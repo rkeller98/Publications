@@ -1,0 +1,17 @@
+\begin{figure}[tb]
+\centering
+\begin{tikzpicture}[scale=.92]
+ \draw[->] (-3.8,0)--(3.4,0) node[right]{$i_d$};
+ \draw[->] (0,-2.1)--(0,2.4) node[above]{$i_q$};
+ \draw[densely dashed,gray,thick] (0,0) ellipse (1.8 and 1.05);
+ \draw[constraint curve,rotate around={12:(-1.35,.35)}]
+   (-1.35,.35) ellipse (1.8 and 1.05);
+ \draw[coordinate vector] (0,0)--(-1.35,.35) node[midway,above]{$\ic$};
+ \node[operating point] at (0,0) {};
+ \node[psm center] at (-1.35,.35) {};
+ \node[annotation] at (1.9,-1.5){translation: center\\rotation: orientation};
+\end{tikzpicture}
+\caption{Completing the square translates the center.  Translation alone does
+not change the conic type or semi-axis lengths.}
+\label{fig:translation}
+\end{figure}

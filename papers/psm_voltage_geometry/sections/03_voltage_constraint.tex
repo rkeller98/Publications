@@ -1,0 +1,70 @@
+\section{Voltage inequality as a quadratic form}
+
+Substituting \cref{eq:affine-map} into \cref{eq:voltage-ball} gives
+\begin{align}
+0&\geq \norm{\Apsm\current+\vect r}^2-\Umax^2\\
+ &=\current\trans\Apsm\trans\Apsm\current
+   +2\vect r\trans\Apsm\current+\vect r\trans\vect r-\Umax^2.
+\end{align}
+Thus
+\begin{equation}
+ \boxed{\current\trans\Hpsm\current+2\vect b\trans\current+c\leq0}
+ \label{eq:psm-general-quadratic}
+\end{equation}
+with
+\begin{align}
+\Hpsm&=\Apsm\trans\Apsm
+=\begin{bmatrix}
+\Rs^2+\omegae^2\Ld^2&\Rs\omegae(\Ld-\Lq)\\
+\Rs\omegae(\Ld-\Lq)&\Rs^2+\omegae^2\Lq^2
+\end{bmatrix},\label{eq:Hpsm}\\
+\vect b&=\Apsm\trans\vect r
+=\begin{bmatrix}\omegae^2\Ld\psif\\\Rs\omegae\psif\end{bmatrix},
+\label{eq:bpsm}\\
+c&=\omegae^2\psif^2-\Umax^2.\label{eq:cpsm}
+\end{align}
+Every term now has a traceable origin.  The diagonal entries of $\Hpsm$ are
+squared voltage sensitivities to $i_d$ and $i_q$.  The off-diagonal term comes
+from resistance acting together with saliency.  The linear vector couples the
+PM-generated voltage to current-generated voltage.  The constant compares
+open-circuit back EMF with available voltage.
+
+The matrix $\Hpsm$ is symmetric by construction.  Moreover,
+\begin{equation}
+ \vect y\trans\Hpsm\vect y=\norm{\Apsm\vect y}^2\geq0,
+\end{equation}
+so it is positive semidefinite without any appeal to an expected ellipse.  Its
+determinant and trace are
+\begin{align}
+\det\Hpsm&=(\det\Apsm)^2
+=(\Rs^2+\omegae^2\Ld\Lq)^2,\label{eq:detH}\\
+\tr\Hpsm&=2\Rs^2+\omegae^2(\Ld^2+\Lq^2)>0
+\end{align}
+except at the simultaneous ideal limit $R_s=\omega_e=0$.  Therefore, whenever
+$\Rs^2+\omegae^2\Ld\Lq>0$, both eigenvalues are positive and $\Hpsm$ is
+positive definite.
+
+Why does the determinant enter here?  For a linear map in the plane,
+$\abs{\det\Apsm}$ is the factor by which oriented area is scaled.  A nonzero
+determinant says that no area has collapsed to a line and that every voltage
+increment has one current increment as its inverse.  If the determinant is
+zero, at least one current direction is collapsed: that direction lies in the
+null space and produces no voltage increment.  The identity
+$\det(\Apsm\trans\Apsm)=(\det\Apsm)^2$ therefore translates the geometric
+area test into a positivity test for the quadratic form.  It also explains
+why rank loss, a zero eigenvalue, a null direction, and a degenerate or open
+level set are different descriptions of the same collapse.
+
+\physinterpretation No nonzero current displacement is invisible to both
+voltage components when $\Apsm$ is invertible.
+
+\engineeringconsequence The closedness of the eventual current-space boundary
+comes from full column rank of the current-to-voltage map, not from the label
+``synchronous machine.''
+
+\paragraph{Synthesis.}
+Algebra gives a Gram matrix $\Hpsm=\Apsm\trans\Apsm$; geometry says every
+nonzero direction has positive quadratic growth; physics says every current
+direction changes at least one voltage component; engineering says a finite
+voltage disk pulls back to a bounded current set.  This chain fails precisely
+when the map loses rank.

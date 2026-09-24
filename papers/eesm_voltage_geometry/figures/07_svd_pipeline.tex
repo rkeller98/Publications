@@ -1,0 +1,28 @@
+\begin{figure}[tb]
+  \centering
+  \begin{tikzpicture}[
+    node distance=9mm,
+    box/.style={draw,rounded corners,align=center,minimum height=12mm,
+      text width=.19\linewidth,fill=gray!6},
+    flow/.style={-{Latex[length=2mm]},thick}
+  ]
+    \node[box] (input) {$\R^3$ current space\\three directions};
+    \node[box,right=of input] (rotate) {$\matr V\trans$\\rotate to principal
+      currents};
+    \node[box,right=of rotate] (scale) {$[\matr\Sigma\ \vect0]$\\scale two,
+      collapse one};
+    \node[box,right=of scale] (output) {$\matr U$\\rotate in $\R^2$ voltage
+      space};
+    \draw[flow] (input)--(rotate);
+    \draw[flow] (rotate)--(scale);
+    \draw[flow] (scale)--(output);
+    \node[below=5mm of scale,align=center,text width=.46\linewidth] {
+      $\sigma_1,\sigma_2>0$: finite cross-section;\qquad
+      $\sigma_3=0$: voltage-invisible cylinder axis};
+  \end{tikzpicture}
+  \caption{The EESM SVD as a sequence of operations. Rotations preserve shape
+  and dimension; the rectangular scaling stage is where one input direction
+  is removed. Traversing the map backward turns the voltage disk into an
+  elliptic cylinder in current space.}
+  \label{fig:eesm-svd-pipeline}
+\end{figure}

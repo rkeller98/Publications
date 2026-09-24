@@ -1,0 +1,92 @@
+\section{Null space, principal directions, and SVD}
+
+A concrete null vector is the cross product of the two rows of $\Ae$:
+\begin{equation}
+ \vect n=\begin{bmatrix}
+ -\omegae^2\Lq\Lexc\\
+ -\Rs\omegae\Lexc\\
+ \Rs^2+\omegae^2\Ld\Lq
+ \end{bmatrix},\qquad \Ae\vect n=\vect0.\label{eq:general-null}
+\end{equation}
+The slice-center line in \cref{eq:slice-center}, augmented with its excitation
+coordinate, is exactly a scalar multiple of this vector.  For $R_s=0$ it
+simplifies to
+\begin{equation}
+ \vect n\sim\begin{bmatrix}-\Lexc/\Ld\\0\\1\end{bmatrix}.
+ \label{eq:ideal-null}
+\end{equation}
+For any state and scalar $t$,
+\begin{equation}
+ \vect u(\state+t\vect n)=\Ae\state+t\Ae\vect n=\Ae\state.
+ \label{eq:null-invariance}
+\end{equation}
+Movement along the cylinder axis costs exactly no additional stator voltage in
+this model.  This is the physical content of the zero eigenvalue.
+
+\input{figures/01_voltage_cylinder.tex}
+\input{figures/02_principal_axes.tex}
+
+The full \gls{svd} can be written
+\begin{equation}
+ \Ae=\matr U
+ \begin{bmatrix}\sigma_1&0&0\\0&\sigma_2&0\end{bmatrix}
+ \matr V\trans,
+ \qquad \sigma_1,\sigma_2>0.
+\end{equation}
+Then
+\begin{equation}
+ \Qu=\matr V\diag(\sigma_1^2,\sigma_2^2,0)\matr V\trans.
+\end{equation}
+The three right singular vectors are current-space principal directions.  The
+first two produce voltage gains $\sigma_1$ and $\sigma_2$ and have cylinder
+semi-axes
+\begin{equation}
+ a_1=\frac{\Umax}{\sigma_1},\qquad
+ a_2=\frac{\Umax}{\sigma_2}.
+\end{equation}
+The third has $\sigma_3=0$ and therefore $a_3=\infty$: a compact ellipsoid is
+impossible.  The rank argument, eigenvalue signature, null-space invariance,
+and SVD all express the same geometry at different levels of detail.
+
+\input{figures/07_svd_pipeline.tex}
+
+\subsection{Five descriptions, one geometric fact}
+
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{@{}p{.20\linewidth}X@{}}
+\toprule
+Description & Most useful interpretation\\
+\midrule
+Dimension and rank &
+The fastest mathematical classification: three inputs, two independent
+outputs, and therefore at least one invisible input direction.\\
+Null space &
+The clearest controller and physical interpretation: it gives the precise
+current tradeoff that leaves stator voltage unchanged.\\
+Eigenvalue signature &
+The standard quadric language: two positive curvatures and one zero curvature
+mean an elliptic cylinder rather than an ellipsoid.\\
+SVD &
+The best numerical algorithmic view: right singular vectors give current
+directions, singular values give voltage gains and conditioning, and the zero
+singular value detects the free axis robustly.\\
+Stacked slices &
+The most direct visualization: congruent fixed-excitation ellipses translate
+along one line and assemble the cylinder.\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+These descriptions agree because
+$\Qu=\Ae\trans\Ae$.  Rank counts visible directions, the null space identifies
+the missing one, eigenvalues square the directional gains, the SVD retains
+both input and output directions, and the slice picture reconstructs the same
+set one excitation plane at a time.  None of the five is redundant: each
+reveals information that another representation suppresses.
+
+\paragraph{What if excitation were bounded?}
+The voltage surface itself would still be a cylinder, but intersecting it with
+$i_{e,\min}\leq i_e\leq i_{e,\max}$ would cut out a finite slab.  Boundedness
+would come from the added excitation constraint, not from a change in the
+rank-two voltage geometry.

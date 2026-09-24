@@ -1,0 +1,91 @@
+\section{Copper-loss ellipsoid and minimum-loss operation}
+
+The copper-loss model is
+\begin{equation}
+ \Pcu=\frac32\Rs(\id^2+\iq^2)+\Rexc\iexc^2
+ =\state\trans\Rl\state,
+ \qquad
+ \Rl=\diag\left(\frac32\Rs,\frac32\Rs,\Rexc\right).
+ \label{eq:copper-loss}
+\end{equation}
+For $R_s>0$ and $R_e>0$, $\Rl$ is positive definite.  Hence
+$\state\trans\Rl\state=P_{\mathrm{Cu,max}}$ is a closed ellipsoid, with
+semi-axes
+\begin{equation}
+ \sqrt{\frac{\Pmax}{(3/2)\Rs}},\quad
+ \sqrt{\frac{\Pmax}{(3/2)\Rs}},\quad
+ \sqrt{\frac{\Pmax}{\Rexc}}.
+\end{equation}
+This is a copper-loss or thermal-budget ellipsoid, not an output-power
+ellipsoid.  Its definiteness sharply contrasts with the rank-deficient voltage
+cylinder.
+
+A physically meaningful EESM analogue of MTPA is
+\begin{equation}
+ \min_{\state}\Pcu\quad\text{subject to}\quad\Te=T^*.
+ \label{eq:min-loss}
+\end{equation}
+Why should gradients appear?  Imagine expanding a copper-loss ellipsoid from
+the origin until it first reaches the requested torque surface.  At first
+contact the two level surfaces share a tangent plane.  Their normal vectors
+must therefore be parallel, and gradients are precisely those normals.  This
+geometric contact condition gives
+$\nabla\Pcu=\mu\nabla\Te$ at a regular solution, i.e.,
+\begin{align}
+ 3\Rs\id&=\mu\kt\dL\iq,\\
+ 3\Rs\iq&=\mu\kt(\Lexc\iexc+\dL\id),\\
+ 2\Rexc\iexc&=\mu\kt\Lexc\iq.
+\end{align}
+On a nonzero-torque branch, the first and third equations give
+\begin{equation}
+ \boxed{\id=\frac{2\Rexc\dL}{3\Rs\Lexc}\iexc.}\label{eq:minloss-ratio}
+\end{equation}
+The remaining equations determine a constant ratio for $i_q/i_e$.  This ray
+property follows from homogeneity:
+\begin{equation}
+ \Te(\rho\state)=\rho^2\Te(\state),\qquad
+ \Pcu(\rho\state)=\rho^2\Pcu(\state).
+\end{equation}
+The optimum direction is independent of requested torque; only scale changes.
+
+Equivalently, maximizing torque for a fixed loss budget gives
+\begin{equation}
+ \Hm\state=\lambda\Rl\state,\label{eq:generalized-eigenproblem}
+\end{equation}
+but jumping directly to the phrase generalized eigenvalue problem hides its
+geometry.  The loss constraint
+$\state\trans\Rl\state=P_0$ is an ellipsoid because equal Euclidean current
+steps have unequal copper cost.  Define the loss-whitened coordinate
+\begin{equation}
+ \vect y=\Rl^{1/2}\state,\qquad
+ \state=\Rl^{-1/2}\vect y.
+\end{equation}
+Then explicitly
+\begin{equation}
+ \state\trans\Rl\state
+ =\vect y\trans\Rl^{-1/2}\Rl\Rl^{-1/2}\vect y
+ =\vect y\trans\vect y=P_0.
+\end{equation}
+Whitening therefore changes coordinates so that one unit of Euclidean
+distance represents one unit of copper-loss resource in every direction.  It
+exposes fair resource comparison, while hiding the original amperes until the
+result is transformed back.  Torque becomes
+\begin{equation}
+ \Te=\vect y\trans(\Rl^{-1/2}\Hm\Rl^{-1/2})\vect y.
+\end{equation}
+On the sphere, the best direction is the largest-eigenvalue direction of the
+symmetric whitened torque matrix:
+\begin{equation}
+ (\Rl^{-1/2}\Hm\Rl^{-1/2})\vect y=\lambda\vect y.
+\end{equation}
+Substituting $\vect y=\Rl^{1/2}\state$ and multiplying by
+$\Rl^{1/2}$ recovers
+$\Hm\state=\lambda\Rl\state$.  The generalized eigenproblem is thus an
+ordinary eigenproblem viewed back in physical current coordinates.
+
+\paragraph{Synthesis.}
+The loss ellipsoid supplies a resource metric, tangency supplies the optimum
+condition, whitening makes that metric Euclidean, and the dominant eigenvector
+selects the most torque-effective direction per unit loss.  This argument
+requires $\Rl\succ0$; if a resistance vanished, whitening would be singular
+and the corresponding current direction would have zero modeled loss.

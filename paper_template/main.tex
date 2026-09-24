@@ -1,0 +1,28 @@
+\documentclass[11pt,a4paper]{article}
+\input{includes/preamble.tex}
+\input{metadata.tex}
+\input{local.tex}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+\PaperAbstract
+\end{abstract}
+\tableofcontents
+
+\input{sections/01_introduction.tex}
+\input{sections/02_theory.tex}
+\input{sections/03_method.tex}
+\input{sections/04_results.tex}
+\input{sections/05_conclusion.tex}
+
+\ifshowglossary
+  \glsaddall[types={\acronymtype}]
+  \glsaddall[types={symbols}]
+  \printnoidxglossary[type=\acronymtype,title={Acronyms}]
+  \printnoidxglossary[type=symbols,title={Symbols}]
+\fi
+\ifshowbibliography
+  \printbibliography
+\fi
+\end{document}

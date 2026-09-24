@@ -1,0 +1,152 @@
+\section{Principal axes, eigenvalues, and rotation}
+
+The immediate problem is the mixed term: changing $i_d$ can alter the
+quadratic growth associated with $i_q$, so the two coordinates cannot be read
+independently.  We therefore ask a more purposeful question than merely
+requesting eigenvalues: is there a direction whose image under $\Hpsm$ changes
+only in magnitude, not in direction?  Such a direction satisfies
+\begin{equation}
+ \Hpsm\vect q=\lambda\vect q.
+\end{equation}
+Along it, the quadratic form grows as a single scalar coefficient
+$\lambda$.  Finding two orthogonal directions of this kind removes the
+coupling and reveals the geometric axes.  Without them, one could still use
+the double-angle formula below, but the relation between axis direction,
+directional voltage sensitivity, and quadratic curvature would remain hidden.
+
+The spectral theorem for real symmetric matrices gives an orthogonal matrix
+$\matr Q=[\vect q_1\ \vect q_2]$ and
+\begin{equation}
+ \Hpsm=\matr Q\matr\Lambda\matr Q\trans,
+ \qquad \matr\Lambda=\diag(\lambda_1,\lambda_2),\quad\lambda_i>0.
+\end{equation}
+With the translated, rotated coordinates
+\begin{equation}
+ \vect z=\matr Q\trans(\current-\ic),\label{eq:principal-coordinates}
+\end{equation}
+orthogonality preserves Euclidean lengths and
+\begin{equation}
+ \lambda_1z_1^2+\lambda_2z_2^2=\Umax^2.\label{eq:principal-ellipse}
+\end{equation}
+No cross term remains because eigenvectors diagonalize the quadratic map.  A
+displacement $t\vect q_j$ changes the left side by $\lambda_jt^2$ alone.  The
+eigenvectors are therefore exactly the principal-axis directions, and
+\begin{equation}
+ a_j=\sqrt{\frac{\Umax^2}{\lambda_j}}=
+ \frac{\Umax}{\sqrt{\lambda_j}}.\label{eq:semiaxes}
+\end{equation}
+A large eigenvalue means steep quadratic growth and hence a short semi-axis.
+
+\paragraph{Normalized thought experiment.}
+Suppose the centered equation is
+$z_1^2+4z_2^2=1$.  Then $\lambda_1=1$ and $\lambda_2=4$, while
+$a_1=1$ and $a_2=1/2$.  Doubling the directional gain squares the
+quadratic coefficient and halves the allowed current distance.  This small
+example makes the inverse relation between eigenvalue and axis length visible
+before machine parameters obscure it.
+
+The \gls{svd} makes the same result especially physical.  Write
+\begin{equation}
+ \Apsm=\matr U\matr\Sigma\matr V\trans.
+\end{equation}
+Then
+\begin{equation}
+ \Hpsm=\Apsm\trans\Apsm
+ =\matr V\matr\Sigma^2\matr V\trans.
+\end{equation}
+Thus the right singular vectors are current-space principal directions and
+$\lambda_j=\sigma_j^2$.  A unit current displacement along $\vect v_j$
+creates voltage magnitude $\sigma_j$; the allowable distance before reaching
+the voltage circle is therefore
+\begin{equation}
+ a_j=\frac{\Umax}{\sigma_j}.
+\end{equation}
+The eigenvalue view describes curvature of the pulled-back quadratic form; the
+SVD view describes directional gain of the physical current-to-voltage map.
+They are not competing explanations but the identity $\Hpsm=\Apsm\trans\Apsm$
+seen from two sides.
+
+\input{figures/09_svd_pipeline.tex}
+
+\subsection{Five viewpoints on the same voltage ellipse}
+
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{.25\linewidth}X@{}}
+\toprule
+Viewpoint & What it contributes and what it leaves implicit\\
+\midrule
+Scalar expansion &
+Audits every resistance, speed, inductance, and PM-flux term.  It is best for
+sign checking, but the axes are difficult to see.\\
+Conic classification &
+Uses definiteness, the discriminant, and the translated level to prove that
+the boundary is a real ellipse.  It names the shape but says little about the
+physical map that created it.\\
+Affine inverse image &
+Starts with the inverter's voltage circle and pulls it through
+$\voltage=\Apsm\current+\vect r$.  It makes the center and boundedness
+intuitive, but does not by itself give numerical axis directions.\\
+Eigenvalue decomposition &
+Diagonalizes $\Hpsm$ and exposes uncoupled current coordinates, curvature, and
+semi-axis lengths.  Squaring in the Gram matrix hides the output-side
+direction of each voltage response.\\
+Singular-value decomposition &
+Keeps both current- and voltage-space directions.  It is the clearest gain and
+numerical-conditioning interpretation, although it is less convenient for
+reading the original scalar coefficients.\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+All five agree because they start from the identity
+\begin{equation}
+ \norm{\Apsm\current+\vect r}^2
+ =\current\trans\Apsm\trans\Apsm\current
+  +2\vect r\trans\Apsm\current+\norm{\vect r}^2.
+\end{equation}
+Expansion reads the identity in components, conic theory studies its level
+set, the inverse-image view studies the map before squaring, the
+eigendecomposition studies its Gram matrix, and the SVD factors the original
+map.
+
+\input{figures/02_rotated_eigenvectors.tex}
+\input{figures/04_eigenvalue_axes.tex}
+
+The classical angle formula is the same diagonalization written componentwise.
+For $Ax^2+Bxy+Cy^2$, substitute
+$x=\xi\cos\theta-\eta\sin\theta$ and
+$y=\xi\sin\theta+\eta\cos\theta$.  The $\xi\eta$ coefficient becomes
+\begin{equation}
+ B\cos(2\theta)+(C-A)\sin(2\theta).
+\end{equation}
+The double angle appears because products of two rotated coordinates contain
+$\sin\theta\cos\theta$, $\cos^2\theta$, and $\sin^2\theta$.  Setting the mixed
+coefficient to zero gives
+\begin{equation}
+ \boxed{\tan(2\theta)=\frac{B}{A-C}.}\label{eq:double-angle}
+\end{equation}
+The two solutions separated by $\pi/2$ are the two orthogonal eigenvector
+directions.  Applying \cref{eq:double-angle} to \cref{eq:Hpsm}, where
+$B=2H_{12}$, gives for $L_d\neq L_q$
+\begin{equation}
+ \tan(2\theta)=\frac{2\Rs}{\omegae(\Ld+\Lq)}.\label{eq:psm-angle}
+\end{equation}
+At a circular limit the angle is undefined because every direction is a
+principal direction; an arbitrary numerical angle then carries no physics.
+
+\geointerpretation Translation selects the bowl's minimum, rotation aligns the
+coordinate axes with its uncoupled slopes, and the eigenvalues set its
+directional steepness.
+
+\physinterpretation Saliency and resistance together create the cross term.
+The PM flux appears in $\vect b$ and therefore translates the ellipse, but it
+does not enter $\Hpsm$ and hence does not directly change its shape.
+
+\paragraph{Synthesis.}
+Translation locates the ellipse, eigenvectors identify independent directions,
+eigenvalues measure how rapidly voltage budget is consumed, and singular
+values express the same consumption as a physical current-to-voltage gain.
+These conclusions require a symmetric positive-definite Gram matrix; a zero
+eigenvalue would open an infinite direction, while a negative eigenvalue could
+occur only after leaving the Gram-matrix setting.

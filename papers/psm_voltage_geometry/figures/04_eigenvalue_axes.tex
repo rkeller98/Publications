@@ -1,0 +1,16 @@
+\begin{figure}[tb]
+\centering
+\begin{tikzpicture}
+ \begin{axis}[axis main,width=.78\linewidth,height=5.2cm,
+ xlabel={eigenvalue $\lambda$},ylabel={semi-axis $a/U_{\max}$},
+ xmin=.2,xmax=5,ymin=0,ymax=2.4,domain=.2:5,samples=100]
+  \addplot[very thick,MidnightBlue]{1/sqrt(x)};
+  \addplot[only marks,mark=*,BrickRed] coordinates {(.5,1.414) (1,1) (4,.5)};
+  \node[annotation,anchor=west] at (axis cs:2.1,1.35)
+    {large $\lambda$\\$\Rightarrow$ short axis};
+ \end{axis}
+\end{tikzpicture}
+\caption{Inverse square-root relation between curvature eigenvalue and
+semi-axis length.}
+\label{fig:eigenvalue-axis}
+\end{figure}

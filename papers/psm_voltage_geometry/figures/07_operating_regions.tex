@@ -1,0 +1,23 @@
+\begin{figure}[tb]
+\centering
+\begin{tikzpicture}
+ \begin{axis}[axis main,width=.82\linewidth,height=7cm,
+ xlabel={$i_d$},ylabel={$i_q$},xmin=-2.5,xmax=.5,ymin=0,ymax=1.9,
+ legend pos=north west]
+  \addplot[current limit,domain=0:180,samples=120]
+    ({1.55*cos(x)},{1.55*sin(x)});
+  \addplot[voltage limit,domain=0:360,samples=181]
+    ({-1.18+1.35*cos(x)},{.72*sin(x)});
+  \addplot[optimization path,domain=-1.65:-.08,samples=80]
+    ({x},{sqrt(max(0,x*x+x/(-.38)))});
+  \addplot[only marks,mark=*,mark size=2pt] coordinates {(-.34,1.05) (-1.22,1.0) (-1.7,.58)};
+  \node[annotation] at (axis cs:-.15,.75){MTPA};
+  \node[annotation] at (axis cs:-1.05,1.6){FW};
+  \node[annotation] at (axis cs:-2.05,.32){MTPV side};
+ \end{axis}
+\end{tikzpicture}
+\caption{Conceptual active-set geometry: MTPA is current-limited, field
+weakening uses both limits, and the high-speed branch follows the voltage
+boundary toward an MTPV tangency.}
+\label{fig:operating-regions}
+\end{figure}

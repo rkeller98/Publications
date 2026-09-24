@@ -1,0 +1,50 @@
+\section{Model, coordinates, and scope}
+
+An \gls{eesm} replaces the fixed PM excitation of a PSM by a controllable rotor
+field current.  In the simplest linear steady-state model,
+\begin{align}
+ \ud&=\Rs\id-\omegae\Lq\iq,\label{eq:eesm-ud}\\
+ \uq&=\Rs\iq+\omegae(\Ld\id+\Lexc\iexc),\label{eq:eesm-uq}
+\end{align}
+where $\Lexc\iexc$ is the field-produced stator flux linkage.  Machine-model
+conventions and the limitations of constant inductances are discussed in
+standard drive texts \cite{binder2017,schroeder2021}.
+
+\begin{assumption}[Linear stationary EESM]
+$L_d,L_q,L_e>0$, $R_s\geq0$, and the flux linkages are linear in the currents.
+Rotor-field dynamics are slow or separately controlled, so $i_e$ is a
+steady-state decision variable.  Saturation, iron loss, and cross-coupling are
+not included.
+\end{assumption}
+
+Define
+\begin{equation}
+ \state=\begin{bmatrix}\id\\\iq\\\iexc\end{bmatrix},\qquad
+ \vect u=\begin{bmatrix}\ud\\\uq\end{bmatrix},\qquad
+ \Ae=\begin{bmatrix}
+ \Rs&-\omegae\Lq&0\\
+ \omegae\Ld&\Rs&\omegae\Lexc
+ \end{bmatrix}.
+\end{equation}
+Then
+\begin{equation}
+ \vect u=\Ae\state.\label{eq:eesm-map}
+\end{equation}
+The essential difference from the PSM affine map is dimensional: $\Ae$ maps
+$\R^3$ into $\R^2$.  The extra coordinate is not a small correction to a 2D
+ellipse; it changes rank, compactness, and optimization well-posedness.
+
+\physinterpretation A PM flux is essentially fixed, whereas field current is a
+controllable flux degree of freedom.  The controller may trade direct-axis
+stator current against rotor excitation while preserving the same stator
+voltage.
+
+\engineeringconsequence A 3D plot should not be labeled an ellipsoid from its
+appearance.  Its quadratic matrix and rank must be examined first.
+
+The development is intentionally pedagogical.  The cylinder will be reached
+five ways---dimension and rank, a null direction, eigenvalue signature, SVD,
+and stacked fixed-excitation slices---because each view answers a different
+engineering question.  The goal is not merely to accept the name of the
+surface, but to understand why no ordinary choice of parameters can turn this
+voltage-only constraint into a bounded three-dimensional ellipsoid.

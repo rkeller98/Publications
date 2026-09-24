@@ -1,0 +1,18 @@
+\begin{figure}[tb]
+\centering
+\begin{tikzpicture}
+\begin{axis}[publication 3d,width=.86\linewidth,height=7.3cm,
+ xlabel={$i_d$},ylabel={$i_q$},zlabel={$i_e$},
+ xmin=-2,xmax=2,ymin=-2,ymax=2,zmin=-2,zmax=2]
+ \addplot3[surf,shader=interp,opacity=.48,draw=Purple!55,
+  domain=.45:2,y domain=-1.5:1.5,samples=16,samples y=13]
+  ({y},{.8/x},{(x+.45*y)/.9});
+ \addplot3[surf,shader=interp,opacity=.48,draw=Purple!55,
+  domain=-2:-.45,y domain=-1.5:1.5,samples=16,samples y=13]
+  ({y},{.8/x},{(x+.45*y)/.9});
+\end{axis}
+\end{tikzpicture}
+\caption{A nonzero torque level is hyperbolic in the effective-flux and
+$i_q$ coordinates and extends along the independent third direction.}
+\label{fig:torque-surface}
+\end{figure}

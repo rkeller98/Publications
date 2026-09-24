@@ -1,0 +1,92 @@
+\section{Current, torque, and operating regions}
+
+Current-vector control under simultaneous inverter voltage and current limits
+is a classical route to extending the PSM operating range
+\cite{morimoto1990,kim1997}; the derivation below makes its geometry explicit.
+
+The stator-current constraint is
+\begin{equation}
+ \id^2+\iq^2\leq\Imax^2,\label{eq:current-circle}
+\end{equation}
+a disk because its quadratic matrix is the identity.  Unlike the voltage
+ellipse, it is centered at the origin and isotropic.
+
+For $p$ pole pairs, electromagnetic torque is
+\begin{equation}
+ \Te=\kt\left[\psif\iq+(\Ld-\Lq)\id\iq\right],
+ \qquad \kt=\frac32p.\label{eq:psm-torque}
+\end{equation}
+Let $\dL=\Ld-\Lq$.  A constant nonzero torque satisfies
+\begin{equation}
+ \iq=\frac{\Te/\kt}{\psif+\dL\id}.\label{eq:torque-hyperbola}
+\end{equation}
+When $\dL\neq0$, translation $\tilde i_d=i_d+\psif/\dL$ reduces it to
+$\tilde i_d i_q=\text{constant}$: a rectangular hyperbola.  When $\dL=0$,
+the constant-torque curves are horizontal lines, not hyperbolas.  At zero
+torque, the equation degenerates to the union of $i_q=0$ and
+$i_d=-\psif/\dL$.
+
+\input{figures/05_current_voltage.tex}
+\input{figures/06_torque_contours.tex}
+
+\subsection{Tangency interpretation}
+
+\gls{mtpa} minimizes $\norm{\current}^2$ at fixed torque.  The multiplier
+condition is best discovered from the picture rather than memorized as a
+recipe.  A current circle is a level set of
+$f(\current)=\norm{\current}^2$; a torque contour is a level set of
+$g(\current)=\Te(\current)$.  At the smallest circle that reaches the requested
+torque, the two curves touch.  Their tangents coincide, so their normals are
+parallel.  Because a gradient is normal to a regular level set, there must be
+a scalar $\mu$ such that
+\begin{equation}
+ 2\current=\mu\nabla_{\current}\Te.
+\end{equation}
+This geometric necessity is the Lagrange multiplier condition.  It exposes
+the optimum without parameterizing the hyperbola, but it does not by itself
+select the correct branch or guarantee global optimality; feasibility and
+comparison of stationary candidates remain necessary.
+Eliminating $\mu$ gives the familiar locus
+\begin{equation}
+ \psif\id+\dL(\id^2-\iq^2)=0.\label{eq:mtpa-locus}
+\end{equation}
+Geometrically, the smallest current circle reaching a requested torque contour
+is tangent to it.
+
+As speed rises, the voltage ellipse contracts and moves toward the flux
+cancellation point.  \gls{fw} begins when the unconstrained MTPA point no
+longer satisfies the voltage inequality.  With both current and voltage active,
+the feasible operating point lies at their intersection and the KKT condition
+expresses the torque normal as a nonnegative combination of both constraint
+normals \cite{boyd2004}.
+
+The nonnegative coefficients in this combination are not arbitrary algebraic
+decorations.  Each active inequality can oppose motion only toward its
+infeasible side.  KKT therefore replaces one parallel-normal condition by a
+cone of admissible active-boundary normals.  An inactive boundary has zero
+multiplier and contributes no normal.
+
+In the ideal $R_s=0$ model, \gls{mtpv} maximizes torque on
+\begin{equation}
+ \omegae^2\left[\Lq^2\iq^2+(\Ld\id+\psif)^2\right]=\Umax^2.
+\end{equation}
+It is again a tangency, now between a torque contour and the voltage ellipse.
+Using the gradients of torque and ideal voltage and eliminating the Lagrange
+multiplier yields the explicit locus
+\begin{equation}
+ \boxed{\dL\Lq^2\iq^2
+ =\Ld(\psif+\dL\id)(\psif+\Ld\id).}\label{eq:ideal-mtpv}
+\end{equation}
+This relation is valid on regular branches for $R_s=0$; feasibility and the
+sign of torque must still be checked.  For $\dL=0$ it reduces to the appropriate
+SPMSM limiting condition rather than a hyperbolic saliency branch.
+The term is meaningful only after current or thermal admissibility and the
+chosen machine model have been stated.
+
+\input{figures/07_operating_regions.tex}
+
+\paragraph{Synthesis.}
+MTPA, field weakening, and MTPV are not three unrelated formulas.  They are
+successive contact configurations of torque level sets with a current circle,
+then a voltage ellipse, and sometimes both.  The algebra changes because the
+active normals change; the geometric principle does not.

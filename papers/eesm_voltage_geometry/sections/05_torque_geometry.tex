@@ -1,0 +1,75 @@
+\section{Torque surfaces and their classification}
+
+The linear EESM torque is
+\begin{equation}
+ \Te=\kt\iq(\Lexc\iexc+\dL\id),\qquad
+ \kt=\frac32p,\quad\dL=\Ld-\Lq.\label{eq:eesm-torque}
+\end{equation}
+Introduce the flux-producing coordinate and an independent complementary
+coordinate
+\begin{equation}
+ \sflux=\dL\id+\Lexc\iexc,\qquad
+ r=\Lexc\id-\dL\iexc.
+\end{equation}
+
+These coordinates can be discovered rather than guessed.  Torque already
+contains the combination $\dL i_d+\Lexc i_e$, so naming that combination
+$s_\psi$ isolates the direction that is effective for torque.  In the
+$(i_d,i_e)$ plane its coefficient vector is $[\dL,\Lexc]\trans$.  A natural
+complement is the perpendicular vector $[\Lexc,-\dL]\trans$, because
+\begin{equation}
+ [\dL,\Lexc]\begin{bmatrix}\Lexc\\-\dL\end{bmatrix}=0.
+\end{equation}
+This produces $r=\Lexc i_d-\dL i_e$.  In matrix form,
+\begin{equation}
+ \begin{bmatrix}s_\psi\\r\end{bmatrix}
+ =
+ \underbrace{\begin{bmatrix}\dL&\Lexc\\
+                 \Lexc&-\dL\end{bmatrix}}_{\matr T_\psi}
+ \begin{bmatrix}i_d\\i_e\end{bmatrix},
+ \qquad
+ \matr T_\psi\trans\matr T_\psi=(\dL^2+\Lexc^2)\matr I.
+\end{equation}
+After division by $\sqrt{\dL^2+\Lexc^2}$, the transformation is orthogonal:
+it rotates or reflects the plane into a torque-effective direction and a
+torque-invisible complementary direction.  The transformation is nonsingular
+unless both $\dL$ and $L_e$ vanish.
+
+Torque becomes $\Te=\kt\iq\sflux$ and contains no $r$.  A nonzero
+constant-torque curve is a hyperbola in
+the $(s_{\psi},i_q)$ plane and is independent of $r$; in the original 3D space
+it is therefore a hyperbolic cylinder, possibly oblique relative to the current
+axes.  At zero torque it degenerates into two planes:
+\begin{equation}
+ \iq=0\quad\text{or}\quad\Lexc\iexc+\dL\id=0.
+\end{equation}
+
+The same result follows from the symmetric quadratic form
+\begin{equation}
+ \Te=\state\trans\Hm\state,\qquad
+ \Hm=\frac{\kt}{2}\begin{bmatrix}
+ 0&\dL&0\\ \dL&0&\Lexc\\0&\Lexc&0
+ \end{bmatrix}.\label{eq:torque-matrix}
+\end{equation}
+Its eigenvalues are
+\begin{equation}
+ 0,\qquad \pm\frac{\kt}{2}\sqrt{\dL^2+\Lexc^2}.
+\end{equation}
+The opposite signs produce saddle curvature; the zero eigenvalue extends each
+2D hyperbola along a free direction.  Thus ``bilinear'' is the algebraic cause,
+``saddle'' describes the scalar torque landscape, and ``hyperbolic cylinder''
+classifies a nonzero torque level surface.
+
+At fixed excitation, torque contours in the $dq$ plane resemble PSM contours
+with an effective excitation flux $L_e\bar i_e$.  At fixed $i_q$, constant
+torque is a straight line in $(i_d,i_e)$.  These slices explain why one 3D
+surface can appear as different curve families in different planes.
+
+\input{figures/05_torque_surface.tex}
+
+\paragraph{Synthesis.}
+The coordinate $s_\psi$ is selected by the physics already present in the
+torque equation; $r$ is selected by orthogonality.  Algebra turns torque into
+a product, geometry turns its nonzero levels into hyperbolas extended along a
+free direction, and control design learns which current combination changes
+torque and which can be traded without changing it.

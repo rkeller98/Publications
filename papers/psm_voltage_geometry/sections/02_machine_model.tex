@@ -1,0 +1,45 @@
+\section{Stationary dq machine model}
+
+\begin{assumption}[Steady-state linear model]
+The rotor-oriented $dq$ variables are constant, $L_d,L_q>0$, $R_s\geq0$, and
+the permanent-magnet flux linkage $\psi_f$ is constant.  Electrical speed is
+$\omega_e$.  Motor torque and positive $i_q$ use the same sign convention.
+\end{assumption}
+
+The flux linkages and stator voltages are
+\begin{align}
+ \psid&=\Ld\id+\psif, & \psiq&=\Lq\iq,\label{eq:psm-flux}\\
+ \ud&=\Rs\id-\omegae\Lq\iq, &
+ \uq&=\Rs\iq+\omegae(\Ld\id+\psif).\label{eq:psm-voltage-model}
+\end{align}
+The terms proportional to $R_s$ are resistive drops; the terms proportional
+to $\omega_e$ are rotational electromotive forces.  The inverter imposes
+\begin{equation}
+ \ud^2+\uq^2\leq\Umax^2.\label{eq:voltage-ball}
+\end{equation}
+This is a disk in voltage coordinates.  The task is to determine its inverse
+image in current coordinates.
+
+Set
+\begin{equation}
+ \current=\begin{bmatrix}\id\\\iq\end{bmatrix},\quad
+ \voltage=\begin{bmatrix}\ud\\\uq\end{bmatrix},\quad
+ \Apsm=\begin{bmatrix}\Rs&-\omegae\Lq\\
+             \omegae\Ld&\Rs\end{bmatrix},\quad
+ \vect{r}=\begin{bmatrix}0\\\omegae\psif\end{bmatrix}.
+\end{equation}
+Then the two scalar equations become the affine map
+\begin{equation}
+ \voltage=\Apsm\current+\vect{r}.\label{eq:affine-map}
+\end{equation}
+
+\geointerpretation The linear part rotates and directionally scales current
+displacements; $\vect r$ translates their image in voltage space.
+
+\physinterpretation The PM flux produces voltage even at zero stator current.
+Resistance and inductive coupling determine how a current increment changes
+the two voltage components.
+
+\engineeringconsequence A voltage circle need not remain a circle when pulled
+back through the machine map.  Its precise image is governed by the singular
+values and invertibility of $\Apsm$.

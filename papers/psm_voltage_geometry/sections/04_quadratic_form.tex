@@ -1,0 +1,90 @@
+\section{Conic classification before naming the curve}
+
+Consider the general real conic
+\begin{equation}
+ Ax^2+Bxy+Cy^2+Dx+Ey+F=0.\label{eq:general-conic}
+\end{equation}
+Its quadratic matrix is
+\begin{equation}
+ \matr Q=\begin{bmatrix}A&B/2\\B/2&C\end{bmatrix},\qquad
+ \det\matr Q=AC-\frac{B^2}{4}.
+\end{equation}
+Consequently
+\begin{equation}
+ B^2-4AC=-4\det\matr Q.\label{eq:disc-det}
+\end{equation}
+This identity is a bridge between classical analytic geometry and linear
+algebra.  The left side is the coefficient test traditionally learned for
+conics; the right side asks whether the quadratic map preserves area with one
+orientation, reverses it, or collapses a direction.  Since
+$\det\matr Q$ is also the product of the two eigenvalues:
+\begin{itemize}
+ \item $B^2-4AC<0$ means equal eigenvalue signs.  A positive or negative
+       definite quadratic part is ellipse-like, but the translated level may
+       still be a real ellipse, a point, or empty.
+ \item $B^2-4AC=0$ means at least one zero eigenvalue.  Linear terms then decide
+       between a parabola, parallel lines, one line, or the empty set.
+ \item $B^2-4AC>0$ means opposite eigenvalue signs.  The quadratic contribution
+       rises in one principal direction and falls in the other, producing a
+       hyperbola or a degenerate pair of intersecting lines.
+\end{itemize}
+Thus the discriminant classifies the quadratic part; reality and degeneracy
+also require the lower-order terms.
+
+A third, distinct determinant belongs to the homogeneous conic matrix
+\begin{equation}
+ \matr C=\begin{bmatrix}
+ A&B/2&D/2\\ B/2&C&E/2\\ D/2&E/2&F
+ \end{bmatrix},\qquad
+ [x\ y\ 1]\matr C[x\ y\ 1]\trans=0.
+\end{equation}
+Its determinant detects degeneracy of the \emph{whole} conic, not definiteness
+of the $2\times2$ quadratic block.  For a centered ellipse
+$\vect z\trans\matr Q\vect z-k=0$,
+\begin{equation}
+ \det\matr C=-k\det\matr Q<0,
+\end{equation}
+while simultaneously $\det\matr Q>0$ and $B^2-4AC<0$.  The signs differ
+because the three expressions answer three different questions; there is no
+contradiction.
+
+For a nonsingular symmetric matrix, complete the square:
+\begin{align}
+q(\vect x)&=\vect x\trans\matr Q\vect x+2\vect d\trans\vect x+f,\\
+\vect x_0&=-\matr Q\inv\vect d,\label{eq:center-general}\\
+q(\vect x)&=(\vect x-\vect x_0)\trans\matr Q(\vect x-\vect x_0)
+ +f-\vect d\trans\matr Q\inv\vect d.\label{eq:matrix-square}
+\end{align}
+The cancellation follows from $\matr Q\vect x_0=-\vect d$ and symmetry.  For
+the voltage inequality define
+\begin{equation}
+ k\defeq\vect b\trans\Hpsm\inv\vect b-c.
+\end{equation}
+Then its boundary is
+\begin{equation}
+ (\current-\ic)\trans\Hpsm(\current-\ic)=k,
+ \qquad \ic=-\Hpsm\inv\vect b.\label{eq:centered-voltage}
+\end{equation}
+Because $\vect r$ lies in the range of invertible $\Apsm$, the current
+$\ic=-\Apsm\inv\vect r$ maps to zero voltage.  Hence directly $k=\Umax^2>0$.
+We have now established all conditions for a real, nondegenerate ellipse:
+$\Hpsm\succ0$ and $k>0$.
+
+Explicit inversion yields
+\begin{equation}
+ \boxed{\ic=\begin{bmatrix}
+ -\dfrac{\psif\omegae^2\Lq}{\Rs^2+\omegae^2\Ld\Lq}\\[.7em]
+ -\dfrac{\psif\Rs\omegae}{\Rs^2+\omegae^2\Ld\Lq}
+ \end{bmatrix}.}\label{eq:ellipse-center}
+\end{equation}
+
+\input{figures/03_translation.tex}
+
+\paragraph{Why complete the square?}
+The linear term prevents the quadratic part from being read as a shape around
+its natural center.  Completing the square is therefore not cosmetic algebra:
+it asks where the quadratic landscape has its stationary point and translates
+that point to the origin.  Translation exposes the center and the remaining
+energy level, but it deliberately hides the absolute current origin.  Directly
+solving $\Apsm\current+\vect r=\vect0$ is an alternative route to the same
+center and makes the zero-voltage interpretation more visible.

@@ -1,0 +1,22 @@
+\begin{figure}[tb]
+\centering
+\begin{tikzpicture}[scale=.9]
+ \begin{scope}[xshift=-3.3cm]
+  \draw[->] (-2.1,0)--(2.2,0) node[right]{$u_d$};
+  \draw[->] (0,-2.1)--(0,2.2) node[above]{$u_q$};
+  \draw[constraint curve] (0,0) circle (1.55);
+  \node[annotation] at (0,-2.35){voltage-space norm};
+ \end{scope}
+ \draw[-{Latex[length=3mm]},very thick,gray] (-.7,0)--(.7,0)
+   node[midway,above]{inverse affine map};
+ \begin{scope}[xshift=3.3cm,rotate=18]
+  \draw[->,rotate=-18] (-2.3,0)--(2.4,0) node[right]{$i_d$};
+  \draw[->,rotate=-18] (0,-2)--(0,2.2) node[above]{$i_q$};
+  \draw[constraint curve] (.25,-.15) ellipse (1.9 and 1.05);
+  \node[annotation,rotate=-18] at (.2,-2.25){current-space conic};
+ \end{scope}
+\end{tikzpicture}
+\caption{A Euclidean voltage circle pulls back through an invertible affine
+machine map to a translated and generally rotated ellipse.}
+\label{fig:circle-ellipse}
+\end{figure}

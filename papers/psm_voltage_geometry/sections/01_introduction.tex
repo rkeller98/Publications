@@ -1,0 +1,36 @@
+\section{Purpose and geometric point of view}
+
+Current-plane plots for a \gls{pmsm} commonly show a current circle, a voltage
+ellipse, constant-torque curves, and optimal trajectories.  Calling the
+voltage boundary an ellipse before inspecting its equation, however, hides the
+reason it is closed and the assumptions under which that statement fails.
+This paper therefore starts from the voltage map and lets its algebra determine
+the conic.  The machine conventions follow standard rotor-oriented models
+\cite{binder2017,schroeder2021}; the geometric analysis uses elementary
+properties of real symmetric matrices \cite{horn2013}.
+
+The central analogy is a quadratic cost landscape.  A positive-definite
+quadratic form is a bowl.  Its level curves are ellipses; its eigenvectors are
+directions along which the bowl rises without lateral coupling; and its
+eigenvalues measure steepness.  Translation moves the bowl, and rotation
+changes its orientation, but neither operation changes its intrinsic conic
+class.
+
+\input{figures/01_circle_ellipse.tex}
+
+The derivation repeatedly separates five questions: what algebraic operation
+is performed, why it is valid, what it means geometrically, what physical term
+caused it, and what an engineer can infer from it.  The model is linear and
+steady state.  Saturation, cross-saturation, iron loss, inverter harmonics, and
+transient flux derivatives are outside its scope; their omission is an
+explicit modeling decision, not a claim that real machines are exact quadrics.
+
+Accordingly, this is a learning paper rather than a compressed derivation
+note.  Important conclusions are approached from several directions.  The
+voltage boundary is first expanded component by component, then classified as
+a conic, interpreted as an inverse image of a circle, diagonalized through an
+eigenbasis, and finally read as the gain geometry of an SVD.  These routes are
+kept together because each answers a different question: algebra checks the
+coefficients, conic theory names the shape, the inverse-image view explains
+why it appears, eigenvectors expose its axes, and singular values connect
+those axes to physical voltage gain.

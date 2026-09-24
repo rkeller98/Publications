@@ -1,0 +1,19 @@
+\begin{figure}[tb]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[
+      axis main,
+      width=0.72\linewidth,
+      xlabel={$x$},
+      ylabel={$y$},
+      domain=0:4,
+      samples=80
+    ]
+      \addplot[constraint curve] {0.5*x^2};
+      \addplot[paper highlight] coordinates {(2,2)};
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Replace this demonstrator with a paper-specific figure and explain
+  the message of the figure in the caption.}
+  \label{fig:placeholder}
+\end{figure}

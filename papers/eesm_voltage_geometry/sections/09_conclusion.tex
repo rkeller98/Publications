@@ -1,0 +1,21 @@
+\section{Conclusions}
+
+The EESM voltage surface is controlled by a simple dimensional fact: a linear
+map from three current coordinates to two stator-voltage components has a null
+space.  Its Gram matrix therefore has two positive eigenvalues and one zero
+eigenvalue in the nondegenerate case.  The resulting surface is an oblique
+elliptic cylinder assembled from congruent fixed-excitation ellipses, not an
+ellipsoid.
+
+Torque adds an indefinite bilinear geometry: nonzero levels are hyperbolic
+cylinders and the zero level is a pair of planes.  Copper loss, by contrast,
+has a positive-definite metric and forms a genuine ellipsoid.  This distinction
+supports a minimum-loss tangency interpretation and a generalized eigenvalue
+solution after loss whitening.
+
+Finally, a voltage cylinder does not compactly bound torque.  Voltage-only MTPV
+is generically unbounded in the linear model; a finite high-speed optimum
+requires explicit thermal, stator-current, excitation-current, or saturation
+constraints.  Numerical boxes must never be mistaken for those physical
+constraints.  Rank, null spaces, and active-set checks remain useful even when
+nonlinear data warp the ideal quadrics.

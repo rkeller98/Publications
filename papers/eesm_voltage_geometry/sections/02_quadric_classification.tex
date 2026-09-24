@@ -1,0 +1,95 @@
+\section{Quadrics from eigenvalue signatures}
+
+Consider
+\begin{equation}
+ q(\state)=\state\trans\matr A\state+2\vect b\trans\state+c=0,
+ \qquad \matr A=\matr A\trans.\label{eq:general-quadric}
+\end{equation}
+Why introduce eigenvectors?  The original coordinates can be coupled, so
+changing one current may change several terms at once.  We ask whether there
+is a direction $\vect v$ for which the quadratic map changes only magnitude,
+not direction:
+\begin{equation}
+ \matr A\vect v=\lambda\vect v.
+\end{equation}
+In a basis made of such directions, every coordinate contributes
+independently.  The signs of the corresponding $\lambda$ values then say
+whether the surface curves upward, downward, or not at all in each direction.
+Accordingly, an orthogonal eigenbasis transforms the quadratic part to
+$\lambda_1z_1^2+\lambda_2z_2^2+\lambda_3z_3^2$.  If $\matr A$ is nonsingular,
+translation by $-\matr A^{-1}\vect b$ removes all linear terms.  The signs of
+the eigenvalues and the translated level $k$ then decide the real surface:
+\begin{itemize}
+ \item three equal nonzero signs: ellipsoid for the compatible sign of $k$,
+       a point for $k=0$, and empty otherwise;
+ \item signature $(+,+,-)$: one-sheet hyperboloid for $k>0$, two-sheet
+       hyperboloid for $k<0$, and a cone for $k=0$; reversing all signs reverses
+       the roles of $k>0$ and $k<0$;
+ \item a zero eigenvalue with no linear component in that null direction:
+       a cylinder over the corresponding 2D conic;
+ \item a zero eigenvalue with a nonzero linear component in that direction:
+       an elliptic or hyperbolic paraboloid, according to whether the remaining
+       two eigenvalues have equal or opposite signs.
+\end{itemize}
+Further zero eigenvalues or $k=0$ produce planes, lines, cones, or empty
+degeneracies.  This classification follows from principal coordinates; names
+are consequences, not assumptions.
+
+The voltage limit is
+\begin{equation}
+ \norm{\Ae\state}^2\leq\Umax^2
+ \quad\Longleftrightarrow\quad
+ \state\trans\Qu\state\leq\Umax^2,
+ \qquad \Qu=\Ae\trans\Ae.\label{eq:eesm-voltage-quadratic}
+\end{equation}
+Explicitly,
+\begin{equation}
+\Qu=\begin{bmatrix}
+\Rs^2+\omegae^2\Ld^2&\Rs\omegae(\Ld-\Lq)&\omegae^2\Ld\Lexc\\
+\Rs\omegae(\Ld-\Lq)&\Rs^2+\omegae^2\Lq^2&\Rs\omegae\Lexc\\
+\omegae^2\Ld\Lexc&\Rs\omegae\Lexc&\omegae^2\Lexc^2
+\end{bmatrix}.\label{eq:Qu-explicit}
+\end{equation}
+It is positive semidefinite because
+$\state\trans\Qu\state=\norm{\Ae\state}^2\geq0$, but it cannot be positive
+definite: $\rank\Qu=\rank\Ae\leq2<3$.  Under ordinary nondegenerate conditions
+$\rank\Ae=2$, hence its eigenvalue signature is $(+,+,0)$.  Since there is no
+linear term along the null direction and $U_{\max}^2>0$, the boundary is an
+elliptic cylinder.
+
+The determinant makes the same collapse visible as a volume statement.
+$\det\Qu=0$ means that the quadratic map cannot scale a three-dimensional
+volume to another nonzero volume; one dimension has been flattened.  Here the
+reason is structural: two voltage outputs cannot distinguish all directions
+in a three-dimensional current input.  The zero determinant, zero eigenvalue,
+nontrivial null space, and infinite cylinder axis are therefore not separate
+accidents.
+
+\paragraph{Rank-two thought experiment.}
+Before returning to machine parameters, consider
+\begin{equation}
+ \matr A_0=\begin{bmatrix}1&0&1\\0&1&0\end{bmatrix}.
+\end{equation}
+By inspection, $[-1,0,1]\trans$ is invisible to the map.  The constraint
+$\norm{\matr A_0\vect x}^2\leq1$ reads
+$(x_1+x_3)^2+x_2^2\leq1$: a unit disk in the two visible combinations and no
+restriction along the invisible combination.  This is already an oblique
+cylinder.  The EESM matrix changes the directions and scales, not the rank
+logic.
+
+\subsection{Structural and parameter-dependent facts}
+
+\textbf{Structural:} because $\Ae\in\R^{2\times3}$,
+$\rank(\Ae\trans\Ae)\leq2$.  No positive values of
+$R_s,\omega_e,L_d,L_q,L_e$ can make the voltage-only Gram matrix positive
+definite in three dimensions.
+
+\textbf{Parameter dependent:} those quantities do determine whether the
+ordinary rank is two, the orientation of the null line, and the two finite
+semi-axis lengths.  They deform and tilt the cylinder, but they do not close
+its axis.
+
+\paragraph{What if there were three independent voltage outputs?}
+A full-rank map from $\R^3$ to $\R^3$ could produce a positive-definite Gram
+matrix and hence an ellipsoid.  It is the output dimension and rank, not the
+word excitation, that forces the cylinder here.

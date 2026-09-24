@@ -1,0 +1,88 @@
+\section{Parameter dependence and limiting cases}
+
+\Cref{eq:Hpsm,eq:ellipse-center,eq:semiaxes} separate parameter effects.
+
+\paragraph{$R_s\to0$.}
+The cross term vanishes and the axes align with $d$ and $q$:
+\begin{equation}
+ \frac{(\id+\psif/\Ld)^2}{(\Umax/\abs{\omegae}\Ld)^2}
+ +\frac{\iq^2}{(\Umax/\abs{\omegae}\Lq)^2}=1.
+\end{equation}
+Resistance is therefore the source of the small rotation in the linear model.
+
+\paragraph{$L_d=L_q=L_s$.}
+The shape matrix becomes
+$(R_s^2+\omega_e^2L_s^2)\matr I$.  The voltage boundary is a translated
+circle.  This is the linear \gls{spmsm} limit; any plotted orientation is
+meaningless because both eigenvalues coincide.
+
+\paragraph{High speed.}
+The inductive terms dominate, semi-axes scale approximately as
+$1/\abs{\omega_e}$, and
+\begin{equation}
+ \ic\longrightarrow[-\psif/\Ld,\ 0]\trans.
+\end{equation}
+The feasible voltage region contracts about the $d$-axis current that cancels
+PM flux.
+
+\paragraph{Low speed.}
+For $R_s>0$, $\Hpsm\to R_s^2\matr I$, $\ic\to0$, and the voltage boundary
+approaches a resistance-limited circle of radius $U_{\max}/R_s$.  If both
+$R_s=0$ and $\omega_e=0$, the stationary equations predict zero voltage for
+every current and no finite voltage conic exists; current and thermal limits
+then dominate.
+
+\paragraph{IPMSM versus SPMSM.}
+An \gls{ipmsm} has saliency, so unequal eigenvalues generally produce unequal
+axes and reluctance torque bends the torque contours.  An ideal linear SPMSM
+has equal inductances: its voltage boundary is circular and torque contours are
+lines.  These conclusions concern the stated constant-inductance model; real
+saturation can reintroduce anisotropy.
+
+\subsection{Counterfactual checks}
+
+\paragraph{What if the PM flux vanished?}
+Then $\vect b=\vect0$, the voltage ellipse is centered at the origin, and only
+reluctance torque remains.  The shape matrix is unchanged: excitation moves
+the conic but does not create its anisotropy.
+
+\paragraph{What if one eigenvalue became zero?}
+The corresponding semi-axis formula would diverge.  The boundary would cease
+to be a bounded ellipse and would become strip-like or degenerate depending on
+the lower-order terms.  In the present model this requires rank loss of
+$\Apsm$, reached at the joint limit $R_s=\omega_e=0$ for positive
+inductances.
+
+\paragraph{What if one eigenvalue were negative?}
+The level set would have opposite curvature in its two principal directions
+and would be hyperbolic.  This cannot happen for
+$\Hpsm=\Apsm\trans\Apsm$, because a squared norm is never negative.  The
+counterexample is useful: positive semidefiniteness is a structural consequence
+of the voltage norm, not a numerical coincidence.
+
+\paragraph{What if saturation destroys the quadratic model?}
+Current-dependent inductances make the voltage map nonlinear, so one global
+matrix can no longer classify the entire boundary.  Local Jacobians still
+provide directional gains and local SVDs, while numerical level sets reveal
+the global deformation.  The ellipse then becomes a reference geometry rather
+than an exact law.
+
+\input{figures/08_parameter_change.tex}
+
+For a representative set $R_s=\SI{0.08}{\ohm}$,
+$L_d=\SI{0.8}{\milli\henry}$, $L_q=\SI{1.2}{\milli\henry}$,
+$\psi_f=\SI{0.075}{\weber}$, and $U_{\max}=\SI{180}{\volt}$, the equations
+above are sufficient to compute center, orientation, and axes without fitting
+an ellipse to sampled points.  Numerical plots should be used to evaluate the
+model, not to infer its mathematical class.
+
+\subsection{Numerical verification of the derived geometry}
+
+For lookup-table, measured, or \gls{fe} flux maps, analytic rearrangement may
+be unavailable.  A robust verification samples the voltage residual on a mesh,
+extracts the zero contour triangle by triangle, and compares it with the
+analytic center, eigenvectors, and semi-axes in the linear case.  The checks
+should include the residual $\abs{\norm{\voltage}-\Umax}$ and gradient
+parallelism at claimed tangencies.  Delaunay contour extraction is useful for
+irregular samples, but it does not replace the rank and definiteness proof: a
+finite plotting window can hide an open or degenerate level set.

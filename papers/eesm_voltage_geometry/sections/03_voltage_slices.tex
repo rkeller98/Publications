@@ -1,0 +1,41 @@
+\section{Fixed-excitation slices and projections}
+
+Fix $i_e=\bar i_e$.  The remaining voltage map is affine in
+$\vect i=[i_d,i_q]\trans$:
+\begin{equation}
+ \vect u=\underbrace{\begin{bmatrix}
+ R_s&-\omega_eL_q\\ \omega_eL_d&R_s
+ \end{bmatrix}}_{\matr M}\vect i
+ +\begin{bmatrix}0\\\omega_eL_e\bar i_e\end{bmatrix}.
+\end{equation}
+Whenever $\det\matr M=R_s^2+\omega_e^2L_dL_q>0$, the slice is a real ellipse.
+Its shape matrix $\matr M\trans\matr M$ is independent of $\bar i_e$; only its
+center changes:
+\begin{equation}
+ \vect i_c(\bar i_e)=
+ \begin{bmatrix}
+ -\dfrac{\Lexc\bar i_e\omegae^2\Lq}{\Rs^2+\omegae^2\Ld\Lq}\\[.8em]
+ -\dfrac{\Lexc\bar i_e\Rs\omegae}{\Rs^2+\omegae^2\Ld\Lq}
+ \end{bmatrix}.\label{eq:slice-center}
+\end{equation}
+Thus constant-excitation planes cut the surface into congruent, linearly shifted
+ellipses.  Their stacked centers form the axis of an oblique elliptic cylinder.
+
+\input{figures/03_excitation_slices.tex}
+
+Other slices answer different engineering questions.  At fixed $i_d$, the
+constraint is an ellipse-like quadratic inequality in $(i_q,i_e)$ when its
+restricted quadratic block is positive definite.  At fixed $i_q$, it describes
+an ellipse or strip in $(i_d,i_e)$ depending on the parameter limit.  A slice
+must not be confused with a projection.
+
+If excitation is unbounded and $\omega_eL_e\neq0$, projection onto the $dq$
+plane eliminates $i_e$ by choosing it to cancel $u_q$.  Therefore the projected
+feasible set is only
+\begin{equation}
+ \abs{R_si_d-\omega_eL_qi_q}\leq U_{\max},\label{eq:dq-projection-strip}
+\end{equation}
+an infinite strip, not one of the fixed-excitation ellipses.  Excitation-current
+bounds clip this strip and restore a smaller projected region.
+
+\input{figures/04_projection.tex}

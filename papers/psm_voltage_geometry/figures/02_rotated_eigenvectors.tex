@@ -1,0 +1,20 @@
+\begin{figure}[tb]
+\centering
+\begin{tikzpicture}[scale=1.05]
+ \draw[->] (-3.2,0)--(3.4,0) node[right]{$i_d$};
+ \draw[->] (0,-2.3)--(0,2.5) node[above]{$i_q$};
+ \begin{scope}[shift={(.35,-.15)},rotate=27]
+  \draw[constraint curve] (0,0) ellipse (2.35 and 1.05);
+  \draw[principal axis] (-2.8,0)--(2.8,0);
+  \draw[principal axis] (0,-1.5)--(0,1.5);
+  \draw[eigenvector] (0,0)--(1.45,0) node[above]{$\vect q_1$};
+  \draw[eigenvector] (0,0)--(0,.8) node[left]{$\vect q_2$};
+ \end{scope}
+ \node[psm center,label=below right:$\ic$] at (.35,-.15) {};
+ \draw[->] (1.2,0) arc[start angle=0,end angle=27,radius=1.2];
+ \node at (1.42,.32){$\theta$};
+\end{tikzpicture}
+\caption{The orthonormal eigenvectors of the quadratic matrix are the ellipse's
+principal directions.}
+\label{fig:eigenvectors-axes}
+\end{figure}

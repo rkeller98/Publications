@@ -1,0 +1,45 @@
+\section{Numerical level sets and hidden constraints}
+
+For nonlinear saturation maps, measured flux data, or \gls{fe} results, the
+surfaces are no longer exact quadrics.  The analytic model remains a regression
+case for numerical geometry:
+\begin{enumerate}
+ \item sample voltage, torque, and loss on a grid or irregular point cloud;
+ \item use triangles in 2D or tetrahedra/voxels in 3D to locate sign changes of
+       a requested level;
+ \item reconstruct ordered contours or triangulated isosurfaces rather than
+       treating edge intersections as an unstructured cloud;
+ \item verify physical residuals and gradient/KKT residuals at candidate
+       optima.
+\end{enumerate}
+Delaunay simplices are useful for irregular data; marching-cubes-style
+isosurfaces are preferable for clean visualization on regular grids.  These
+methods reveal deformed surfaces without requiring an algebraic solution for
+one current coordinate.
+
+\subsection{Hidden numerical constraints}
+
+A finite search box silently adds current limits.  In particular, solving
+\cref{eq:naive-mtpv} on
+\begin{equation}
+ i_d\in[i_{d,\min},i_{d,\max}],\quad
+ i_q\in[i_{q,\min},i_{q,\max}],\quad
+ i_e\in[0,i_{e,\max}]
+\end{equation}
+can return a finite point only because a box face truncates the voltage
+cylinder.  A physical optimum should converge when the numerical domain is
+enlarged; an artifact moves with the boundary.  Report which constraints are
+active, repeat the solve on expanded domains, and inspect whether the result is
+on a mesh boundary.
+
+\paragraph{Small domain-enlargement experiment.}
+Solve first on $\abs{i_d},\abs{i_q},\abs{i_e}\leq1$, then repeat with bounds
+$2$ and $4$ in normalized units.  A physical optimum should settle while the
+box recedes.  If the maximizing point and torque keep moving outward, the
+experiment has diagnosed an unbounded model rather than a better operating
+point.
+
+For visualization, fixed-excitation slices often communicate the geometry
+better than many transparent 3D surfaces.  A few labeled slices, the null
+direction, and the loss ellipsoid make compactness and active constraints
+visible without obscuring them.

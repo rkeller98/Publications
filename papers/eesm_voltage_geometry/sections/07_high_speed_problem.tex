@@ -1,0 +1,75 @@
+\section{Why voltage-only MTPV is not well posed}
+
+The tempting problem
+\begin{equation}
+ \max_{\state}\Te(\state)
+ \quad\text{subject to}\quad
+ \state\trans\Qu\state=\Umax^2\label{eq:naive-mtpv}
+\end{equation}
+optimizes over an infinite cylinder.  Noncompactness alone does not prove an
+unbounded objective, so the torque must be checked along its null lines.
+
+For $R_s=0$, use \cref{eq:ideal-null} and any voltage-feasible point
+$\state_0$ with $i_{q0}\neq0$:
+\begin{equation}
+ \state(t)=\state_0+t
+ \begin{bmatrix}-\Lexc/\Ld\\0\\1\end{bmatrix}.
+\end{equation}
+Voltage is constant by \cref{eq:null-invariance}.  The torque-producing flux is
+\begin{align}
+\Lexc i_e(t)+\dL i_d(t)
+ &=\Lexc i_{e0}+\dL i_{d0}
+ +t\Lexc\left(1-\frac{\dL}{\Ld}\right)\\
+ &=\Lexc i_{e0}+\dL i_{d0}
+ +t\Lexc\frac{\Lq}{\Ld}.
+\end{align}
+Consequently torque grows linearly without bound for one sign of $t$.  For
+$R_s>0$, the general null vector in \cref{eq:general-null} produces the same
+conclusion generically unless torque happens to be constant along that
+particular line.  Voltage-only EESM MTPV therefore has no finite global optimum
+in the stated model.
+
+\subsection{A well-posed high-speed formulation}
+
+A practical problem adds compact current, excitation, or thermal constraints:
+\begin{equation}
+ \max_{\state}\Te(\state)
+\end{equation}
+subject to
+\begin{align}
+ \state\trans\Qu(\omegae)\state&\leq\Umax^2,\\
+ \state\trans\Rl\state&\leq\Pmax,\\
+ 0\leq\iexc&\leq I_{\mathrm e,max}.
+\end{align}
+The loss ellipsoid is compact; its intersection with closed voltage and
+excitation constraints is compact.  Continuity of torque then guarantees an
+attained finite maximum.  With voltage and loss active, the \gls{kkt}
+stationarity condition is
+\begin{equation}
+ \nabla\Te=\lambda_U\nabla g_U+\lambda_P\nabla g_P,
+ \qquad \lambda_U,\lambda_P\geq0.\label{eq:eesm-kkt}
+\end{equation}
+Geometrically, the torque normal lies in the cone spanned by the normals of the
+active cylinder and ellipsoid.  The optimum is determined by their joint
+contact, not by the voltage surface alone \cite{boyd2004}.
+
+This is the several-boundary extension of the earlier Lagrange picture.
+Moving along any feasible tangent direction must not increase torque at the
+optimum.  Each active inequality contributes an outward normal, and only a
+nonnegative combination of those normals can oppose every infeasible motion.
+Complementary slackness sets the multiplier of an inactive boundary to zero.
+KKT therefore records both geometry and active-set logic; it is not merely a
+larger system of derivative equations.
+
+\input{figures/06_combined_geometry.tex}
+
+\paragraph{What if the voltage map had a third independent output?}
+The voltage boundary could become compact by itself, and voltage-only MTPV
+might then be well posed.  The unboundedness proved here is tied to the
+rank-two stator-voltage map.
+
+\paragraph{What if saturation limits excitation?}
+A nonlinear flux map can make torque grow sublinearly or even decrease at high
+field current, so the linear null-line proof need not persist globally.
+Nevertheless, a finite optimum must be attributed to that explicit nonlinear
+physics or to another compact constraint, not silently to a numerical box.

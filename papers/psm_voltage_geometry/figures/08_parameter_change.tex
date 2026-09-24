@@ -1,0 +1,19 @@
+\begin{figure}[tb]
+\centering
+\begin{tikzpicture}
+ \begin{axis}[axis main,width=.82\linewidth,height=6.5cm,
+ xlabel={$i_d$ (normalized)},ylabel={$i_q$ (normalized)},
+ xmin=-3.1,xmax=.8,ymin=-1.6,ymax=1.6,axis equal image]
+  \addplot[voltage limit,BrickRed!55,domain=0:360,samples=160]
+    ({-.45+2.15*cos(x)},{1.25*sin(x)});
+  \addplot[voltage limit,BrickRed!78,domain=0:360,samples=160]
+    ({-1.05+1.45*cos(x)},{.82*sin(x)});
+  \addplot[voltage limit,BrickRed,domain=0:360,samples=160]
+    ({-1.42+.95*cos(x)},{.52*sin(x)});
+  \legend{low speed,medium speed,high speed}
+ \end{axis}
+\end{tikzpicture}
+\caption{Increasing speed contracts the voltage ellipse and moves its center
+toward the flux-cancellation current.}
+\label{fig:parameter-change}
+\end{figure}

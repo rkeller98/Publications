@@ -1,0 +1,24 @@
+\begin{figure}[tb]
+\centering
+\begin{tikzpicture}[x={(1cm,0cm)},y={(.35cm,.35cm)},z={(0cm,1cm)},scale=1.05]
+ \draw[->] (-3,0,0)--(3.2,0,0) node[right]{$i_d$};
+ \draw[->] (0,-2,0)--(0,2.1,0) node[above right]{$i_q$};
+ \draw[->] (0,0,-2)--(0,0,2.25) node[above]{$i_e$};
+ \begin{scope}[canvas is xy plane at z=-1.25]
+  \draw[excitation slice,BrickRed] (.8,0) ellipse (1.35 and .72);
+ \end{scope}
+ \begin{scope}[canvas is xy plane at z=0]
+  \draw[excitation slice,ForestGreen!70!black] (0,0) ellipse (1.35 and .72);
+ \end{scope}
+ \begin{scope}[canvas is xy plane at z=1.25]
+  \draw[excitation slice,MidnightBlue] (-.8,0) ellipse (1.35 and .72);
+ \end{scope}
+ \draw[projection line] (.8,0,-1.25)--(0,0,0)--(-.8,0,1.25);
+ \node[annotation] at (2.25,0,-1.25){$i_e<0$};
+ \node[annotation] at (1.7,0,0){$i_e=0$};
+ \node[annotation] at (.85,0,1.25){$i_e>0$};
+\end{tikzpicture}
+\caption{Constant-excitation cuts are congruent ellipses.  Their centers move
+on the null line, generating the cylinder.}
+\label{fig:excitation-slices}
+\end{figure}

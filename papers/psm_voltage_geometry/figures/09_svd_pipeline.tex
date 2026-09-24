@@ -1,0 +1,44 @@
+\begin{figure}[tb]
+  \centering
+  \begin{tikzpicture}[x=1cm,y=1cm,>=Latex,font=\scriptsize]
+    \foreach \x in {0,3.4,6.8,10.2}{
+      \draw[gray!35,rounded corners] (\x-1.15,-1.1) rectangle (\x+1.15,1.1);
+    }
+
+    \draw[->,gray] (-.9,0)--(.9,0);
+    \draw[->,gray] (0,-.9)--(0,.9);
+    \draw[current limit] (0,0) circle (.65);
+    \node[align=center] at (0,-1.42) {current circle\\isotropic budget};
+
+    \begin{scope}[shift={(3.4,0)},rotate=28]
+      \draw[->,gray] (-.9,0)--(.9,0);
+      \draw[->,gray] (0,-.9)--(0,.9);
+      \draw[current limit] (0,0) circle (.65);
+    \end{scope}
+    \node[align=center] at (3.4,-1.42) {$\matr V\trans$: rotation\\shape unchanged};
+
+    \draw[->,gray] (5.9,0)--(7.7,0);
+    \draw[->,gray] (6.8,-.9)--(6.8,.9);
+    \draw[voltage limit] (6.8,0) ellipse [x radius=.9,y radius=.48];
+    \node[align=center] at (6.8,-1.42) {$\matr\Sigma$: scaling\\circle becomes ellipse};
+
+    \begin{scope}[shift={(10.2,0)},rotate=-24]
+      \draw[->,gray] (-.95,0)--(.95,0);
+      \draw[->,gray] (0,-.9)--(0,.9);
+      \draw[voltage limit] (0,0) ellipse [x radius=.9,y radius=.48];
+    \end{scope}
+    \node[align=center] at (10.2,-1.42) {$\matr U$: rotation\\output orientation};
+
+    \draw[->,thick] (1.2,0)--(2.2,0)
+      node[midway,above] {$\matr V\trans$};
+    \draw[->,thick] (4.6,0)--(5.6,0)
+      node[midway,above] {$\matr\Sigma$};
+    \draw[->,thick] (8.0,0)--(9.0,0)
+      node[midway,above] {$\matr U$};
+  \end{tikzpicture}
+  \caption{Visual derivation of the SVD. Rotations change orientation but not
+  shape or size; only the singular-value scaling changes a circle into an
+  ellipse. For the voltage-limit inverse image, the same steps are traversed
+  backward, so the allowable current axes scale as $U_{\max}/\sigma_j$.}
+  \label{fig:psm-svd-pipeline}
+\end{figure}

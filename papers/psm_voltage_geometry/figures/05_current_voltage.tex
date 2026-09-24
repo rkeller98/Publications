@@ -1,0 +1,19 @@
+\begin{figure}[tb]
+\centering
+\begin{tikzpicture}
+ \begin{axis}[axis main,width=.78\linewidth,height=7cm,
+ xlabel={$i_d$ (normalized)},ylabel={$i_q$ (normalized)},
+ xmin=-2.6,xmax=1.6,ymin=-1.8,ymax=1.8,axis equal image]
+  \addplot[current limit,domain=0:360,samples=181]
+    ({1.45*cos(x)},{1.45*sin(x)});
+  \addplot[voltage limit,domain=0:360,samples=181]
+    ({-1.0+1.8*cos(x)*cos(12)-.9*sin(x)*sin(12)},
+     {.15+1.8*cos(x)*sin(12)+.9*sin(x)*cos(12)});
+  \addplot[only marks,mark=*,black] coordinates {(-1.2,1.05)};
+  \legend{current limit,voltage limit,feasible operating point}
+ \end{axis}
+\end{tikzpicture}
+\caption{The feasible currents lie in the intersection of the current disk and
+voltage ellipse.}
+\label{fig:current-voltage}
+\end{figure}
