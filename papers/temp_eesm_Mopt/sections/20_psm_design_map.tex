@@ -1,0 +1,108 @@
+\section{PSM design regions: flux, saliency, and characteristic current}
+\label{sec:psm-design-map}
+
+\subsection{Nonsalient machine: two closed design inequalities}
+
+For \(L_d=L_q\), positive torque is
+\(M=k_T\psi_{\mathrm{pm}}i_q\).  On the loss disk
+\(a(i_d^2+i_q^2)\leq P_{\mathrm{Cu},\max}\), the largest \(i_q\) is
+\(I_P=\sqrt{P_{\mathrm{Cu},\max}/a}\), attained at \(i_d=0\).  Hence
+\begin{equation}
+ \boxed{M_{\max}^{(U\,\mathrm{free})}
+ =k_T\psi_{\mathrm{pm}}\sqrt{\frac{P_{\mathrm{Cu},\max}}{a}}.}
+ \label{eq:psm-nonsalient-mmax}
+\end{equation}
+For \(\psi_{\mathrm{pm}}>0\), the exact loss-limited inverse is
+\begin{equation}
+ \boxed{\psi_{\mathrm{pm}}\geq\psi_{\min}
+ :=\frac{M_{\mathrm{req}}}{k_T}
+ \sqrt{\frac{a}{P_{\mathrm{Cu},\max}}}.}
+ \label{eq:psm-minimum-flux}
+\end{equation}
+This is a necessary and sufficient low-speed condition only while voltage is
+inactive and the linear, nonsalient model is valid.
+
+The characteristic current is \(I_{\mathrm{ch}}=\psi_{\mathrm{pm}}/L_d\).
+Requiring the zero-flux point \((-I_{\mathrm{ch}},0)\) to lie inside the loss
+circle gives
+\begin{equation}
+ \boxed{\psi_{\mathrm{pm}}\leq\psi_{\max}^{\mathrm{FW}}
+ :=L_d\sqrt{\frac{P_{\mathrm{Cu},\max}}{a}}.}
+ \label{eq:psm-characteristic-design}
+\end{equation}
+Combining the two yields the analytic window
+\begin{equation}
+ \boxed{\frac{M_{\mathrm{req}}}{k_T}
+ \sqrt{\frac{a}{P_{\mathrm{Cu},\max}}}
+ \leq\psi_{\mathrm{pm}}\leq
+ L_d\sqrt{\frac{P_{\mathrm{Cu},\max}}{a}}.}
+ \label{eq:psm-design-window}
+\end{equation}
+It is nonempty exactly when
+\begin{equation}
+ M_{\mathrm{req}}\leq\frac{k_TL_d}{a}P_{\mathrm{Cu},\max}.
+ \label{eq:psm-window-nonempty}
+\end{equation}
+The upper bound is not a universal necessary condition for every finite-speed
+requirement.  It is the familiar ideal flux-cancellation criterion associated
+with wide or theoretically unbounded constant-power operation when resistance,
+saturation, demagnetization, and other constraints are neglected
+\cite{soong1994,morimoto1990}.  Modern design work still treats characteristic
+current as a field-weakening metric, but evaluates it together with losses and
+the full operating envelope \cite{lee2017,li2026}.
+
+\input{figures/17_psm_design_window.tex}
+
+Too little PM flux fails low-speed torque.  Increasing flux improves torque per
+ampere, until the fixed flux consumes too much of the current budget when it
+must be cancelled at high speed.  In coordinates
+\((L_d,\psi_{\mathrm{pm}})\), the torque condition is a horizontal line and
+the characteristic-current condition is a ray.  Their intersection makes the
+tradeoff visible without solving a current trajectory.
+
+\subsection{Salient PSM: a two-descriptor extension}
+
+For a salient machine and \(\psi_{\mathrm{pm}}>0\), write a loss-boundary
+current as \(i_d=I_P\cos\gamma\), \(i_q=I_P\sin\gamma\).  Then
+\begin{equation}
+ \frac{M}{k_T\psi_{\mathrm{pm}}I_P}
+ =\sin\gamma\left(1+\gls{sym:sigma}\cos\gamma\right),
+ \qquad \sigma=\frac{\Delta L I_P}{\psi_{\mathrm{pm}}}.
+ \label{eq:psm-normalized-torque}
+\end{equation}
+Stationarity gives
+\begin{equation}
+ \cos\gamma+\sigma(2\cos^2\gamma-1)=0.
+\end{equation}
+For \(\sigma\neq0\), the physical maximum continuously connected to
+\(\gamma=\pi/2\) has
+\begin{equation}
+ c_\star:=\cos\gamma_\star
+ =\frac{-1+\sqrt{1+8\sigma^2}}{4\sigma},
+ \quad
+ F(\sigma)=\sqrt{1-c_\star^2}(1+\sigma c_\star),
+ \label{eq:salient-factor}
+\end{equation}
+and \(F(0)=1\) by continuity.  Therefore
+\begin{equation}
+ M_{\max}^{(U\,\mathrm{free})}
+ =k_T\psi_{\mathrm{pm}}I_PF(\sigma).
+ \label{eq:salient-psm-capability}
+\end{equation}
+This is an analytic scalar design test, although inversion for
+\(\psi_{\mathrm{pm}}\) is implicit because \(\sigma\) contains that flux.
+
+A second independent coordinate is
+\begin{equation}
+ \gls{sym:iota}=\frac{I_{\mathrm{ch}}}{I_P}
+ =\frac{\psi_{\mathrm{pm}}}{L_dI_P}.
+ \label{eq:characteristic-ratio}
+\end{equation}
+The loss-limited torque shape depends on \(\sigma\), whereas ideal
+flux-cancellation access is the half-plane \(\iota\leq1\).  Since
+\(\sigma=(1-L_q/L_d)/\iota\), the saliency ratio and normalized PM flux are
+not an arbitrary list of indices: they are alternative coordinates generated
+by the torque circle and characteristic-current line.  Machines with the same
+maximum torque per loss can still have different \(\iota\), voltage demand,
+and high-speed behavior.  One capability number is therefore insufficient.
+

@@ -1,0 +1,45 @@
+\section{Method for Winding Distribution} \label{sec:WindingDist}
+The developed approach is based on the analysis of the magnetic field within the machine, specifically examining the magnetic flux linkage, denoted as \(\gls{mag_fluxlink}\). Similar to the slot star, a phasor representation is used; however, instead of placing the phasors in the slots, they are aligned with the mechanical coil axis, as illustrated in Fig. \ref{fig:Zahnstern_Mechanisch}\footnote{The shown phasors are arranged radially, whereas they would need to be aligned axially, normal to the plane of the paper, according to physical constraints.}. Here, \(\gls{phasor_diff_angle_mech} = \frac{2\pi}{\gls{Ntooth}}\) represents the angular distance between two consecutive phasors in mechanical coordinates. The next step involves transforming the mechanical phasor star into electrical coordinates by multiplying the mechanical phasor argument \(\gls{gamma_mech}\) by the number of pole pairs \(\gls{polepair}\) to determine the electrical phasor argument \(\gls{gamma_elec}\): \(\gls{gamma_elec}_{k} = \gls{polepair} \cdot \gls{gamma_mech}_{k} \quad k = 1, \dots, \gls{Ntooth}\). Accordingly, the distance between two consecutive phasors in electrical coordinates is given by \(\gls{phasor_diff_angle_elec} = \gls{polepair} \cdot \gls{phasor_diff_angle_mech}\). In the next step, magnetic fluxes are assigned to the phasors in the electrical coordinate system. These fluxes contain information about the phases of the three-phase system as well as the polarity of the magnetic flux. The phasors are selected to form a rotating magnetic field, with each phase and polarity having an equal number of coils. Additionally, the vectorial sum of the phasors in each phase must result in the magnitude maximum :
+%
+\begin{equation}
+    \pNorm
+    {
+        \phasor{\gls{mag_fluxlink}}[_{x+}^{\discretestep{k_1}}] +
+        \phasor{\gls{mag_fluxlink}}[_{x+}^{\discretestep{k_2}}] -
+        \phasor{\gls{mag_fluxlink}}[_{x-}^{\discretestep{k_3}}] -
+        \phasor{\gls{mag_fluxlink}}[_{x-}^{\discretestep{k_4}}]
+    }[2] \to \max \quad x = \gls{idx_cs_abc_a}, \gls{idx_cs_abc_b}, \gls{idx_cs_abc_c}.
+    \label{equ:Bopt}
+\end{equation}
+%
+Here, \(\phasor{\gls{mag_fluxlink}}[_{x\{+,-\}}^{\discretestep{k_i}}]\) is interpreted such that the subscript \(x\) represents the phase, the subscript \(\{+,-\}\) indicates the polarity, and determines whether addition or subtraction is used. The superscript \(\discretestep{k_i} \in [1;\gls{Ntooth}] \subseteq \mathbb{N}^{+}\) represents the number of the corresponding phasor. Therefore, it is necessary to choose the values \(k_1, \dots, k_4\) such that the magnitude condition is satisfied. In the case of the reference machine with \(\gls{Ntooth}=12\), \(\gls{polepair}=5\), and \(\gls{num_phases}=3\), this implies that the number of coils per phase and polarity is \(\frac{\gls{Ntooth}}{2\gls{num_phases}} = 2\), and the phasor selection for each phase is shifted by \(\SI{120}{\degree}\). This results in the flux distribution shown in Fig. \ref{fig:Zahnstern_Elektrisch}.
+%
+\begin{figure}[ht]
+    \centering
+    \begin{subfigure}{.49\linewidth}
+        \centering
+    \input{figures/fundamentals/Zahnstern_Mechanisch.tex}
+        \caption{Mechanical flux star}
+        \label{fig:Zahnstern_Mechanisch}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{.49\linewidth}
+        \centering
+    \input{figures/fundamentals/Zahnstern_Elektrisch.tex}
+        \caption{Electrical flux star}
+        \label{fig:Zahnstern_Elektrisch}
+    \end{subfigure}
+    \caption{Representation of the phasor star}
+    \label{fig:Zahnstern}
+\end{figure}
+%
+The result in Fig. \ref{fig:Zahnstern_Elektrisch} can be interpreted such that the winding, depending on the polarity, is either wound in a left-handed or right-handed direction. If one arbitrarily defines that a positive polarity generates magnetic flux upwards and a negative polarity generates magnetic flux downwards, the winding can be characterized using the ampère's right-hand grip rule. This method results in the winding distribution as shown in Fig. \ref{fig:Wicklungsverteilung}.
+%
+\begin{figure}[ht]
+    \centering
+    \input{figures/fundamentals/Wicklungsverteilung.tex}
+    \caption{Winding distribution}
+    \label{fig:Wicklungsverteilung}
+\end{figure}
+%
+The developed method is limited to the application of concentrated windings. However, for this use case, it provides a straightforward method for determining the winding distribution. An additional advantage is that the \(\gls{idx_cs_ab_a}\)-axis of the stator-fixed coordinate system can be directly determined by summing the phasors of the first phase. This is of paramount importance for the analysis of the electric machine.

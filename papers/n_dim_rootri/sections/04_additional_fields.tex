@@ -1,0 +1,10 @@
+\section{Interpolation of Additional Fields on Identical Grids}
+
+Thus far, the interpolation framework has been developed for scalar fields defined over a spatial domain \(\Omega \subset \mathbb{R}^N\), interpreted as a subset of an \(N\)-dimensional Euclidean space. The objective in such cases is typically the evaluation of isocontour values or level sets within the scalar distribution. This framework can be naturally extended to multiple scalar fields, provided that all fields are defined on an identical spatial grid.
+
+Furthermore, the methodology can be generalized to vector-valued fields, under the assumption that each component of the vector field is defined independently and can be interpolated separately. This assumption holds for vector fields represented in Cartesian coordinates, where the basis vectors are orthogonal and linearly independent. Under this premise, an \(N\)-dimensional vector field can be interpreted as a collection of \(N\) scalar fields---each associated with a single spatial component---which are interpolated independently and recombined to reconstruct the vector field at arbitrary positions.
+
+This concept is illustrated by an example involving a randomly sampled point cloud. The first two columns are interpreted as coordinates in a two-dimensional Euclidean space, forming the base of the interpolation domain. The third column defines the primary scalar field of interest, while the remaining columns represent additional scalar quantities or vector field components. These quantities are interpolated at spatial locations where the reference scalar field attains a specified isovalue, thereby enabling the extraction of associated scalar or vector potentials along the corresponding level set.
+
+
+

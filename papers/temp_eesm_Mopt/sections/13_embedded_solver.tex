@@ -1,0 +1,77 @@
+\section{A compact current-reference architecture}
+\label{sec:controller}
+
+The recommended linear-model implementation combines offline/pre-update matrix
+construction with a scalar online boundary search.
+
+\subsection{Preparation at a parameter update}
+
+Given
+\(\theta=(R_s,R_{\mathrm{exc}},L_d,L_q,L_{\mathrm{exc}},p)\) and speed,
+form \(\matr R,\matr H,\matr Q_U\), then
+\(\bar{\matr H}=\matr R^{-1/2}\matr H\matr R^{-1/2}\) and
+\(\bar{\matr Q}=\matr R^{-1/2}\matr Q_U\matr R^{-1/2}\). Temperature-updated
+resistances may enter here at runtime. Cache the six independent entries of
+each symmetric matrix and the inverse whitening scale.
+
+\subsection{Online request handling}
+
+\begin{enumerate}
+ \item Select the torque-sign branch. Evaluate the unconstrained best-loss
+       direction from the extreme eigenvector of \(\bar{\matr H}\).
+ \item Scale it to \(M_{\mathrm{ref}}\) and test voltage. If voltage is
+       inactive, compute \(P_{\mathrm{req}}\) directly.
+ \item If voltage is active, bracket the support slope \(\mu\). At each trial,
+       compute the dominant eigenvector of
+       \(\bar{\matr H}-\mu\bar{\matr Q}\), map it to \((\nu,\tau)\), and use
+       the signed residual
+       \(r(\mu)=M_{\mathrm{ref}}\nu-U_{\max}^2\tau\).
+       Bisection or safeguarded interpolation finds the boundary contact.
+ \item Set \(P_{\mathrm{req}}=M_{\mathrm{ref}}/\tau_\star\). If
+       \(P_{\mathrm{req}}\leq P_{\mathrm{Cu},\max}\), scale
+       \(\vect y_\star=\sqrt{P_{\mathrm{req}}}\vect x_\star\), back-transform,
+       and return status \texttt{TRACKING}.
+ \item Otherwise maximize \cref{eq:performance-mmax} on the same cached upper
+       boundary, scale to the first active resource, and return status
+       \texttt{LOSS\_LIMITED}, \texttt{VOLTAGE\_LIMITED}, or
+       \texttt{BOTH\_LIMITED}. Degenerate parameters or empty positive-torque
+       branches return \texttt{MODEL\_INVALID} or \texttt{INFEASIBLE}.
+\end{enumerate}
+
+The interface is
+\begin{equation}
+ (i_d^\star,i_q^\star,i_{\mathrm{exc}}^\star,M_{\mathrm{ach}},
+ P_{\mathrm{Cu}}^\star,\mathrm{status})
+ =\gls{sym:currentmap}(M_{\mathrm{ref}},U_{\max},P_{\mathrm{Cu},\max},
+ \omega_e;\theta).
+ \label{eq:controller-map}
+\end{equation}
+
+\subsection{Cost and numerical choices}
+
+A 3D symmetric matrix requires six stored scalars. Two whitened forms, the
+back-transform, brackets, and status data fit comfortably below 32 floating
+values. The voltage-inactive branch needs one precomputed eigenvector, one
+division, one square root, and a matrix-vector back-transform online. The
+voltage-active branch typically uses 8--12 bracket iterations for a fixed
+relative tolerance. Each trial forms six affine matrix entries and solves one
+symmetric \(3\times3\) extreme eigenpair. A compact Jacobi implementation
+using 5--8 plane rotations is roughly \(80\)--\(150\) multiplications per
+trial, with square roots or hypot operations in the rotations; exact counts
+depend on whether divisions and rotations are tabled, CORDIC-based, or
+hardware-supported. No trigonometric or hyperbolic function is required.
+
+For an \gls{mcu}, fixed-iteration bisection plus a robust symmetric eigensolver
+is easier to certify than radicals for a sextic contact equation. For an
+\gls{fpga}, the three Jacobi rotation cells can be pipelined; alternatively a
+precomputed support-slope grid plus one interpolation supplies deterministic
+latency. Coefficient scaling should normalize \(\bar{\matr H}\) and
+\(\bar{\matr Q}\) near unity. Eigenvector signs are chosen continuously using
+the previous cycle, then corrected to the requested torque branch. Every
+returned point is checked in the original equations, not only in transformed
+coordinates.
+
+This is a structured numerical method rather than a fetish for symbolic
+closed form. Its iterations are one-dimensional, monotone/bracketed, and tied
+to visible geometry; their bounded cost is usually preferable to fragile
+general quartic or sextic root selection.

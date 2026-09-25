@@ -1,0 +1,85 @@
+\section{Geodesics, flattening, curvature, and optical refraction}
+\label{sec:geodesics-curvature}
+
+With zero drift and ellipsoidal control authority, minimum time is the length
+\[
+ \ell_G(\gamma)=\int_0^1
+ \sqrt{\dot\gamma(s)^{\mathsf T}\matr G(\gamma(s))\dot\gamma(s)}\,\mathrm ds.
+ \tag{28.1}
+\]
+This is Riemannian: reversing the tangent vector leaves the integrand
+unchanged.  If \(\matr G\) is constant, dynamic whitening turns it into the
+Euclidean metric and its geodesics are straight lines in whitened coordinates.
+For state-dependent \(\matr G\), stationary curves satisfy
+\[
+ \ddot x^k+\Gamma^k_{ij}\dot x^i\dot x^j=0,
+ \quad
+ \Gamma^k_{ij}=\frac12G^{k\ell}
+ (\partial_iG_{j\ell}+\partial_jG_{i\ell}-\partial_\ell G_{ij}).
+ \tag{28.2}
+\]
+Christoffel symbols enter only now: they describe how the local speedometer
+changes from point to point.
+
+\subsection{Conformal is not isometric}
+
+A coordinate transformation can make every geodesic a straight Euclidean line
+only when it actually flattens the metric.  Angle preservation alone is
+insufficient.  Intrinsic curvature is the diagnostic: if the Riemann curvature
+tensor is nonzero, no coordinate choice can make \(\matr G\) globally
+constant.  Curvature therefore distinguishes a bad current coordinate from
+genuine machine-induced path bending.
+
+The PSM gives a useful two-dimensional exception.  Every smooth Riemannian
+metric is locally expressible in isothermal coordinates,
+\[
+ \matr G(\xi,\eta)=\lambda(\xi,\eta)\matr I.
+ \tag{28.3}
+\]
+This removes directional anisotropy but not spatial speed variation.  Unless
+\(\lambda\) is constant, straight lines are not generally minimum-time paths.
+The local refractive index is \(n=\sqrt{\lambda}\), and Fermat's principle
+minimizes \(\int n\,ds\), not Euclidean length.
+
+\subsection{Piecewise-affine saturation and Snell's law}
+
+Within one affine magnetic region
+\[
+ \boldsymbol\psi=\matr L_k\vect i+\boldsymbol\psi_{0,k},
+ \tag{28.4}
+\]
+the input metric is constant when the converter model is constant.  A
+piecewise-affine flux map is therefore a piecewise-flat dynamic geometry,
+although its drift may remain affine.  In the drift-free isotropic 2D case,
+variation of the crossing point along an interface gives
+\[
+ \boxed{n_1\sin\theta_1=n_2\sin\theta_2.}
+ \tag{28.5}
+\]
+The path bends toward the normal in the slower region.  For anisotropic
+metrics, continuity applies to tangential canonical momentum rather than to
+the scalar sine formula.  For hexagonal authority, the analogous condition is
+set-valued at a corner.  Figure~\ref{fig:optical-pwa} shows the scalar teaching
+case.
+
+\input{figures/25_optical_pwa.tex}
+
+This construction suggests an embedded approximation: precompute flat-region
+segments, evaluate a small number of interface candidates, and verify every
+segment against the original nonlinear flux map.  It is exact only for the
+declared piecewise model.
+
+\subsection{The earlier conformal square map under dynamics}
+
+For \(w=z_\psi+\mathrm jz_q\) and \(\zeta=w^2\),
+\[
+ \dot\zeta=2w\dot w.
+ \tag{28.6}
+\]
+The real part still exposes the difference of squares and the imaginary part
+is proportional to torque.  Thus torque dynamics are visually direct.
+However, the voltage-reachable body is multiplied by the state-dependent
+Jacobian \(2w\); it collapses at \(w=0\), double-covers the plane away from the
+origin, and generally introduces rather than removes metric variation.  The
+map is useful for task visualization, not a generic geodesic flattening.
+

@@ -1,0 +1,22 @@
+\documentclass[11pt,a4paper]{article}
+\input{includes/preamble.tex}
+\input{metadata.tex}
+\input{local.tex}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+\PaperAbstract
+\end{abstract}
+
+\input{sections/01_introduction.tex}
+\input{sections/02_isocontour_extraction.tex}
+\input{sections/03_redundant_edges.tex}
+\input{sections/04_additional_fields.tex}
+\input{sections/05_implementation.tex}
+\input{sections/06_conclusion.tex}
+
+\ifshowbibliography
+  \printbibliography
+\fi
+\end{document}

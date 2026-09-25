@@ -1,0 +1,23 @@
+\begin{figure}[tb]
+\centering
+\begin{tikzpicture}[scale=.95]
+ \begin{scope}[xshift=-3.3cm]
+  \draw[->] (-2.3,0)--(2.4,0) node[right]{$i_d$};
+  \draw[->] (0,-1.55)--(0,1.65) node[above]{$i_{\mathrm{exc}}$};
+  \draw[loss curve] (0,0) ellipse (1.85 and .82);
+  \node at (0,-1.95){amperes: unequal loss price};
+ \end{scope}
+ \draw[-{Latex[length=3mm]},very thick] (-.8,0)--(.8,0)
+ node[midway,above]{$\matr R^{1/2}$};
+ \begin{scope}[xshift=3.3cm]
+  \draw[->] (-1.65,0)--(1.75,0) node[right]{$y_d$};
+  \draw[->] (0,-1.55)--(0,1.65) node[above]{$y_e$};
+  \draw[loss curve] (0,0) circle (1.15);
+  \node at (0,-1.95){distance: equal loss price};
+ \end{scope}
+\end{tikzpicture}
+\caption{Loss whitening changes units, not physics. The ellipsoid becomes a
+sphere because one coordinate unit is chosen to cost one unit of copper loss
+in every direction.}
+\label{fig:whitening}
+\end{figure}

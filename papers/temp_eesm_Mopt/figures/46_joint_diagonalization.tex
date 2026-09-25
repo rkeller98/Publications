@@ -1,0 +1,15 @@
+\begin{figure}[tb]
+\centering
+\begin{tikzpicture}[font=\small,>=Latex]
+\node[draw,rounded corners,fill=ForestGreen!9,minimum width=4.5cm,minimum height=2.2cm,align=center] (exact) at (0,0)
+ {exact\\\([A,B]=0\)\\common eigenvectors\\zero off-diagonal energy};
+\node[draw,rounded corners,fill=Orange!12,minimum width=4.5cm,minimum height=2.2cm,align=center] (approx) at (6.0,0)
+ {approximate\\\([A,B]\neq0\)\\weighted Jacobi rotations\\minimum residual coupling};
+\draw[->,very thick] (exact)--node[above]{generic machine parameters}(approx);
+\node[below=8mm of exact] {\(\begin{bmatrix}a&0&0\\0&b&0\\0&0&c\end{bmatrix}\)};
+\node[below=8mm of approx] {\(\begin{bmatrix}a&\epsilon&0\\\epsilon&b&\eta\\0&\eta&c\end{bmatrix}\)};
+\end{tikzpicture}
+\caption{Exact versus approximate simultaneous diagonalization. Residual
+off-diagonal terms quantify the compromise rather than disappearing by name.}
+\label{fig:joint-diagonalization}
+\end{figure}

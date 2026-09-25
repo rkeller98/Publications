@@ -1,0 +1,90 @@
+\section{Trajectory-aware machine design and the unified framework}
+\label{sec:dynamic-design}
+
+The dynamic geometry can be read backward just like the static value
+functions.  For representative transitions \(A_k\rightarrow B_k\), define
+\[
+ \gls{sym:tdyn}=\min_{\gamma,u}t_f,
+ \qquad
+ E_{\min,k}(\boldsymbol\theta)=\min_{\gamma,u}E_{\mathrm{loss}},
+ \tag{34.1}
+\]
+under the declared converter, torque, current, and thermal constraints.  The
+dynamic design region is
+\[
+ \Theta_{\mathrm{dyn}}=\bigcap_k
+ \{\boldsymbol\theta:t_{\min,k}\leq t_{\mathrm{req},k},
+ E_{\min,k}\leq E_{\mathrm{req},k}\}.
+ \tag{34.2}
+\]
+It intersects, rather than replaces, the static torque--speed design region.
+
+Useful screening descriptors include
+\[
+ \lambda_{\min}(\matr W_c),\quad
+ \lambda_{\max}(\matr W_c),\quad
+ \kappa(\matr W_c),\quad
+ \frac{\tau_f}{\tau_s},\quad
+ \lambda_{\min}(\matr G),\quad
+ \lambda_{\max}(\matr G),
+ \tag{34.3}
+\]
+all tied to a stated horizon, speed, voltage set, and operating region.  The
+Gramian measures finite-horizon control-energy reachability; the local metric
+measures instantaneous voltage-to-current speed.  Neither alone certifies a
+constrained transition, but both cheaply reject dynamically poor candidates.
+
+\input{figures/33_dynamic_design_region.tex}
+
+The design trade-off is physical.  Low rotor resistance improves steady-state
+field copper efficiency but, with large field inductance and limited field
+voltage, can increase the field time constant.  Large inductance may reduce
+ripple yet shrink current acceleration for a fixed DC link.  Strong mutual
+coupling improves torque per field ampere while rotating the dynamic axes and
+approaching the positive-energy boundary
+\(L_dL_f-L_m^2>0\).  A statically efficient machine can therefore be
+dynamically sluggish.  Machine-control co-design must price both.
+
+For a physical geometry \(\vect g\), the extended forward map is no longer
+only \(\boldsymbol\theta=\mathcal M(\vect g)\).  It also supplies differential
+flux maps, thermal resistances, converter ratings, and uncertainty envelopes.
+An inexpensive workflow is:
+\begin{enumerate}
+ \item apply the static capability filters of Part~II;
+ \item evaluate local metric and Gramian descriptors at representative points;
+ \item solve the reduced transition set (34.1) for survivors;
+ \item verify saturation, losses, demagnetization, mechanics, and thermal
+ dynamics with FEA-coupled simulation.
+\end{enumerate}
+The analytic descriptors prioritize expensive simulations; they do not
+replace them.
+
+\subsection{Three geometries, one co-design problem}
+
+\input{figures/34_three_geometries.tex}
+
+The completed framework has three linked questions:
+\[
+ \boxed{\begin{aligned}
+ &\text{Where should the machine operate?}\\
+ &\text{How should it move between operating points?}\\
+ &\text{Which machine parameters make both possible?}
+ \end{aligned}}
+ \tag{34.4}
+\]
+The resulting method hierarchy is evidence-based.  Constant linear dynamics
+with ellipsoidal authority admits whitening, exact Gramians, and in special
+cases closed geodesics.  Hard converter and path constraints lead to
+piecewise-analytic or boundary-following arcs.  PWA saturation suggests
+piecewise-flat refraction.  A fully nonlinear machine supports local metrics,
+short-horizon direct optimization, or an offline value field; intrinsic
+curvature explains why no global coordinate transform need straighten all
+paths.  Geometric optimal control provides the common language
+\parencite{agrachev2004}, not a mandate to force every case into one metric.
+
+Open questions are now concrete: certified error bounds for PWA refraction,
+viscosity-solution regularity of converter-polytope HJB equations, nonsmooth
+sensitivities of \(t_{\min,k}\) at switching changes, robust curvature
+estimation from flux maps, minimal-memory value-function representations, and
+whether a finite set of transition descriptors can predict full drive-cycle
+dynamic capability.

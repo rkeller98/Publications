@@ -1,0 +1,65 @@
+\section{Can one constant frame simplify every quadratic form?}
+\label{sec:joint-diagonalization}
+
+Loss whitening first maps \(\matr R\) to the identity. Let
+\(\widetilde{\matr H}\) and \(\widetilde{\matr Q}_U\) denote the resulting
+symmetric torque and voltage matrices. Two real symmetric matrices possess
+one common orthogonal eigenbasis exactly when they commute:
+\begin{equation}
+ [\widetilde{\matr H},\widetilde{\matr Q}_U]
+ =\widetilde{\matr H}\widetilde{\matr Q}_U
+ -\widetilde{\matr Q}_U\widetilde{\matr H}=\matr0.
+ \label{eq:commutator-test}
+\end{equation}
+The sampled EESM case in §cref{sec:coordinate-validation} gives a nonzero
+normalized commutator. Therefore no fixed orthogonal current basis can make
+loss, torque, and voltage simultaneously diagonal. This is not a failure of a
+clever search; it is the algebraic obstruction. Degenerate eigenvalues permit
+rotations within an eigenspace but do not remove the commutator condition
+\cite{horn2013}.
+
+\input{figures/46_joint_diagonalization.tex}
+
+\subsection{A fixed best compromise}
+
+An offline \gls{ajd} instead chooses an orthogonal \(\matr S\) to minimize
+\begin{equation}
+ \min_{\matr S^{\mathsf T}\matr S=\matr I}
+ \sum_{k=1}^{N}w_k
+ \left\|\operatorname{offdiag}
+  (\matr S^{\mathsf T}\matr A_k\matr S)\right\|_F^2.
+ \label{eq:ajd-objective}
+\end{equation}
+The family may contain torque, voltage, and differential-inductance matrices
+from representative operating points; the identity loss matrix adds no
+preference. Jacobi plane rotations provide a standard signal-processing
+algorithm for this problem \cite{cardoso1996joint}. The result is best called
+a \emph{machine-normal compromise frame}: it can reduce average cross coupling
+but does not assign exact physical meanings, guarantee decoupled dynamics, or
+preserve its quality outside the weighted calibration domain.
+
+The residual
+\[
+ \epsilon_{\mathrm{off}}=
+ \frac{\sum_kw_k\|\operatorname{offdiag}
+ (\matr S^{\mathsf T}\matr A_k\matr S)\|_F^2}
+ {\sum_kw_k\|\matr A_k\|_F^2}
+\]
+is a useful machine-control co-design descriptor. A smaller value means a
+single fixed transformation captures more of the relevant physics.
+
+\subsection{Why not diagonalize online?}
+
+An operating-point eigenframe \(\matr E(\vect i,\omega,M)\) can make one
+instantaneous matrix diagonal. It also introduces eigenvector sign ambiguity,
+rapid rotations near eigenvalue crossings, interpolation and normalization
+cost, and the connection term \(\dot{\matr E}\). A continuous sign convention
+and a spectral-gap monitor are mandatory. The moving frame is justified only
+if reduced cross coupling overcomes these costs. In practice, three levels are
+therefore distinct:
+\begin{enumerate}
+ \item exact constant frame when commutators vanish;
+ \item offline approximate frame when residual coupling is acceptably small;
+ \item local moving frame when saturation or active constraints make fixed
+       residuals unacceptable.
+\end{enumerate}

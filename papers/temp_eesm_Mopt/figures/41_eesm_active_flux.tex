@@ -1,0 +1,25 @@
+\begin{figure}[tb]
+\centering
+\begin{tikzpicture}[>=Latex,font=\small,node distance=8mm and 10mm]
+\node[draw,rounded corners,fill=MidnightBlue!8,minimum width=2.6cm] (id)
+ {\(\Delta L\,i_d\)};
+\node[draw,rounded corners,fill=MidnightBlue!8,below=of id,minimum width=2.6cm] (if)
+ {\(L_{md}i_F\)};
+\node[draw,circle,right=of id,yshift=-6mm] (sum) {\(+\)};
+\node[draw,rounded corners,fill=ForestGreen!9,right=of sum,minimum width=2.7cm] (pa)
+ {\(\psi_a=s_\psi\)};
+\node[draw,rounded corners,fill=Orange!12,right=of pa,minimum width=2.4cm] (tor)
+ {\(\times k_Ti_q\)};
+\node[draw,rounded corners,right=of tor,minimum width=1.5cm] (m) {\(M\)};
+\draw[->] (id)--(sum);
+\draw[->] (if)--(sum);
+\draw[->,thick] (sum)--(pa);
+\draw[->,thick] (pa)--(tor);
+\draw[->,thick] (tor)--(m);
+\node[below=9mm of pa,align=center,text width=5.0cm]
+ {one flux resource, two allocation mechanisms;\\equality requires consistent current referral};
+\end{tikzpicture}
+\caption{EESM active flux combines reluctance and field excitation before
+multiplication by the quadrature torque factor.}
+\label{fig:eesm-active-flux}
+\end{figure}

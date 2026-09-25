@@ -1,0 +1,81 @@
+\section{From task coordinates to virtual voltage inputs}
+\label{sec:task-control}
+
+Consider the electrical current dynamics already used in Part~III,
+\[
+ \dot{\vect i}=\vect f(\vect i,\omega)+\matr B(\vect i)\vect u,
+ \qquad \vect y=\vect h(\vect i).
+\]
+The chain rule gives the task dynamics
+\begin{equation}
+ \dot{\vect y}=
+ \underbrace{\gls{sym:jtask}\vect f}_{\text{task drift}}+
+ \underbrace{\gls{sym:jtask}\matr B}_{\gls{sym:decoupling}}\vect u.
+ \label{eq:task-output-dynamics}
+\end{equation}
+For outputs that depend directly on current, every regular channel has relative
+degree one. If the decoupling matrix \(\matr A_h=\matr J_h\matr B\) is square
+and nonsingular, the virtual task-rate input
+\(\gls{sym:vtask}=\dot{\vect y}\) yields
+\begin{equation}
+ \boxed{\vect u=\matr A_h^{-1}
+  (\vect v_{\mathrm{task}}-\matr J_h\vect f).}
+ \label{eq:feedback-linearizing-input}
+\end{equation}
+This is input--output feedback linearization after, not before, its physical
+meaning is clear: cancel the predicted task drift and choose converter
+voltages that generate the desired task velocity. PMSM torque/flux control
+has used precisely this idea \cite{lascu2012feedback,choi2016feedback}.
+
+Invertibility is only the first test. The commanded \(\vect u\) must remain in
+the stator inverter hexagon and field-converter interval. Close to a singular
+\(\matr A_h\), small task commands demand large voltage and amplify model
+error. Saturation breaks exact cancellation, so anti-windup or a constrained
+least-squares allocation
+\[
+ \min_{\vect u\in\mathcal U}
+ \|\matr A_h\vect u-(\vect v_{\mathrm{task}}-\matr J_h\vect f)\|_W^2
+\]
+is more honest than an unconstrained inverse.
+
+\subsection{Three EESM states are a resource, not three equal obligations}
+
+With independent stator and field converters, a linear EESM has three
+electrical states and three input voltages. Candidate output triples include
+\((M,\psi_s,\sigma)\), \((M,\psi_a,\alpha)\), and
+\((M,\text{loss allocation},\text{voltage allocation})\). Each must pass the
+rank test on \(\matr J_h\matr B\); a meaningful label is not enough.
+
+A useful hierarchy is:
+\begin{align*}
+ \text{primary:}&\quad M\to M^\star,\\
+ \text{secondary:}&\quad \text{minimize loss or regulate flux},\\
+ \text{tertiary:}&\quad \text{voltage margin or thermal sharing}.
+\end{align*}
+Locally, \(\nabla M^{\mathsf T}\dot{\vect i}=0\) defines a two-dimensional
+EESM torque-null tangent plane. One tangent direction can redistribute
+stator/field excitation; the other can manage voltage. A two-current PSM has
+only one such tangent direction. The existing \(z_0\) is one exact null
+direction of the linear torque form, not the entire tangent plane at a general
+point.
+
+\input{figures/47_control_stacks.tex}
+
+\subsection{Current references are optional, physical currents are not}
+
+Conventional \gls{cvc} computes
+\(M^\star\to\vect i^\star\to\vect u^\star\). DFVC, direct torque control,
+deadbeat flux/torque control, and feedback linearization may instead compute
+\((M^\star,\psi^\star)\to\vect u^\star\) directly. The recent EESM deadbeat and
+unified torque-controller studies show how torque modules can be composed with
+direct-flux dynamics \cite{rubino2026deadbeat,ionta2026unified}. Skipping an
+explicit current reference can remove one map and one set of loops; it cannot
+skip current and voltage constraints, state estimation, or the machine model
+needed to predict the task response.
+
+For the dynamic A-to-B problem, \((i_T,\alpha,z_0)\) suggests a transparent
+schedule: change \(i_T\) rapidly with fast stator authority, move \(\alpha\)
+more slowly to rebalance torque factors, and relax \(z_0\) along the remaining
+null direction. This is a useful warm-start structure for the constrained
+trajectory optimizer of Part~III, not proof that independently closed loops
+produce the globally optimal path.

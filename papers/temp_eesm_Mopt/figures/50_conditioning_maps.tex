@@ -1,0 +1,22 @@
+\begin{figure}[tb]
+\centering
+\begin{tikzpicture}
+\begin{groupplot}[
+ group style={group size=2 by 1,horizontal sep=1.1cm},
+ width=.42\textwidth,height=5.4cm,
+ xlabel={\(i_d\)},ylabel={\(i_q\)},
+ point meta min=0,point meta max=4
+]
+\nextgroupplot[title={IPMSM: \((M,\psi_s)\)}]
+\addplot[scatter,only marks,mark size=.85pt,scatter src=explicit]
+ table[x=id,y=iq,meta=logcond]{figures/data/coordinate_condition_ipm.dat};
+\nextgroupplot[title={EESM slice: \((M,P,U)\)},
+ colorbar,colorbar style={ylabel={\(\log_{10}\kappa_2\)}}]
+\addplot[scatter,only marks,mark size=.85pt,scatter src=explicit]
+ table[x=id,y=iq,meta=logcond]{figures/data/coordinate_condition_eesm.dat};
+\end{groupplot}
+\end{tikzpicture}
+\caption{Conditioning maps of candidate task charts. Warm/high-value bands are
+places where inversion amplifies noise and a fallback chart is required.}
+\label{fig:conditioning-maps}
+\end{figure}

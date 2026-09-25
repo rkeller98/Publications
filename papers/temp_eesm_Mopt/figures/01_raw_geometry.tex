@@ -1,0 +1,30 @@
+\begin{figure}[tb]
+\centering
+\begin{tikzpicture}
+\begin{groupplot}[group style={group size=3 by 1,horizontal sep=4mm},
+ width=.34\linewidth,height=4.8cm,publication 3d,
+ ticks=none,xlabel={$i_d$},ylabel={$i_q$},zlabel={$i_{\mathrm{exc}}$}]
+\nextgroupplot[title={loss}]
+ \addplot3[surf,shader=interp,opacity=.45,draw=MidnightBlue!50,
+ domain=0:360,y domain=-90:90,samples=19,samples y=11]
+ ({1.05*cos(x)*cos(y)},{1.05*sin(x)*cos(y)},{.72*sin(y)});
+\nextgroupplot[title={voltage}]
+ \addplot3[mesh,opacity=.42,draw=BrickRed,
+ domain=0:360,y domain=-1.2:1.2,samples=23,samples y=7]
+ ({-.55*y+.72*cos(x)},{.50*sin(x)},{y});
+ \addplot3[neutral axis,domain=-1.2:1.2,samples=2] ({-.55*x},{0},{x});
+\nextgroupplot[title={torque}]
+ \addplot3[surf,shader=interp,opacity=.42,draw=Purple!50,
+ domain=.45:1.6,y domain=-1.1:1.1,samples=11,samples y=9]
+ ({y},{.48/x},{(x-.35*y)/.9});
+ \addplot3[surf,shader=interp,opacity=.42,draw=Purple!50,
+ domain=-1.6:-.45,y domain=-1.1:1.1,samples=11,samples y=9]
+ ({y},{.48/x},{(x-.35*y)/.9});
+\end{groupplot}
+\end{tikzpicture}
+\caption{The three raw EESM objects are intrinsically different. Equal loss
+is a closed ellipsoid; equal voltage is a rank-two elliptic cylinder with a
+null axis; equal nonzero torque is a hyperbolic cylinder. Optimization is the
+geometry of their first contacts.}
+\label{fig:raw-geometry}
+\end{figure}

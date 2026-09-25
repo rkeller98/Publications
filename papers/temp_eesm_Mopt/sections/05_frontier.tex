@@ -1,0 +1,82 @@
+\section{One efficient operating frontier, two questions}
+\label{sec:frontier}
+
+Choose any nonzero direction \(\vect d\) and write
+\(\gls{sym:i}=\sqrt{\gls{sym:rho}}\,\vect d\), where
+\(\gls{sym:rho}\geq0\) is a squared radial scale. Define
+\begin{equation}
+ S(\vect d)=\vect d^{\mathsf T}\gls{sym:rmat}\vect d,\quad
+ T(\vect d)=\vect d^{\mathsf T}\gls{sym:hmat}\vect d,\quad
+ V(\vect d)=\vect d^{\mathsf T}\gls{sym:qmat}\vect d.
+\end{equation}
+Homogeneity gives
+\begin{equation}
+ \gls{sym:pcu}=\gls{sym:rho}S,\qquad
+ \gls{sym:torque}=\gls{sym:rho}T,\qquad
+ U^2=\gls{sym:rho}V.
+ \label{eq:radial-separation}
+\end{equation}
+Along that ray, the two physical resources permit
+\begin{equation}
+ \rho_P=\frac{\gls{sym:pcumax}}{S},\qquad
+ \rho_U=\begin{cases}\gls{sym:umax}^2/V,&V>0,\\+\infty,&V=0,\end{cases}
+ \qquad \rho_{\max}=\min(\rho_P,\rho_U).
+ \label{eq:radial-limits}
+\end{equation}
+Imagine walking outward from the origin along one current direction. The first
+surface reached---loss ellipsoid or voltage cylinder---sets the admissible
+radius. Maximum positive torque is therefore
+\begin{equation}
+ \gls{sym:mmax}=\max_{\vect d\neq0}T(\vect d)
+ \min\!\left(\frac{\gls{sym:pcumax}}{S(\vect d)},
+ \frac{\gls{sym:umax}^2}{V(\vect d)}\right),
+ \label{eq:mmax-direction}
+\end{equation}
+with the voltage fraction interpreted as infinite for a voltage-null
+direction.
+
+For a requested positive torque, a direction with \(T>0\) requires
+\begin{equation}
+ \rho_M=\frac{\gls{sym:mref}}{T},\qquad
+ P_{\mathrm{dir}}=\gls{sym:mref}\frac{S}{T},\qquad
+ U_{\mathrm{dir}}^2=\gls{sym:mref}\frac{V}{T}.
+ \label{eq:minloss-direction}
+\end{equation}
+Minimum loss chooses the direction with smallest \(S/T\) among those satisfying
+\(M_{\mathrm{ref}}V/T\leq U_{\max}^2\). Equations
+\cref{eq:mmax-direction,eq:minloss-direction} are the same direction search;
+only the radial question differs.
+
+Define the efficient frontier
+\begin{equation}
+ \gls{sym:pmin}=\min\{P_{\mathrm{Cu}}(\vect i):M(\vect i)=M,
+ U^2(\vect i)\leq U_{\max}^2\}.
+ \label{eq:pmin-frontier}
+\end{equation}
+For \(0<M_1<M_2\), scale any feasible point at \(M_2\) by
+\(\sqrt{M_1/M_2}\). Torque becomes \(M_1\), while voltage squared and loss
+shrink by \(M_1/M_2\). Hence
+\begin{equation}
+ P_{\min}(M_1)\leq\frac{M_1}{M_2}P_{\min}(M_2)<P_{\min}(M_2).
+ \label{eq:frontier-monotone}
+\end{equation}
+On each fixed torque-sign branch the attainable frontier is therefore strictly
+increasing. Up to the maximum voltage-feasible torque,
+\(P_{\min}(M)\) and \(M_{\max}(P)\) are inverse descriptions of the same
+efficient boundary. Negative torque follows by selecting directions with
+\(T<0\); generator and motor branches need not have identical constraints if
+the physical system imposes asymmetric field or inverter limits.
+
+\input{figures/06_frontier.tex}
+
+This frontier already specifies the controller logic. Compute
+\(P_{\mathrm{req}}=P_{\min}(M_{\mathrm{ref}})\). If it is no greater than the
+loss ceiling, return the minimizing point. Otherwise return the point on the
+same frontier at \(P_{\mathrm{Cu},\max}\), mark the request as limited, and
+report its achieved torque.
+
+\paragraph{Synthesis.}
+Direction determines efficiency; radius spends resources. Minimum loss fixes
+torque and asks for the cheapest direction. Maximum torque fixes resources and
+asks which direction turns them into the largest torque. The feasible
+operating boundary, not a choice of optimizer, makes them inverse problems.

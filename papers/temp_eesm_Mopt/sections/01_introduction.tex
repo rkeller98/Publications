@@ -1,0 +1,127 @@
+\section{The allocation problem before the optimizer}
+\label{sec:introduction}
+
+An electrical drive does not ask for three currents; it asks for torque while
+respecting an inverter and a thermal system. In an \gls{eesm}, infinitely many
+triples \((\gls{sym:id},\gls{sym:iq},\gls{sym:iexc})\) can produce the same
+torque. The current-reference problem is therefore an allocation problem: how
+should the demanded electromagnetic effect be shared between stator saliency,
+stator quadrature current, and rotor excitation? The corresponding \gls{psm}
+problem is the two-dimensional fixed-excitation slice of that question.
+
+The usual route writes a Lagrangian immediately. That route is correct but it
+conceals the reason small solutions exist. Before differentiating anything,
+consider the three surfaces in current space. Equal copper loss is a closed
+ellipsoid. Equal nonzero torque is a hyperbolic cylinder. Equal stator-voltage
+magnitude is an oblique elliptic cylinder because three current inputs feed
+only two stator-voltage outputs. Minimum loss means expanding the loss
+ellipsoid until it first touches a requested torque surface without leaving
+the voltage cylinder. Maximum torque means moving through the same nested
+surfaces until the first physical boundary is reached. The two tasks are thus
+different questions about one operating frontier, not two unrelated
+optimizers.
+
+Two precise problems will be connected. For requested torque
+\gls{sym:mref}, define
+\begin{equation}
+ \gls{sym:preq}(\gls{sym:mref})
+ =\min_{\gls{sym:i}}\left\{\gls{sym:pcu}(\gls{sym:i})\;\middle|\;
+ \gls{sym:torque}(\gls{sym:i})=\gls{sym:mref},\ 
+ \norm{\gls{sym:u}(\gls{sym:i})}\leq\gls{sym:umax}\right\}.
+ \label{eq:preq-definition}
+\end{equation}
+The requested point is physically feasible only if
+\begin{equation}
+ \boxed{\gls{sym:preq}(\gls{sym:mref})\leq\gls{sym:pcumax}.}
+ \label{eq:feasibility-test}
+\end{equation}
+The loss ceiling is deliberately not included as a redundant constraint in
+the minimization: it is the acceptance test on the minimum. Removing it from
+the controller would remove the thermal feasibility statement, not simplify
+the physics. The companion problem is
+\begin{equation}
+ \gls{sym:mmax}=\max_{\gls{sym:i}}\left\{\gls{sym:torque}(\gls{sym:i})
+ \;\middle|\;\gls{sym:pcu}\leq\gls{sym:pcumax},\ 
+ \norm{\gls{sym:u}}\leq\gls{sym:umax}\right\}.
+ \label{eq:mmax-definition}
+\end{equation}
+
+The same value functions will later be read in reverse. Instead of fixing a
+machine and selecting a current, fix a required torque-speed envelope and ask
+which electromagnetic parameter vectors admit any feasible current. This
+creates a machine-design region whose boundary is the level set
+\(M_{\max}(\boldsymbol\theta)=M_{\mathrm{req}}\). The forward and inverse
+questions therefore share one solver and one geometry; only the variable being
+projected out changes.
+
+A third question changes the mathematical object from a point to a curve.
+Given two feasible currents, what voltage-constrained trajectory reaches the
+target fastest, with least transient energy, or with a declared compromise?
+The optimal steady endpoint and the optimal route to it are distinct. The
+dynamic part therefore restores Faraday's law, reciprocal rotor-field
+dynamics, converter geometry, and electrical drift before defining distance.
+
+A fourth question precedes all three mathematically even though it is
+developed after them didactically: in which coordinates should sensing,
+reference generation, optimization, and control be performed? The paper
+therefore distinguishes spatial electromagnetic frames, current-space task
+charts, and virtual input coordinates. Rotor \(dq\), stator-flux \(ft\),
+active flux, torque/performance coordinates, and local metric frames are
+judged by what they simplify and by the observer, inverse, conditioning, and
+real-time costs they move elsewhere.
+
+The paper's organizing observation is homogeneity. In the linear EESM model,
+loss, torque, and squared voltage all grow with the square of current scale.
+A current direction therefore chooses three efficiencies; one scalar radius
+then chooses the operating level. This separation leads to three mutually
+illuminating descriptions:
+\begin{itemize}
+ \item loss whitening and torque-aligned coordinates expose the physical
+       factors that multiply to create torque;
+ \item hyperbolic, projective, and conformal coordinates explain the geometry
+       of a constant product;
+ \item the performance plane maps every current direction directly to voltage
+       cost and torque benefit per unit copper loss.
+\end{itemize}
+The last description supplies the preferred controller core: a one-dimensional
+support-direction search involving symmetric \(3\times3\) eigenproblems. The
+other descriptions explain why that reduction works and provide independent
+checks. KKT conditions and algebraic resultants are retained as reference
+routes, following the established EESM setpoint literature
+\cite{reinhard2022} and the quadrics-and-quartics treatment of anisotropic
+synchronous machines \cite{eldeeb2018,eldeeb2016}.
+
+The development is intentionally self-contained. The PSM is first used as a
+two-dimensional microscope: its exact resistive voltage ellipse can be drawn,
+translated, and rotated. The three-dimensional EESM is then easier to see as
+a homogeneous parent problem. The relation to established active flux is
+stated carefully: active flux motivates the torque-producing combination
+\cite{boldea2008}; the subsequent loss-orthogonal completion and projective
+geometry are coordinate developments for the allocation problem, not a claim
+to rename that literature.
+
+The initial operating-point model is linear, stationary, and peak-valued.
+Saturation, cross-saturation, iron loss, inverter nonlinearity, and current
+dynamics are not hidden inside that derivation. Section~\ref{sec:nonlinear}
+adds nonlinear magnetics through a local affine model, while Part~III derives
+the full current dynamics and their state-dependent local geometry. No
+measured machine data were found
+in the workspace; numerical examples are therefore explicitly synthetic and
+serve as regression tests, never as experimental validation.
+
+\paragraph{Reading strategy.}
+Sections~\ref{sec:model}--\ref{sec:psm-ellipse} identify the surfaces.
+Sections~\ref{sec:frontier}--\ref{sec:performance} discover useful
+coordinates. Sections~\ref{sec:algebraic}--\ref{sec:controller} translate the
+geometry into verification and implementation. The limiting cases and final
+comparison are separated so that a compact formula is never mistaken for a
+universally valid one. Part II then turns operating value functions into
+loss-limited design maps, voltage-aware level surfaces, and intersections for
+multiple operating points. Part III develops dynamic operating-point
+transitions from reciprocal flux dynamics through velocity sets, Finsler
+navigation, reachability, and a reproducible fast--slow EESM experiment.
+Part IV develops the representation problem from \(dq\) and DFVC through
+active flux, local task charts, feedback linearization, conditioning maps, and
+embedded operation counts. Part V distinguishes electromagnetic parameter
+space from the non-unique preimage of physical machine geometries and closes
+the loop to machine-control co-design.

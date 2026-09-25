@@ -1,0 +1,64 @@
+\section{From electromagnetic regions to physical machine preimages}
+\label{sec:geometry-preimage}
+
+The coordinates in Part II are not direct \gls{cad} dimensions.  Introduce a
+forward electromagnetic map
+\begin{equation}
+ \boxed{\gls{sym:theta}=\gls{sym:machinemap}(\gls{sym:g})},
+ \label{eq:geometry-forward-map}
+\end{equation}
+where \(\vect g\) can contain stack length, air-gap diameter, pole count,
+turns, conductor area, slot and rotor dimensions, excitation turns, PM
+dimensions, air gap, and material properties.  Analytical magnetic circuits,
+reluctance networks, surrogate models, or \gls{fea} may instantiate
+\(\mathcal M\) at different fidelities.
+
+There is generally no single inverse \(\mathcal M^{-1}\).  Different slot,
+winding, rotor, and material combinations can yield similar values of
+\((R_s,R_{\mathrm{exc}},L_d,L_q,L_{\mathrm{exc}},\psi_{\mathrm{pm}})\).
+The correct inverse object is the preimage
+\begin{equation}
+ \boxed{\gls{sym:gfeas}=
+ \{\vect g:\mathcal M(\vect g)\in\Theta_{\mathrm{feas}}\}.}
+ \label{eq:geometry-feasible-preimage}
+\end{equation}
+We first seek all physical candidates whose electromagnetic image can meet
+the specification.  Only then do mass, cost, torque density, material use,
+ripple, manufacturability, thermal behavior, and mechanical stress choose
+among them.
+
+\input{figures/20_forward_inverse_map.tex}
+
+This separation is practically important.  The analytic circles and windows
+are exact only in electromagnetic parameter space under their stated model.
+Pulling them back through \(\mathcal M\) can bend, disconnect, or even empty
+the corresponding region in geometry space.  Discrete slot/pole choices make
+\(\mathcal G_{\mathrm{feas}}\) a union of families rather than one smooth
+body.  Manufacturing and material bounds may remove parts of
+\(\Theta_{\mathrm{feas}}\) that look attractive electromagnetically.
+
+\paragraph{A hierarchy of tests.}
+A candidate geometry can be processed from cheap to expensive:
+\begin{enumerate}
+ \item evaluate a low-order map \(\widehat{\mathcal M}(\vect g)\);
+ \item reject it if the analytic loss-only capability fails;
+ \item evaluate the voltage-aware support-eigenvalue value function at all
+       mandatory operating points;
+ \item retain only positive-margin candidates for nonlinear magnetic,
+       thermal, mechanical, demagnetization, and ripple analysis;
+ \item validate finalists with high-fidelity \gls{fea} and experiments.
+\end{enumerate}
+This is a pre-filter, not a replacement for field analysis.  Its benefit is
+that obviously infeasible candidates do not require a current grid or a full
+high-fidelity torque-speed map.  Published PMSM design procedures already
+couple geometry, flux weakening, multiobjective search, and finite-element
+verification \cite{dang2017,parasiliti2012}; the present value-function view
+makes the inner feasibility calculation explicit and reusable.
+
+The margin vector \((m_1,\ldots,m_N)\) should be passed to the outer optimizer,
+not only a pass/fail flag.  It provides a smooth ranking away from active-set
+changes, supports surrogate learning, and identifies which operating point
+deserves higher-fidelity refinement.  Near a boundary, original equations and
+independent residuals remain mandatory because small surrogate errors can
+change feasibility.
+

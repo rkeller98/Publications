@@ -1,0 +1,62 @@
+\section{Nonlinear magnetic data without pretending it is globally linear}
+\label{sec:nonlinear}
+
+Two kinds of parameter variation must be separated. Exogenous values such as
+\begin{equation}
+ R_s=R_s(T_s,f_e),\qquad R_{\mathrm{exc}}=R_{\mathrm{exc}}(T_r)
+\end{equation}
+may be updated from temperature and frequency estimates before the analytical
+solve. At each update, the quadratic structure and all transformations remain
+valid.
+
+Saturation and cross-saturation are different. Writing
+\(L_d=L_d(i_d,i_q,i_{\mathrm{exc}})\) inside a formula derived for a global
+linear map mixes secant and differential quantities and generally destroys
+the derivation. Start instead with a flux map
+\begin{equation}
+ \vect\psi=\gls{sym:phi}(\gls{sym:i}).
+\end{equation}
+At iterate \(\vect i_k\), a genuine tangent approximation is
+\begin{equation}
+ \vect\psi(\vect i)\approx
+ \gls{sym:lk}\vect i+\gls{sym:psi0k},\qquad
+ \matr L_k=\left.\frac{\partial\boldsymbol\phi}{\partial\vect i}
+ \right|_{\vect i_k},\quad
+ \vect\psi_{0,k}=\boldsymbol\phi(\vect i_k)-\matr L_k\vect i_k.
+ \label{eq:local-affine-flux}
+\end{equation}
+The offset is essential: omitting it forces the tangent plane through the
+origin and makes it fail even at the expansion point. Within one local affine
+region, torque and voltage become affine-quadratic expressions and retain much
+of the \gls{qcqp} structure. Recent work formulates saturated \gls{wrsm}
+reference generation over \gls{pwa} finite-element flux regions in precisely
+this spirit; as of this paper's date it is an arXiv preprint and is cited as
+such \cite{parsonscherban2026}.
+
+\input{figures/13_nonlinear_loop.tex}
+
+A controller-oriented outer loop is:
+\begin{enumerate}
+ \item initialize with the global linear geometric solution;
+ \item read \(\boldsymbol\phi(\vect i_k)\), \(\matr L_k\), loss parameters,
+       and the correct affine offset from the map;
+ \item solve the small local geometric allocation problem;
+ \item damp the update,
+       \(\vect i_{k+1}=(1-\gamma)\vect i_k+\gamma\vect i_{\mathrm{local}}\),
+       if region switching or saturation makes the full step unreliable;
+ \item stop when current change, torque residual, voltage residual, and flux
+       model residual all meet tolerances.
+\end{enumerate}
+Two or three iterations are a design target, not a theorem. A contraction
+check supports fixed-point convergence locally; an \gls{sqp} method offers
+more systematic globalization but carries Hessian, line-search, and active-set
+costs. The geometric inner solution is valuable in both cases as a warm start,
+preconditioner, and diagnostic. If the local model crosses a PWA boundary,
+candidate neighboring regions must be checked rather than assuming one affine
+piece remains valid.
+
+\paragraph{What survives nonlinearity?}
+Global ellipsoids and exact homogeneity do not. Local loss metrics, directional
+voltage gains, active-flux combinations, residual checks, and the separation
+between an inner allocation solve and an outer map update do. That is the
+structure worth preserving.

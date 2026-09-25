@@ -1,0 +1,72 @@
+\section{Reading the same geometry in reverse}
+\label{sec:inverse-question}
+
+Part I asked a forward question: given electromagnetic parameters, which
+current direction and magnitude are best?  The inverse question keeps every
+operating constraint but changes what is fixed.  Let
+\begin{equation}
+ \gls{sym:theta}=(R_s,R_{\mathrm{exc}},L_d,L_q,L_{\mathrm{exc}},
+ p,\psi_{\mathrm{pm}},\ldots)
+ \label{eq:theta-definition}
+\end{equation}
+denote electromagnetic parameters, and reserve \(\mathcal I\) for the current
+space containing \((i_d,i_q,i_{\mathrm{exc}})\).  The two spaces answer
+different questions:
+\begin{align}
+ \boldsymbol\theta\ \hbox{fixed}:&\quad
+ \text{which }\vect i\in\mathcal I\text{ is optimal?}\\
+ \text{specification fixed}:&\quad
+ \text{which }\boldsymbol\theta\text{ admits at least one feasible }\vect i?
+\end{align}
+Confusing these quantifiers is the most common conceptual error in an inverse
+reading.  A current is not a machine parameter, and an electromagnetic
+parameter vector is not yet a physical rotor and stator geometry.
+
+The operating solver of Part I already supplies the required value functions.
+For one requested torque-speed point define
+\begin{equation}
+ \gls{sym:thetafeas}=
+ \left\{\boldsymbol\theta:\exists\vect i,
+ \ M(\vect i;\boldsymbol\theta)=M_{\mathrm{req}},\ 
+ P_{\mathrm{Cu}}(\vect i;\boldsymbol\theta)\leq P_{\mathrm{Cu},\max},\ 
+ U(\vect i;\boldsymbol\theta,\omega_e)\leq U_{\max}\right\}.
+ \label{eq:theta-feas-exists}
+\end{equation}
+Equivalently,
+\begin{equation}
+ \boxed{\boldsymbol\theta\in\Theta_{\mathrm{feas}}
+ \iff M_{\max}(P_{\mathrm{Cu},\max},U_{\max},\omega_e;
+ \boldsymbol\theta)\geq M_{\mathrm{req}}.}
+ \label{eq:inverse-value-test}
+\end{equation}
+For a positive request the minimum-loss form is
+\begin{equation}
+ \boldsymbol\theta\in\Theta_{\mathrm{feas}}
+ \iff P_{\min}(M_{\mathrm{req}},U_{\max},\omega_e;
+ \boldsymbol\theta)\leq P_{\mathrm{Cu},\max}.
+ \label{eq:inverse-pmin-test}
+\end{equation}
+Thus minimum loss and maximum torque are not separate design criteria.  They
+are reciprocal level-set descriptions of the same feasibility boundary.
+
+In current space, the boundary was the first tangency or intersection of a
+torque surface with the loss and voltage sets.  In parameter space, the
+boundary
+\begin{equation}
+ M_{\max}(P_{\mathrm{Cu},\max},U_{\max},\omega_e;
+ \boldsymbol\theta)=M_{\mathrm{req}}
+ \label{eq:design-capability-boundary}
+\end{equation}
+collects all machines for which that current-space contact has just appeared.
+This is a projection of a higher-dimensional feasible set: the current is
+existentially eliminated, not guessed or fixed in advance.
+
+\paragraph{What can be inverted explicitly?}
+When voltage is inactive and the model is linear, whitening provides closed
+EESM and nonsalient-PSM inequalities.  With voltage, saliency, saturation, or
+several operating points, a unique algebraic inverse should not be expected.
+The honest output is then an implicit level surface such as
+\cref{eq:design-capability-boundary}, a two-dimensional slice, or a monotone
+root in one selected parameter.  This distinction prevents the phrase
+``inverse design'' from hiding a second numerical optimization.
+

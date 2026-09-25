@@ -1,0 +1,21 @@
+\begin{figure}[tb]
+\centering
+\begin{tikzpicture}[scale=1.0,>=Latex,font=\small]
+\draw[->] (-3.1,0)--(3.3,0) node[right]{\(z_\psi\)};
+\draw[->] (0,-2.6)--(0,2.8) node[above]{\(z_q\)};
+\foreach \c in {.45,.9,1.35}
+ {
+  \draw[Purple!70,domain=.48:3,samples=80] plot ({\x},{\c/\x});
+  \draw[Purple!45,domain=-3:-.48,samples=80] plot ({\x},{\c/\x});
+ }
+\draw[->,Orange,very thick] (1.2,1.12)--(1.55,.87) node[right]{increase \(\alpha\)};
+\draw[->,ForestGreen!70!black,very thick] (1.2,1.12)--(1.65,1.54) node[above]{increase \(i_T\)};
+\node[draw,rounded corners,fill=MidnightBlue!7,align=left] at (5.6,.7)
+ {\(i_T\): crosses torque sheets\\
+  \(\alpha\): moves along one sheet\\
+  \(z_0\): second EESM null direction};
+\end{tikzpicture}
+\caption{Hyperbolic task coordinates separate torque amplitude from reciprocal
+sharing of its two multiplicative factors.}
+\label{fig:hyperbolic-task}
+\end{figure}

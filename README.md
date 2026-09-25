@@ -1,6 +1,6 @@
 # Publications
 
-This repository contains two self-contained LaTeX papers and a reusable,
+This repository contains five self-contained LaTeX papers and a reusable,
 self-contained paper template.
 
 ## Repository layout
@@ -8,6 +8,9 @@ self-contained paper template.
     papers/
       psm_voltage_geometry/       independent PSM publication
       eesm_voltage_geometry/      independent EESM publication
+      iemdc_digest_2024/          IEMDC digest with venue overrides
+      n_dim_rootri/               N-dimensional isocontour extraction
+      recursive_qp_within_simplex/ recursive simplex QP paper
     paper_template/               complete basis for a new paper
     shared/                       reference source for the include bundle
     scripts/                      build, clean, and scaffolding commands
@@ -55,13 +58,17 @@ Requirements:
 - latexmk, LuaLaTeX, and Biber on PATH
 - PowerShell 7 or Windows PowerShell 5.1
 
-Build either paper from the repository root:
+Build any paper from the repository root:
 
     .\scripts\build.ps1 psm_voltage_geometry
     .\scripts\build.ps1 eesm_voltage_geometry
+    .\scripts\build.ps1 iemdc_digest_2024
+    .\scripts\build.ps1 n_dim_rootri
+    .\scripts\build.ps1 recursive_qp_within_simplex
     .\scripts\build_all.ps1
 
-LuaLaTeX is the default. To use pdfLaTeX:
+`build_all.ps1` discovers every `papers/*/main.tex`, so newly scaffolded papers
+are included automatically. LuaLaTeX is the default. To use pdfLaTeX:
 
     .\scripts\build.ps1 psm_voltage_geometry pdflatex
     .\scripts\build_all.ps1 -Engine pdflatex
@@ -88,6 +95,11 @@ vendored framework.
 The shared/ directory records the repository-level reference implementation.
 The paper_template/includes/ directory is the starting snapshot used for new
 papers. Existing papers remain stable when either reference is changed.
+
+Venue-specific requirements remain local to a paper. For example,
+`iemdc_digest_2024/local.tex` applies the letter-paper geometry and line spacing
+from the digest source while continuing to use the same publication framework,
+notation, TikZ setup, and Biber pipeline as the other papers.
 
 New acronyms use \newabbreviation in includes/glossary/acronyms.tex; symbols use
 \newglossaryentry in includes/glossary/symbols.tex. Shared drawing styles

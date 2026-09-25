@@ -1,0 +1,17 @@
+\begin{figure}[tb]
+\centering
+\begin{tikzpicture}[scale=1.05,>=Latex,font=\small]
+\coordinate (O) at (0,0);
+\draw[fill=Purple!12,draw=Purple] (O)--(3.3,0)--(2.35,2.05)--cycle;
+\draw[->,ForestGreen!70!black,very thick] (O)--(3.3,0) node[right]{\(\boldsymbol\psi_s=\psi_s\boldsymbol e_f\)};
+\draw[->,Purple,very thick] (O)--(2.35,2.05) node[above]{\(\vect i=i_f\boldsymbol e_f+i_t\boldsymbol e_t\)};
+\draw[dashed,Purple] (2.35,2.05)--(2.35,0);
+\draw[<->,Orange,thick] (2.62,0)--(2.62,2.05) node[midway,right]{\(i_t\)};
+\node[align=center] at (6.2,1.15)
+ {oriented area \(=\psi_s i_t\)\\
+  \(i_f\) changes the base projection,\\not the perpendicular height};
+\end{tikzpicture}
+\caption{Geometric derivation of \(M=(3/2)p\psi_si_t\): torque is the signed
+area of the flux--current parallelogram.}
+\label{fig:cross-product-torque}
+\end{figure}

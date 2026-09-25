@@ -1,0 +1,82 @@
+\section{Machine-control co-design and an implementable design loop}
+\label{sec:codesign}
+
+Machine design and current allocation share the same quadratic forms.  A
+change in \(L_d-L_q\) changes the torque surface, its loss-optimal eigenvector,
+the voltage ellipse, and the field-weakening trajectory simultaneously.  It is
+therefore artificial to select a machine first and ask only afterward how it
+should be controlled.  The coupled object is
+\begin{equation}
+ \min_{\vect g}\ J(\vect g,\vect i_1^\star,\ldots,\vect i_N^\star)
+ \quad\text{subject to}\quad
+ \vect i_k^\star\in\argmax_{\vect i}\{M_k:\ P_k\leq P_{\max},
+ U_k\leq U_{\max}\},
+ \label{eq:machine-control-codesign}
+\end{equation}
+with \(\boldsymbol\theta=\mathcal M(\vect g)\).  Part I supplies the inner
+solution; Part II turns its optimal value into outer constraints.
+
+\subsection{PSM points and EESM trajectories in one picture}
+
+A PSM has one fixed excitation coordinate \(\psi_{\mathrm{pm}}\).  An EESM
+generates a family of effective PSM slices
+\begin{equation}
+ \psi_f(i_{\mathrm{exc}})=L_{\mathrm{exc}}i_{\mathrm{exc}},
+ \qquad
+ M=k_Ti_q(\Delta L i_d+\psi_f).
+ \label{eq:effective-pm-trajectory}
+\end{equation}
+As \(i_{\mathrm{exc}}\) varies, the EESM traces an effective-PM-flux path
+through PSM-like operating geometries.  This extra degree of freedom can move
+the voltage ellipse and trade stator current against field current across
+speed.  Its price is the additional term
+\(R_{\mathrm{exc}}i_{\mathrm{exc}}^2\), an excitation converter, rotor thermal
+loading, and field dynamics.  Thus an EESM does not dominate every PSM point
+for free; it buys a controllable trajectory through design/performance space.
+
+\subsection{Outer optimizer, inner geometric oracle}
+
+For each proposed \(\boldsymbol\theta\), an implementable oracle is:
+\begin{enumerate}
+ \item reject immediately if the closed loss-only upper bound is below the
+       requested torque;
+ \item for each operating point, search the support slope \(\mu\) and solve a
+       symmetric \(3\times3\) generalized eigenproblem;
+ \item scale the selected direction by the active loss or voltage radius;
+ \item return currents, active constraints, \(P_{\min}\), \(M_{\max}\), and
+       signed margins;
+ \item for nonlinear maps, update the local affine model and verify the final
+       point in the original flux, voltage, and thermal equations.
+\end{enumerate}
+This regular small computation is suitable for screening analytical designs,
+initializing numerical optimization, training a surrogate on physically
+meaningful outputs, or filtering candidates before \gls{fea}.  It also matches
+the embedded controller: the offline design tool and online current-reference
+generator can use the same tested value-function kernel with different
+parameter sources.
+
+For an \gls{mcu}, the most useful result is the bounded scalar support search,
+closed inactive-voltage branch, and explicit feasibility margin.  For an
+\gls{fpga}, a fixed-sweep Jacobi eigensolver or tabulated support frontier gives
+regular data flow.  The inverse design extension does not increase online
+state dimension; it clarifies which parameter combinations and uncertainty
+ranges the kernel must support.
+
+\subsection{What remains exact, local, or open}
+
+The EESM capability circle, its sensitivities, and the nonsalient PSM flux
+bound are exact only for constant linear parameters with voltage inactive.
+The characteristic-current upper bound additionally uses the ideal
+flux-cancellation interpretation.  Voltage-aware design boundaries are exact
+for the stated linear steady-state model but generally implicit.  Local affine
+flux maps retain the value-function architecture under saturation, while the
+global circle and constant spectral descriptors become parameter paths.
+
+Open mathematical questions include conditions for convexity or star-convexity
+of useful low-dimensional design slices, certified error bounds when a
+surrogate approximates \(\mathcal M\), nonsmooth sensitivities at active-set
+changes and repeated eigenvalues, and contraction certificates for the
+nonlinear outer flux update.  A further practical question is how few support
+values of \(\widetilde H-\mu\widetilde Q\) suffice to fingerprint voltage-aware
+capability without missing a narrow torque-speed constraint.
+

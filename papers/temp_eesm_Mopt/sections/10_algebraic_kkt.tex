@@ -1,0 +1,87 @@
+\section{Algebraic intersections and KKT as reference routes}
+\label{sec:algebraic}
+
+\subsection{Why tangency appears as a repeated root}
+
+In the projective chart, write the loss circle and voltage conic as
+\begin{equation}
+ G_c(\eta,\chi)=\eta^2+\chi^2-c\eta+1=0,
+ \qquad F(\eta,\chi)=0.
+\end{equation}
+For a fixed \(c\), eliminating \(\chi\) with
+\(p(\eta;c)=\operatorname{res}_\chi(F,G_c)\) gives a polynomial whose roots
+are the projected intersection coordinates. Two quadratic conics produce a
+quartic intersection polynomial in the generic case. Before first contact
+there are no real roots; at contact two intersection points coalesce; after
+contact they separate. Coalescence is precisely a multiple root, so
+\begin{equation}
+ p(\eta;c)=0,\qquad \frac{\partial p}{\partial\eta}(\eta;c)=0,
+ \quad\Longleftrightarrow\quad \disc_\eta p(\eta;c)=0.
+ \label{eq:discriminant-contact}
+\end{equation}
+This is the algebraic version of common tangent lines.
+
+For the EESM's generic projective conic, fixed-level intersection is quartic.
+If the level parameter is eliminated as well, direct stationarity of
+\(J(\eta,\chi)\) on \(F=0\) combines one quadratic and one cubic equation;
+the univariate stationary equation is generically degree six. Axis symmetry,
+zero resistance, or vanishing cross terms can factor it into lower-degree
+pieces, frequently quartics or polynomials in a squared variable. Thus
+``quadrics'' does not imply that every EESM contact is solved by one universal
+quartic. Candidate roots must still satisfy \(\eta>0\), the original voltage
+inequality, the requested torque sign, and the unsquared equations.
+
+For the 2D PSM, intersection of the current circle, voltage ellipse, torque
+hyperbola, or MTPV locus likewise produces quartics. Closed radical formulas
+exist and have been developed systematically for anisotropic synchronous
+machines including resistance and cross-coupling \cite{eldeeb2018,eldeeb2016}.
+They are valuable offline and for exact regression. On a controller, a
+monotone bracketed scalar search often has better coefficient conditioning,
+clearer branch selection, and predictable execution than a general quartic in
+radicals.
+
+\subsection{Lagrange and KKT after the geometry is visible}
+
+When voltage is inactive, first contact between a loss ellipsoid and torque
+surface has parallel normals. This gives
+\begin{equation}
+ \gls{sym:rmat}\gls{sym:i}=\lambda\gls{sym:hmat}\gls{sym:i},
+ \label{eq:loss-torque-gep}
+\end{equation}
+the generalized eigenproblem already explained by loss whitening. Its largest
+positive generalized eigenvalue gives the best torque per loss. The equation
+is not sufficient by itself: the desired torque fixes scale, and the voltage
+inequality must be checked.
+
+With voltage potentially active, minimum loss at fixed torque satisfies
+\begin{align}
+ (\matr R+\lambda\matr H+\mu\matr Q_U)\vect i&=\vect0,
+ \label{eq:minloss-kkt}\\
+ \vect i^{\mathsf T}\matr H\vect i&=M_{\mathrm{ref}},\\
+ \vect i^{\mathsf T}\matr Q_U\vect i&\leq U_{\max}^2,\qquad
+ \mu\geq0,\qquad
+ \mu(\vect i^{\mathsf T}\matr Q_U\vect i-U_{\max}^2)=0.
+\end{align}
+The multiplier \(\mu\) is zero if the voltage cylinder is not touched. If it
+is active, the loss normal is balanced by torque and voltage normals. The
+nonconvex torque equality means a KKT point is only a candidate; globality
+comes here from comparing branches or, preferably, from the convex
+performance-space boundary.
+
+Maximum torque under both inequalities has
+\begin{equation}
+ (-\matr H+\mu_P\matr R+\mu_U\matr Q_U)\vect i=\vect0,
+ \quad \mu_P,\mu_U\geq0,
+ \label{eq:mmax-kkt}
+\end{equation}
+with two complementary-slackness equations. This active-set language remains
+useful for verifying whether the loss ellipsoid, voltage cylinder, or both
+limit a returned point. It is also the natural extension when one adds field
+or stator-current bounds as in real EESM setpoint algorithms
+\cite{reinhard2022}.
+
+\paragraph{Controller judgment.}
+Resultants provide finite candidate sets and symbolic insight; KKT provides
+residuals and active-set labels. Neither is selected as the primary online
+coordinate because the performance boundary reduces branch management before
+forming high-degree polynomials.

@@ -1,0 +1,122 @@
+% Persistent physical quantities and meaning-bearing transformed coordinates.
+\newglossaryentry{sym:i}{type=symbols,name={\ensuremath{\vect i}},description={EESM current vector $[i_{\mathrm d},i_{\mathrm q},i_{\mathrm{exc}}]^{\mathsf T}$},sort=i}
+\newglossaryentry{sym:ip}{type=symbols,name={\ensuremath{\vect i_{\mathrm s}}},description={PSM stator-current vector $[i_{\mathrm d},i_{\mathrm q}]^{\mathsf T}$},sort=is}
+\newglossaryentry{sym:u}{type=symbols,name={\ensuremath{\vect u}},description={Stator-voltage vector $[u_{\mathrm d},u_{\mathrm q}]^{\mathsf T}$},sort=u}
+\newglossaryentry{sym:pcu}{type=symbols,name={\ensuremath{P_{\mathrm{Cu}}}},description={Total copper loss},sort=PCu}
+\newglossaryentry{sym:preq}{type=symbols,name={\ensuremath{P_{\mathrm{req}}}},description={Minimum copper loss required for requested torque under the voltage limit},sort=Preq}
+\newglossaryentry{sym:pmin}{type=symbols,name={\ensuremath{P_{\min}(M)}},description={Minimum-loss operating frontier},sort=Pmin}
+\newglossaryentry{sym:pcumax}{type=symbols,name={\ensuremath{P_{\mathrm{Cu},\max}}},description={Maximum permissible copper loss},sort=PCumax}
+\newglossaryentry{sym:torque}{type=symbols,name={\ensuremath{M}},description={Electromagnetic torque},sort=M}
+\newglossaryentry{sym:mref}{type=symbols,name={\ensuremath{M_{\mathrm{ref}}}},description={Requested electromagnetic torque},sort=Mref}
+\newglossaryentry{sym:mach}{type=symbols,name={\ensuremath{M_{\mathrm{ach}}}},description={Achieved electromagnetic torque},sort=Mach}
+\newglossaryentry{sym:mmax}{type=symbols,name={\ensuremath{M_{\max}}},description={Maximum available torque},sort=Mmax}
+\newglossaryentry{sym:currentmap}{type=symbols,name={\ensuremath{\mathcal I}},description={Current-reference and feasibility map},sort=Icalligraphic}
+\newglossaryentry{sym:p}{type=symbols,name={\ensuremath{p}},description={Number of pole pairs},sort=p}
+\newglossaryentry{sym:kt}{type=symbols,name={\ensuremath{k_{\mathrm T}}},description={Torque constant $3p/2$},sort=kT}
+\newglossaryentry{sym:id}{type=symbols,name={\ensuremath{i_{\mathrm d}}},description={Direct-axis stator current},sort=id}
+\newglossaryentry{sym:iq}{type=symbols,name={\ensuremath{i_{\mathrm q}}},description={Quadrature-axis stator current},sort=iq}
+\newglossaryentry{sym:iexc}{type=symbols,name={\ensuremath{i_{\mathrm{exc}}}},description={Rotor excitation current},sort=iexc}
+\newglossaryentry{sym:ud}{type=symbols,name={\ensuremath{u_{\mathrm d}}},description={Direct-axis stator voltage},sort=ud}
+\newglossaryentry{sym:uq}{type=symbols,name={\ensuremath{u_{\mathrm q}}},description={Quadrature-axis stator voltage},sort=uq}
+\newglossaryentry{sym:rs}{type=symbols,name={\ensuremath{R_{\mathrm s}}},description={Stator phase resistance},sort=Rs}
+\newglossaryentry{sym:rexc}{type=symbols,name={\ensuremath{R_{\mathrm{exc}}}},description={Rotor excitation-winding resistance},sort=Rexc}
+\newglossaryentry{sym:ld}{type=symbols,name={\ensuremath{L_{\mathrm d}}},description={Direct-axis stator inductance},sort=Ld}
+\newglossaryentry{sym:lq}{type=symbols,name={\ensuremath{L_{\mathrm q}}},description={Quadrature-axis stator inductance},sort=Lq}
+\newglossaryentry{sym:dl}{type=symbols,name={\ensuremath{\Delta L}},description={Saliency difference $L_{\mathrm d}-L_{\mathrm q}$},sort=DeltaL}
+\newglossaryentry{sym:lexc}{type=symbols,name={\ensuremath{L_{\mathrm{exc}}}},description={Excitation inductance relating rotor current to direct-axis stator flux},sort=Lexc}
+\newglossaryentry{sym:psipm}{type=symbols,name={\ensuremath{\psi_{\mathrm{pm}}}},description={Permanent-magnet flux linkage},sort=psipm}
+\newglossaryentry{sym:omega}{type=symbols,name={\ensuremath{\omega_{\mathrm e}}},description={Electrical angular speed},sort=omegae}
+\newglossaryentry{sym:umax}{type=symbols,name={\ensuremath{U_{\max}}},description={Maximum available stator-voltage magnitude},sort=Umax}
+\newglossaryentry{sym:imax}{type=symbols,name={\ensuremath{I_{\max}}},description={Maximum stator-current magnitude},sort=Imax}
+\newglossaryentry{sym:ich}{type=symbols,name={\ensuremath{I_{\mathrm{ch}}}},description={Characteristic flux-cancellation current $\psi_{\mathrm{pm}}/L_{\mathrm d}$},sort=Ich}
+\newglossaryentry{sym:ipmax}{type=symbols,name={\ensuremath{I_P}},description={PSM copper-loss-circle radius},sort=IP}
+\newglossaryentry{sym:rmat}{type=symbols,name={\ensuremath{\matr R}},description={Positive-definite copper-loss matrix},sort=Rmatrix}
+\newglossaryentry{sym:hmat}{type=symbols,name={\ensuremath{\matr H}},description={Symmetric torque matrix},sort=Hmatrix}
+\newglossaryentry{sym:amat}{type=symbols,name={\ensuremath{\matr A}},description={EESM current-to-voltage matrix},sort=Amatrix}
+\newglossaryentry{sym:qmat}{type=symbols,name={\ensuremath{\matr Q_U}},description={Squared-voltage matrix $\matr A^{\mathsf T}\matr A$},sort=QU}
+\newglossaryentry{sym:mp}{type=symbols,name={\ensuremath{\matr M_{\mathrm p}}},description={PSM current-to-voltage matrix},sort=Mp}
+\newglossaryentry{sym:hp}{type=symbols,name={\ensuremath{\matr H_{\mathrm p}}},description={PSM voltage-ellipse shape matrix},sort=Hp}
+\newglossaryentry{sym:ic}{type=symbols,name={\ensuremath{\vect i_{\mathrm c}}},description={Center of the PSM voltage ellipse},sort=ic}
+\newglossaryentry{sym:xi}{type=symbols,name={\ensuremath{\xi}},description={Dimensionless electrical speed},sort=xi}
+\newglossaryentry{sym:y}{type=symbols,name={\ensuremath{\vect y}},description={Loss-whitened current coordinate $\matr R^{1/2}\vect i$},sort=y}
+\newglossaryentry{sym:z}{type=symbols,name={\ensuremath{\vect z}},description={Torque-aligned whitened coordinate $[z_\psi,z_q,z_0]^{\mathsf T}$},sort=z}
+\newglossaryentry{sym:zpsi}{type=symbols,name={\ensuremath{z_\psi}},description={Whitened torque-producing-flux coordinate},sort=zpsi}
+\newglossaryentry{sym:zq}{type=symbols,name={\ensuremath{z_q}},description={Whitened quadrature-current coordinate},sort=zq}
+\newglossaryentry{sym:znull}{type=symbols,name={\ensuremath{z_0}},description={Torque-neutral whitened coordinate},sort=z0}
+\newglossaryentry{sym:spsi}{type=symbols,name={\ensuremath{s_\psi}},description={Active-flux coordinate $\Delta L i_{\mathrm d}+L_{\mathrm{exc}}i_{\mathrm{exc}}$},sort=spsi}
+\newglossaryentry{sym:beta}{type=symbols,name={\ensuremath{\beta}},description={Norm of the loss-weighted active-flux coefficient vector},sort=beta}
+\newglossaryentry{sym:kappa}{type=symbols,name={\ensuremath{\kappa}},description={Canonical torque coefficient in $M=\kappa z_\psi z_q$},sort=kappa}
+\newglossaryentry{sym:uvirt}{type=symbols,name={\ensuremath{u}},description={Positive-signature canonical torque coordinate},sort=uvirt}
+\newglossaryentry{sym:vvirt}{type=symbols,name={\ensuremath{v}},description={Negative-signature canonical torque coordinate},sort=vvirt}
+\newglossaryentry{sym:it}{type=symbols,name={\ensuremath{i_T}},description={Virtual torque amplitude in hyperbolic coordinates},sort=iT}
+\newglossaryentry{sym:alpha}{type=symbols,name={\ensuremath{\alpha}},description={Hyperbolic allocation angle},sort=alpha}
+\newglossaryentry{sym:eta}{type=symbols,name={\ensuremath{\eta}},description={Projective ratio $z_\psi/z_q$},sort=eta}
+\newglossaryentry{sym:chi}{type=symbols,name={\ensuremath{\chi}},description={Projective torque-neutral ratio $z_0/z_q$},sort=chi}
+\newglossaryentry{sym:jproj}{type=symbols,name={\ensuremath{J}},description={Normalized loss in projective coordinates},sort=J}
+\newglossaryentry{sym:w}{type=symbols,name={\ensuremath{w}},description={Complex torque-plane coordinate $z_\psi+\mathrm jz_q$},sort=w}
+\newglossaryentry{sym:zeta}{type=symbols,name={\ensuremath{\zeta}},description={Square-map coordinate $w^2$},sort=zeta}
+\newglossaryentry{sym:tau}{type=symbols,name={\ensuremath{\tau}},description={Torque per unit copper loss $M/P_{\mathrm{Cu}}$},sort=tau}
+\newglossaryentry{sym:nu}{type=symbols,name={\ensuremath{\nu}},description={Squared voltage per unit copper loss $U^2/P_{\mathrm{Cu}}$},sort=nu}
+\newglossaryentry{sym:rho}{type=symbols,name={\ensuremath{\rho}},description={Nonnegative radial loss scale},sort=rho}
+\newglossaryentry{sym:phi}{type=symbols,name={\ensuremath{\boldsymbol\phi}},description={Nonlinear flux-linkage map},sort=phi}
+\newglossaryentry{sym:lk}{type=symbols,name={\ensuremath{\matr L_k}},description={Local differential-inductance matrix},sort=Lk}
+\newglossaryentry{sym:psi0k}{type=symbols,name={\ensuremath{\vect\psi_{0,k}}},description={Offset of a local affine flux approximation},sort=psi0k}
+\newglossaryentry{sym:theta}{type=symbols,name={\ensuremath{\boldsymbol\theta}},description={Electromagnetic machine-parameter vector},sort=theta}
+\newglossaryentry{sym:thetafeas}{type=symbols,name={\ensuremath{\Theta_{\mathrm{feas}}}},description={Feasible electromagnetic machine-design region},sort=Thetafeas}
+\newglossaryentry{sym:thetak}{type=symbols,name={\ensuremath{\Theta_k}},description={Machine-design region feasible at operating point $k$},sort=Thetak}
+\newglossaryentry{sym:g}{type=symbols,name={\ensuremath{\vect g}},description={Physical geometry, winding, and material design vector},sort=g}
+\newglossaryentry{sym:gfeas}{type=symbols,name={\ensuremath{\mathcal G_{\mathrm{feas}}}},description={Preimage of the feasible electromagnetic region in physical design space},sort=Gfeas}
+\newglossaryentry{sym:machinemap}{type=symbols,name={\ensuremath{\mathcal M}},description={Forward map from physical design variables to electromagnetic parameters},sort=Mcalligraphic}
+\newglossaryentry{sym:xm}{type=symbols,name={\ensuremath{x_M}},description={EESM reluctance-torque effectiveness per stator-loss cost $\Delta L/a$},sort=xM}
+\newglossaryentry{sym:ym}{type=symbols,name={\ensuremath{y_M}},description={EESM excitation-torque effectiveness per combined loss cost $L_{\mathrm{exc}}/\sqrt{ab}$},sort=yM}
+\newglossaryentry{sym:Xm}{type=symbols,name={\ensuremath{X_M}},description={Dimensionless reluctance design coordinate $\omega_b x_M$},sort=XM}
+\newglossaryentry{sym:Ym}{type=symbols,name={\ensuremath{Y_M}},description={Dimensionless excitation design coordinate $\omega_b y_M$},sort=YM}
+\newglossaryentry{sym:rm}{type=symbols,name={\ensuremath{r_M}},description={Machine capability radius $\sqrt{x_M^2+y_M^2}$},sort=rM}
+\newglossaryentry{sym:phim}{type=symbols,name={\ensuremath{\phi_M}},description={Machine mechanism angle $\operatorname{atan2}(y_M,x_M)$},sort=phiM}
+\newglossaryentry{sym:omegab}{type=symbols,name={\ensuremath{\omega_b}},description={Chosen positive base angular frequency for dimensionless design coordinates},sort=omegab}
+\newglossaryentry{sym:cm}{type=symbols,name={\ensuremath{C_M}},description={Dimensionless loss-limited machine capability},sort=CM}
+\newglossaryentry{sym:sigma}{type=symbols,name={\ensuremath{\sigma}},description={PSM normalized saliency loading $\Delta L I_P/\psi_{\mathrm{pm}}$},sort=sigma}
+\newglossaryentry{sym:iota}{type=symbols,name={\ensuremath{\iota}},description={Characteristic-current ratio $I_{\mathrm{ch}}/I_P$},sort=iota}
+\newglossaryentry{sym:capability}{type=symbols,name={\ensuremath{C(\boldsymbol\theta)}},description={Scalar machine-capability value function or descriptor},sort=Ctheta}
+\newglossaryentry{sym:operatingdomain}{type=symbols,name={\ensuremath{\mathcal O}},description={Specified operating and uncertainty domain},sort=Ocalligraphic}
+\newglossaryentry{sym:fluxvec}{type=symbols,name={\ensuremath{\boldsymbol\psi}},description={Vector of stator and rotor flux linkages},sort=psivector}
+\newglossaryentry{sym:ldiff}{type=symbols,name={\ensuremath{\matr L_{\mathrm{diff}}}},description={Differential flux-linkage Jacobian with respect to current},sort=Ldiff}
+\newglossaryentry{sym:lm}{type=symbols,name={\ensuremath{L_{\mathrm m}}},description={Reciprocal stator-direct-axis to rotor-field mutual inductance},sort=Lm}
+\newglossaryentry{sym:lf}{type=symbols,name={\ensuremath{L_{\mathrm f}}},description={Rotor excitation-winding self inductance referred to the chosen current coordinates},sort=Lf}
+\newglossaryentry{sym:uf}{type=symbols,name={\ensuremath{u_{\mathrm f}}},description={Rotor excitation-converter voltage},sort=uf}
+\newglossaryentry{sym:uexcmax}{type=symbols,name={\ensuremath{U_{\mathrm{f},\max}}},description={Maximum magnitude of rotor excitation voltage},sort=Ufmax}
+\newglossaryentry{sym:state}{type=symbols,name={\ensuremath{\vect x}},description={Dynamic electrical or electromechanical state vector},sort=xstate}
+\newglossaryentry{sym:drift}{type=symbols,name={\ensuremath{\vect f}},description={Unforced electrical drift field in current coordinates},sort=fdrift}
+\newglossaryentry{sym:binput}{type=symbols,name={\ensuremath{\matr B}},description={Voltage-to-current-velocity input map},sort=Binput}
+\newglossaryentry{sym:uset}{type=symbols,name={\ensuremath{\mathcal U}},description={Admissible converter-voltage set},sort=Uset}
+\newglossaryentry{sym:vset}{type=symbols,name={\ensuremath{\mathcal V(\vect i)}},description={Locally reachable set of instantaneous current velocities},sort=Vset}
+\newglossaryentry{sym:dwhite}{type=symbols,name={\ensuremath{\matr D}},description={Dynamic-whitening transformation},sort=Dwhite}
+\newglossaryentry{sym:gmetric}{type=symbols,name={\ensuremath{\matr G}},description={Local dynamic Riemannian metric tensor when a symmetric quadratic speed body applies},sort=Gmetric}
+\newglossaryentry{sym:wind}{type=symbols,name={\ensuremath{\vect W}},description={Electrical drift expressed as the wind field in dynamically whitened coordinates},sort=Wwind}
+\newglossaryentry{sym:finsler}{type=symbols,name={\ensuremath{F(\vect x,\vect v)}},description={Finsler travel-time density for tangent velocity $\vect v$},sort=Ffinsler}
+\newglossaryentry{sym:gamma}{type=symbols,name={\ensuremath{\gamma}},description={Current-space transition trajectory},sort=gamma}
+\newglossaryentry{sym:tf}{type=symbols,name={\ensuremath{t_{\mathrm f}}},description={Transition terminal time},sort=tf}
+\newglossaryentry{sym:eloss}{type=symbols,name={\ensuremath{E_{\mathrm{loss}}}},description={Integrated transient loss energy},sort=Eloss}
+\newglossaryentry{sym:epsilon}{type=symbols,name={\ensuremath{\varepsilon}},description={Stator-to-excitation electrical time-scale ratio},sort=epsilon}
+\newglossaryentry{sym:wc}{type=symbols,name={\ensuremath{\matr W_{\mathrm c}(T)}},description={Finite-horizon controllability Gramian},sort=Wc}
+\newglossaryentry{sym:rset}{type=symbols,name={\ensuremath{\mathcal R(t)}},description={State set reachable from a declared initial set by time $t$},sort=Rset}
+\newglossaryentry{sym:value}{type=symbols,name={\ensuremath{V(\vect x)}},description={Minimum remaining transition cost or arrival time},sort=Vvalue}
+\newglossaryentry{sym:torqueset}{type=symbols,name={\ensuremath{\mathcal T}},description={Target torque manifold or target set},sort=Tset}
+\newglossaryentry{sym:projg}{type=symbols,name={\ensuremath{\matr P_G}},description={Metric-weighted projector onto the tangent space of a torque surface},sort=PG}
+\newglossaryentry{sym:tauexc}{type=symbols,name={\ensuremath{\tau_{\mathrm f}}},description={Rotor excitation electrical time constant},sort=tauf}
+\newglossaryentry{sym:taus}{type=symbols,name={\ensuremath{\tau_{\mathrm s}}},description={Representative stator electrical time constant},sort=taus}
+\newglossaryentry{sym:tdyn}{type=symbols,name={\ensuremath{t_{\min,k}(\boldsymbol\theta)}},description={Minimum transition time for representative transition $k$ and machine parameters $\boldsymbol\theta$},sort=tmink}
+\newglossaryentry{sym:thetae}{type=symbols,name={\ensuremath{\theta_{\mathrm e}}},description={Electrical rotor angle},sort=thetae}
+\newglossaryentry{sym:frameangle}{type=symbols,name={\ensuremath{\delta}},description={Angle of a synchronous frame relative to the rotor $d$ axis},sort=delta}
+\newglossaryentry{sym:gammaframe}{type=symbols,name={\ensuremath{\gamma}},description={Absolute angle $\theta_{\mathrm e}+\delta$ of an arbitrary synchronous frame},sort=gammaframe}
+\newglossaryentry{sym:jrot}{type=symbols,name={\ensuremath{\matr J}},description={Planar $90^\circ$ rotation generator},sort=Jrotation}
+\newglossaryentry{sym:psis}{type=symbols,name={\ensuremath{\psi_{\mathrm s}}},description={Stator-flux-linkage magnitude},sort=psis}
+\newglossaryentry{sym:psia}{type=symbols,name={\ensuremath{\psi_{\mathrm a}}},description={Active-flux magnitude or rotor-oriented active-flux scalar},sort=psia}
+\newglossaryentry{sym:iflux}{type=symbols,name={\ensuremath{i_{\mathrm f}}},description={Current component parallel to stator flux},sort=if}
+\newglossaryentry{sym:itorqueft}{type=symbols,name={\ensuremath{i_{\mathrm t}}},description={Current component perpendicular to stator flux},sort=itft}
+\newglossaryentry{sym:taskmap}{type=symbols,name={\ensuremath{\boldsymbol\Phi}},description={Map from physical currents to task or performance coordinates},sort=Phi}
+\newglossaryentry{sym:jtask}{type=symbols,name={\ensuremath{\matr J_h}},description={Jacobian of the selected task-output map},sort=Jh}
+\newglossaryentry{sym:decoupling}{type=symbols,name={\ensuremath{\matr A_h}},description={Task-space decoupling matrix $\matr J_h\matr B$},sort=Ah}
+\newglossaryentry{sym:vtask}{type=symbols,name={\ensuremath{\vect v_{\mathrm task}}},description={Virtual task-rate control input},sort=vtask}
+\newglossaryentry{sym:cond}{type=symbols,name={\ensuremath{\kappa_2}},description={Spectral condition number},sort=kappa2}
+\newglossaryentry{sym:commutator}{type=symbols,name={\ensuremath{[\matr A,\matr B]}},description={Matrix commutator $\matr A\matr B-\matr B\matr A$},sort=commutator}

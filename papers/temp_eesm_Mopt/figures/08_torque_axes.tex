@@ -1,0 +1,16 @@
+\begin{figure}[tb]
+\centering
+\begin{tikzpicture}[scale=1.0]
+ \draw[->] (-3,0)--(3.2,0) node[right]{$y_d$};
+ \draw[->] (0,-2.1)--(0,2.25) node[above]{$y_e$};
+ \draw[eigenvector] (0,0)--(2.15,1.25) node[above]{$z_\psi$: active flux};
+ \draw[neutral axis] (0,0)--(-1.25,2.15) node[above left]{$z_0$: torque neutral};
+ \draw[loss curve] (0,0) circle (1.55);
+ \draw[->,gray] (1.0,0) arc[start angle=0,end angle=30,radius=1.0];
+ \node[annotation] at (1.55,.25){loss-orthogonal rotation};
+\end{tikzpicture}
+\caption{After whitening, the active-flux coefficient selects one axis and
+orthogonality uniquely supplies a torque-neutral complement. The quadrature
+axis, perpendicular to this plane in 3D, remains unchanged.}
+\label{fig:torque-axes}
+\end{figure}

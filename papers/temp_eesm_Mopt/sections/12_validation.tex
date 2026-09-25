@@ -1,0 +1,73 @@
+\section{Symbolic and numerical validation}
+\label{sec:validation}
+
+The accompanying script \texttt{validation/verify\_geometry.py} performs two
+levels of checks. Symbolically it verifies:
+\begin{itemize}
+ \item \(\matr Q_U=\matr A^{\mathsf T}\matr A\), the voltage null vector,
+       and the torque-matrix eigenvalues;
+ \item the PSM center, its conic trajectory, and the double-angle formula;
+ \item both inverse coordinate transformations, canonical torque, and loss;
+ \item the hyperbolic parameterization, projective \(J\)-circles, and complex
+       square map;
+ \item the explicit EESM capability coefficient \(\kappa\), its circular
+       machine-design boundary, and the \(R_{\mathrm{exc}}\downarrow0\) limit;
+ \item nonsalient and salient PSM loss-limited maxima, the characteristic-
+       current design window, and multi-point set intersection logic.
+\end{itemize}
+Random regression draws positive resistances and inductances, signed speeds,
+and currents. For every draw it evaluates the original and transformed
+expressions for loss, torque, and squared voltage and requires relative errors
+below \(10^{-10}\). It also checks feasibility reconstruction from performance
+coordinates.
+
+The normalized toy case
+\begin{equation}
+ R_s=0.4,\quad R_{\mathrm{exc}}=0.7,\quad L_d=1.2,\quad L_q=0.8,
+ \quad L_{\mathrm{exc}}=0.9,\quad p=2
+ \label{eq:toy-case}
+\end{equation}
+is dimensionless and selected to avoid accidental symmetry. It is not machine
+data. The engineering-scale PSM values used only to exercise plotting are also
+marked synthetic. The workspace contains no traceable measurement or project
+dataset for this machine problem; unrelated CSV and MATLAB files belong to
+other publications and were not repurposed.
+
+\begin{table}[tb]
+\centering
+\caption{Independent validation routes and their failure signatures.}
+\label{tab:validation}
+\begin{tabularx}{\linewidth}{@{}p{.27\linewidth}X X@{}}
+\toprule
+Claim & Independent check & Typical detected error\\
+\midrule
+Voltage cylinder & rank/SVD and explicit null vector & sign or column error in \(\matr A\)\\
+PSM center & square completion and zero-voltage solve & incorrect PM affine term\\
+Whitening & quadratic congruence and random values & wrong resistance square root\\
+Torque rotation & orthogonality and inverse map & swapped active/neutral signs\\
+Projective circles & symbolic completion and sampled levels & missing \(1/\eta\) factor\\
+Performance frontier & sampled sphere and support eigenvectors & wrong eigenvalue branch\\
+Inverse EESM map & direct generalized eigenvalue and parameter sweeps & missing loss factor or false dimensionless claim\\
+PSM design window & angular maximization and inequality endpoints & sufficient field-weakening test reported as universal\\
+Optimum & primal, complementarity, and KKT residuals & infeasible stationary candidate\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Plots are evidence only after residuals pass. A finite plotting box can make
+the voltage cylinder appear closed and can create a false maximum-torque point
+on a hidden boundary. Every numerical optimum therefore reports active
+physical constraints and is rerun with enlarged diagnostic bounds.
+
+The dynamic extension has an independent script,
+\texttt{validation/verify\_dynamics.py}. It verifies symmetry and positive
+definiteness of the reciprocal inductance matrix, the dynamic-whitening
+identity \(\matr D\matr B\matr S^{1/2}=\matr I\),
+\(\matr G=\matr D^{\mathsf T}\matr D\), the metric tangent projector, and
+positive finite-horizon Gramian eigenvalues. Every reported piecewise-linear
+path is resampled for stator-circle and field-voltage utilization. Because the
+required voltage is affine along one segment, convexity proves that its
+maximum norm and maximum field-voltage magnitude occur at a segment endpoint;
+the dense resampling remains as a regression check. The six trajectory files
+under \texttt{figures/data} are regenerated from the same declared model used
+in Table~\ref{tab:dynamic-results}.

@@ -1,0 +1,90 @@
+\section{Robustness, operating regions, and control-friendly machines}
+\label{sec:coordinate-robustness}
+
+A coordinate map \(\vect y=\vect h(\vect i)\) propagates measurement error as
+\[
+ \delta\vect y\approx\matr J_h\delta\vect i,\qquad
+ \delta\vect i\approx\matr J_h^{-1}\delta\vect y.
+\]
+Hence \(\gls{sym:cond}(\matr J_h)\) is both a geometric and an implementation
+diagnostic. High values imply noise amplification, large fixed-point word
+length, and abrupt inverse references. Robust software must monitor the
+smallest singular value, use branch hysteresis, and fall back to a regular
+chart before singularity.
+
+\subsection{No coordinate wins every operating region}
+
+Below base speed, loss-oriented \((i_T,\alpha,z_0)\) or
+\((M,\psi_a,\sigma_{\mathrm{loss}})\) exposes MTPA allocation. In field
+weakening, \((M,\psi_s,\sigma_U)\) or \(ft\) coordinates expose
+\(U\approx\omega_e\psi_s\). Near the capability boundary, tangent/normal
+coordinates of the active constraint are preferable. Discrete switching is
+simple but requires bumpless transfer of controller states. A smooth
+\(\matr E(\lambda)\), with \(\lambda\) driven by voltage utilization, avoids
+a jump but creates frame-rate terms and interpolated gains. The simpler choice
+should be retained unless measured performance justifies deformation.
+
+\subsection{Control-performance evidence matrix}
+
+The present deterministic study validates geometry and computational
+structure; it does not replace a common-inverter hardware campaign. Claims are
+therefore separated into established expectation, sensitivity, and required
+test:
+\begin{center}
+\begin{tabularx}{\textwidth}{lXXX}
+\toprule
+Criterion & \(dq\) CVC & \(ft\)/active flux & local task/IOFL\\
+\midrule
+Torque step & bandwidth of current loops & direct \(i_t\) channel; fast in published tests & potentially direct, limited by \(\matr A_h\) and saturation\\
+Field weakening & indirect \(i_d^\star\) map & direct \(\psi_s\) limit & direct if \(U\) is a task, costly inverse\\
+Parameter mismatch & feedforward/map error & observer and \(L_q\) error & Jacobian/model cancellation error\\
+Saturation & LUT/flux-map compatible & nonlinear flux observer/map & local differential map required\\
+Transient copper energy & not explicit & not automatically minimized & allocation/null task can target it\\
+Torque ripple & mature compensation & observer and deadbeat variants available & must be measured under quantization\\
+\bottomrule
+\end{tabularx}
+\end{center}
+The comparison protocol should use one plant, switching frequency, voltage
+limit, sensors, and estimator bandwidth, then report torque rise/settling,
+ripple, flux error, voltage utilization, transient copper energy, robustness
+to \(R_s\), \(R_{\mathrm{exc}}\), and flux-map perturbations, and worst-case
+fixed-point overflow margin. Until that experiment is run, lower algebraic
+coupling is evidence, not proof, of superior closed-loop performance.
+
+\subsection{Representation as a machine-design objective}
+
+The inverse-design part of this paper can include control friendliness through
+quantities evaluated over the operating domain:
+\[
+ \max_{\mathcal O}\kappa_2(\matr J_h),\quad
+ \epsilon_{\mathrm{off}},\quad
+ \min_{\mathcal O}\|\nabla M\|_{G^{-1}},\quad
+ \min_{\mathcal O}\|\matr P_MG^{-1}\nabla U^2\|_G,\quad
+ \max_{\mathcal O}\|\dot{\matr E}\|.
+\]
+A control-friendly machine has a well-conditioned task transform, weak
+residual coupling, strong torque sensitivity, a useful voltage-changing null
+direction, and slowly varying axes. These criteria depend on
+\(\Delta L,L_{\mathrm{exc}},R_s,R_{\mathrm{exc}}\), converter ratings, and
+saturation, and therefore connect naturally to the feasible parameter regions
+of Part~II. Efficiency and controllability need not conflict, but neither
+implies the other.
+
+\subsection{Coordinates for the A-to-B transition}
+
+The trajectories in Part~III become easier to interpret in task variables.
+A stator-first path produces a rapid \(i_T\) change followed by slower
+\(\alpha\) and \(z_0\) relaxation as the excitation state catches up. Direct
+linear interpolation in \(dq\)-field current can leave a torque surface;
+projecting the slow redistribution into
+\(\nabla M^{\mathsf T}\dot{\vect i}=0\) suppresses first-order torque error.
+For optimization, \((i_T,\alpha,z_0)\) is therefore the most natural warm
+start among the tested charts, while the final constrained solve should remain
+in regular physical currents or flux states to avoid the \(M=0\) singularity.
+
+The same conclusion bounds calibration claims. DFVC can strongly reduce
+field-weakening reference tables, active flux can unify torque calculation,
+and task allocation can replace a three-dimensional current map by a smaller
+flux/allocation policy. None eliminates the nonlinear magnetic map needed for
+accurate saturated operation; the gain is a change in what is tabulated, not
+the disappearance of calibration.

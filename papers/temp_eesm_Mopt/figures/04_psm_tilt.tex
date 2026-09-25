@@ -1,0 +1,23 @@
+\begin{figure}[tb]
+\centering
+\begin{tikzpicture}
+\begin{axis}[axis main,width=.82\linewidth,height=6.3cm,axis equal image,
+ xlabel={$i_d$},ylabel={$i_q$},xmin=-3,xmax=2.2,ymin=-1.7,ymax=1.7]
+ \addplot[voltage curve,BrickRed!45,domain=0:360,samples=121]
+ ({-.25+1.38*cos(x)*cos(38)-.95*sin(x)*sin(38)},
+  {1.38*cos(x)*sin(38)+.95*sin(x)*cos(38)});
+ \addplot[voltage curve,BrickRed!72,domain=0:360,samples=121]
+ ({-1.0+1.18*cos(x)*cos(16)-.63*sin(x)*sin(16)},
+  {1.18*cos(x)*sin(16)+.63*sin(x)*cos(16)});
+ \addplot[voltage curve,BrickRed,domain=0:360,samples=121]
+ ({-1.55+.78*cos(x)},{.39*sin(x)});
+ \node[annotation] at (axis cs:1.25,1.25){low speed:\\nearly circular};
+ \node[annotation] at (axis cs:-.2,-1.25){medium};
+ \node[annotation] at (axis cs:-2.15,.75){high speed:\\axes align};
+\end{axis}
+\end{tikzpicture}
+\caption{Resistance and saliency generate the mixed term and therefore the
+tilt. At low speed the formal axis angle is poorly meaningful because the
+shape approaches a resistance circle; at high speed the axes approach $dq$.}
+\label{fig:psm-tilt}
+\end{figure}

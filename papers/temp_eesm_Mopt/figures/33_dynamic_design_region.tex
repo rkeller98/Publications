@@ -1,0 +1,26 @@
+\begin{figure}[tb]
+\centering
+\begin{tikzpicture}[font=\small]
+ \begin{axis}[width=.76\linewidth,height=.47\linewidth,axis lines=middle,
+  xmin=0,xmax=4.5,ymin=0,ymax=4.0,ticks=none,
+  xlabel={static capability $C_M$},ylabel={dynamic reachability $D_M$},clip=false]
+  \addplot[name path=static,blue,very thick,domain=1.6:4.2] ({x},{.35});
+  \addplot[name path=dyn,BrickRed,very thick,domain=.4:4.2] ({.55},{x});
+  \path[name path=top] (axis cs:.55,3.7)--(axis cs:4.2,3.7);
+  \path[name path=right] (axis cs:4.2,.35)--(axis cs:4.2,3.7);
+  \addplot[green!20] fill between[of=static and top,soft clip={domain=1.6:4.2}];
+  \fill[blue!12] (axis cs:1.6,.35) rectangle (axis cs:4.2,3.7);
+  \draw[blue,very thick] (axis cs:1.6,.35)--(axis cs:1.6,3.7);
+  \draw[BrickRed,very thick] (axis cs:.55,1.35)--(axis cs:4.2,1.35);
+  \fill[ForestGreen!70!black] (axis cs:2.9,2.35) circle (2.5pt) node[above right] {robust candidate};
+  \fill[Orange] (axis cs:3.1,.8) circle (2.5pt) node[below right,align=left] {statically good,\\dynamically slow};
+  \fill[Purple] (axis cs:1.05,2.55) circle (2.5pt) node[above left,align=right] {fast, but insufficient\\steady capability};
+  \node[blue] at (2.4,3.55) {$C_M\geq C_{\rm req}$};
+  \node[BrickRed,anchor=west] at (axis cs:.65,1.48) {$t_{\min}\leq t_{\rm req}$};
+ \end{axis}
+\end{tikzpicture}
+\caption{Trajectory-aware design intersects static and dynamic capability
+regions.  A machine can pass either screening layer and still fail the other.}
+\label{fig:dynamic-design-region}
+\end{figure}
+

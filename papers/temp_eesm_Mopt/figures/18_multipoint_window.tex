@@ -1,0 +1,30 @@
+\begin{figure}[tb]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+ width=.82\linewidth,height=.54\linewidth,
+ xmin=0,xmax=6,ymin=0,ymax=5,
+ xlabel={normalized torque-per-loss coordinate},
+ ylabel={field-weakening coordinate},ticks=none,axis lines=left,clip=false]
+ \addplot[name path=low,red,very thick,domain=0:5.7] {1.15+4.5/(x+1.25)};
+ \addplot[name path=base,blue,very thick,domain=.4:5.8] {.58*x+.35};
+ \addplot[name path=high,orange,very thick,domain=.3:5.8] {4.55-.33*x};
+ \addplot[name path=floor,draw=none,domain=0:6] {0};
+ \addplot[draw=green!50!black,fill=green!28]
+   coordinates {(2.55,2.91) (3.25,2.24) (4.35,2.89) (3.67,3.34)} \closedcycle;
+ \node[red,anchor=west,font=\scriptsize] at (axis cs:4.1,2.05) {low-speed torque};
+ \node[blue,anchor=west,font=\scriptsize,rotate=26] at (axis cs:3.7,2.7) {base speed};
+ \node[orange!80!black,anchor=west,font=\scriptsize,rotate=-15] at (axis cs:.7,4.45) {maximum speed};
+ \node[green!40!black,align=center,font=\small] at (axis cs:3.45,2.75)
+  {feasible\\design window};
+ \addplot[only marks,mark=*,black] coordinates {(3.35,2.7)};
+ \draw[->,thick] (axis cs:3.35,2.7)--(axis cs:2.95,2.2)
+  node[below,font=\scriptsize] {active margin};
+\end{axis}
+\end{tikzpicture}
+\caption{Multiple operating points as intersecting design regions in a
+two-dimensional normalized slice.  Each boundary is a level set of the same
+current-allocation value function.  Only the common green window satisfies the
+entire torque-speed specification.}
+\label{fig:multipoint-window}
+\end{figure}

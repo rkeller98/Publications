@@ -1,0 +1,72 @@
+\section{The conformal square map: illuminating but not the final solver}
+\label{sec:conformal}
+
+Treat the torque plane as the complex plane:
+\begin{equation}
+ \gls{sym:w}=\gls{sym:zpsi}+\mathrm j\gls{sym:zq},\qquad
+ \gls{sym:zeta}=\gls{sym:w}^2.
+\end{equation}
+Exact expansion gives
+\begin{equation}
+ \operatorname{Re}\zeta=z_\psi^2-z_q^2,\qquad
+ \operatorname{Im}\zeta=2z_\psi z_q=\frac{2M}{\kappa}.
+ \label{eq:square-map}
+\end{equation}
+Constant-torque hyperbolas therefore map to horizontal lines. A loss circle
+\(|w|^2=P\) maps to a circle of radius \(|\zeta|=P\). At the sample points
+\(w=re^{\mathrm j\theta}\), the map gives
+\(\zeta=r^2e^{\mathrm j2\theta}\): radii square and angles double.
+
+The derivative is \(2w\), which is nonzero away from the origin. Locally, the
+map is therefore a rotation and positive scaling, so it preserves the angle
+between intersecting smooth curves. ``Conformal'' means local angle
+preservation, not global distance or area preservation. The points \(w\) and
+\(-w\) share the same square; the map is two-to-one and a current-sign branch
+must be selected on inversion. Given \(\zeta=X+\mathrm jY\), a square-root
+reconstruction uses
+\begin{equation}
+ z_\psi=\pm\sqrt{\frac{|\zeta|+X}{2}},\qquad
+ z_q=\sgn(Y)\sqrt{\frac{|\zeta|-X}{2}},
+ \label{eq:square-root-inverse}
+\end{equation}
+with the coupled sign chosen for the desired current branch. This is friendly
+to fixed-function hardware: additions, one magnitude square root, and two
+component square roots.
+
+\input{figures/11_square_map.tex}
+
+The price appears when voltage is restored. A general quadratic in
+\((z_\psi,z_q,z_0)\) contains terms linear in products such as
+\(z_\psi z_0\) and \(z_qz_0\). The square map represents
+\(z_\psi^2-z_q^2\) and \(2z_\psi z_q\) elegantly, but not the individual
+signed factors coupled to \(z_0\). Expressing them through
+\cref{eq:square-root-inverse} introduces square roots and branches. Thus the
+map linearizes torque superbly, preserves the loss radius, and provides a
+memorable picture; it does not generally simplify the full EESM voltage
+constraint enough to beat projective or performance-space coordinates. It is
+retained as an interpretation and regression route, not selected as the
+online solver.
+
+\subsection{Why stereographic projection is also not selected}
+
+After whitening, current directions lie on a unit sphere. Stereographic
+projection sends a point \((x_1,x_2,x_3)\) away from the north pole to
+\begin{equation}
+ (s,t)=\left(\frac{x_1}{1-x_3},\frac{x_2}{1-x_3}\right),
+ \quad
+ \vect x=\frac{1}{1+s^2+t^2}
+ \begin{bmatrix}2s\\2t\\s^2+t^2-1\end{bmatrix}.
+\end{equation}
+It is conformal and maps circles on the sphere to circles or lines. However,
+substitution into either quadratic performance coordinate produces a quartic
+numerator over \((1+s^2+t^2)^2\). Clearing the denominator gives quartics and
+does not simultaneously diagonalize torque and voltage. The method is useful
+for plotting every direction on one plane, but the excluded projection pole
+requires a second chart and the algebra is no smaller. This elegant route is
+therefore a documented dead end for the embedded solve.
+
+\paragraph{One structure, three lenses.}
+Projective \(\eta\) is the factor ratio. Hyperbolic \(\alpha\) is half its
+logarithm. The square map stores the factor product in one Cartesian
+coordinate and their difference of squares in the other. None is a mysterious
+trick; all three describe the same constant-product geometry.

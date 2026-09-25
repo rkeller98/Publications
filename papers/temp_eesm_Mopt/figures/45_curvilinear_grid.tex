@@ -1,0 +1,23 @@
+\begin{figure}[tb]
+\centering
+\begin{tikzpicture}[>=Latex,font=\small,scale=.95]
+\draw[->] (-3.3,0)--(3.4,0) node[right]{\(i_d\)};
+\draw[->] (0,-2.5)--(0,2.7) node[above]{\(i_q\)};
+\foreach \c in {.45,.85,1.25,1.65}
+ {
+  \draw[Purple!65,domain=.55:3,samples=70] plot ({\x},{\c/\x});
+  \draw[Purple!35,domain=-3:-.55,samples=70] plot ({\x},{\c/\x});
+ }
+\foreach \a in {-1.0,-.5,0,.5,1.0}
+ \draw[ForestGreen!65!black,domain=.45:2.05,samples=50]
+   plot ({sqrt(2)*\x*exp(\a)/2},{sqrt(2)*\x*exp(-\a)/2});
+\node[Purple] at (2.55,2.0){constant torque};
+\node[ForestGreen!60!black] at (2.65,.62){allocation lines};
+\node[align=left,draw,rounded corners,fill=MidnightBlue!6] at (6.0,.4)
+ {state-dependent grid:\\axes bend with the flux map\\and acquire connection terms};
+\end{tikzpicture}
+\caption{A curvilinear grid that follows torque and allocation structure.
+Under saturation the families deform and must be tabulated or evaluated from
+the local flux Jacobian.}
+\label{fig:curvilinear-grid}
+\end{figure}

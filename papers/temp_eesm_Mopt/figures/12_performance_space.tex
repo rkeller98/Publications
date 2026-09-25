@@ -1,0 +1,21 @@
+\begin{figure}[tb]
+\centering
+\begin{tikzpicture}
+\begin{axis}[axis main,width=.8\linewidth,height=6.2cm,
+ xlabel={$\nu=U^2/P_{\mathrm{Cu}}$},ylabel={$\tau=M/P_{\mathrm{Cu}}$},
+ xmin=0,xmax=5.2,ymin=-2.1,ymax=2.8]
+ \addplot[draw=ForestGreen!70!black,very thick,fill=ForestGreen!15,
+ domain=0:360,samples=161]
+ ({2.4+1.75*cos(x)},{.25+1.35*cos(x)*.25+1.35*sin(x)*.97});
+ \addplot[support line] coordinates {(.5,2.55) (4.8,1.25)};
+ \addplot[voltage curve] coordinates {(0,0) (4.9,2.45)};
+ \addplot[only marks,mark=*,BrickRed] coordinates {(1.55,2.23)};
+ \node[annotation] at (axis cs:3.9,2.0){voltage-feasibility line};
+ \node[annotation] at (axis cs:1.55,-1.45){compact convex direction image};
+\end{axis}
+\end{tikzpicture}
+\caption{Every point represents a current direction. A rotating support line
+finds the upper boundary; the requested-torque voltage inequality is a line
+through the origin. Their contact selects the optimal direction.}
+\label{fig:performance-space}
+\end{figure}

@@ -1,0 +1,19 @@
+\begin{figure}[tb]
+\centering
+\begin{tikzpicture}[node distance=8mm and 8mm,>=Latex,font=\small]
+\node[draw,rounded corners,fill=MidnightBlue!8,align=center,minimum width=3.4cm,minimum height=1.15cm] (space)
+ {spatial frame\\\(abc\to\alpha\beta\to dq\to ft\)};
+\node[draw,rounded corners,fill=ForestGreen!9,align=center,right=of space,minimum width=3.4cm,minimum height=1.15cm] (task)
+ {state/task chart\\\(\vect i\to(M,\psi,\sigma)\)};
+\node[draw,rounded corners,fill=Orange!12,align=center,right=of task,minimum width=3.4cm,minimum height=1.15cm] (input)
+ {virtual inputs\\\(\vect u\to(v_M,v_\psi,v_N)\)};
+\draw[->,thick] (space) -- node[above]{measured state} (task);
+\draw[->,thick] (task) -- node[above]{Jacobian} (input);
+\node[below=8mm of space,align=center,text width=3.2cm]{same 2-D electromagnetic vector\\different rotating basis};
+\node[below=8mm of task,align=center,text width=3.2cm]{different labels for the\\3-D current manifold};
+\node[below=8mm of input,align=center,text width=3.2cm]{different directions of\\converter action};
+\end{tikzpicture}
+\caption{Three meanings of coordinates. Only the first column is a spatial
+rotation of the stator field.}
+\label{fig:coordinate-layers}
+\end{figure}

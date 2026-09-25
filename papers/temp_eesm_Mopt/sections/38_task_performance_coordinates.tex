@@ -1,0 +1,113 @@
+\section{Torque as a coordinate: local charts and useful complements}
+\label{sec:torque-coordinate}
+
+Near a point at which \(\nabla_{\vect i}M\neq0\), neighbouring constant-torque
+surfaces form a stack of nonintersecting sheets. Numbering those sheets by
+their torque value is therefore a legitimate local coordinate choice. The
+implicit-function and submersion theorems formalize this picture: two
+additional independent functions \(\xi_2,\xi_3\) can be selected so that
+\[
+ \boldsymbol\xi=(M(\vect i),\xi_2(\vect i),\xi_3(\vect i))
+\]
+has a nonsingular Jacobian. In this chart, a curved surface \(M=M_0\) becomes
+the coordinate plane \(\xi_1=M_0\). This statement is local; it neither proves
+a globally single-valued inverse nor prescribes the best complements
+\cite{agrachev2004}.
+
+\input{figures/42_torque_surface_task_plane.tex}
+
+Useful complements answer different questions:
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+Chart & Meaning of complements & Principal risk\\
+\midrule
+\((M,\alpha,z_0)\) & factor sharing; loss-null allocation & \(M=0\) singularity\\
+\((M,\psi_a,\sigma)\) & active flux; excitation sharing & branch in \(i_q=M/(k_T\psi_a)\)\\
+\((M,\psi_s,i_{\mathrm{exc}})\) & voltage-relevant flux; field current & observer dependence\\
+\((M,P_{\mathrm{Cu}},U^2)\) & three performance levels & local, multi-valued inverse\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+For \((M,\psi_a,\sigma)\), write
+\(\psi_a=\vect c^{\mathsf T}\vect r\),
+\(\vect r=[i_d,i_{\mathrm{exc}}]^{\mathsf T}\), and
+\(\matr R_r=\operatorname{diag}(r_s,r_e)\). The loss-optimal sharing for a
+given active flux is
+\begin{equation}
+ \vect r^\star(\psi_a)=
+ \frac{\matr R_r^{-1}\vect c}
+ {\vect c^{\mathsf T}\matr R_r^{-1}\vect c}\,\psi_a.
+ \label{eq:loss-optimal-sharing}
+\end{equation}
+Choosing \(\sigma\) along the loss-orthogonal complement makes
+\(\sigma=0\) exactly this optimum. Below base speed that is a natural third
+axis. In field weakening, a voltage-optimal complement can differ; a smooth
+blend is possible, but its frame-rate term must be retained.
+
+\subsection{Performance coordinates}
+
+For the linear EESM let
+\[
+ M=k_Ti_q(ai_d+bi_e),\quad
+ P=r_s(i_d^2+i_q^2)+r_ei_e^2,\quad
+ U^2=\vect i^{\mathsf T}\matr Q_U\vect i.
+\]
+The map \(\gls{sym:taskmap}(\vect i)=(M,P,U^2)\) has Jacobian
+\begin{equation}
+ \matr J_\Phi=
+ \begin{bmatrix}
+ k_Tai_q & k_T(ai_d+bi_e) & k_Tbi_q\\
+ 2r_si_d&2r_si_q&2r_ei_e\\
+ 2(\matr Q_U\vect i)_d&2(\matr Q_U\vect i)_q&
+ 2(\matr Q_U\vect i)_e
+ \end{bmatrix}.
+ \label{eq:performance-jacobian}
+\end{equation}
+Where \(\det\matr J_\Phi\neq0\), torque, loss, and voltage usage are themselves
+local coordinates: their curved, ellipsoidal, and cylindrical level sets all
+become coordinate planes. The beauty is static. Globally, quadratic symmetries
+and disconnected branches let several currents share the same triple. The map
+is singular wherever its three gradients are dependent, including the
+zero-torque saddle \(i_q=0,\ ai_d+bi_e=0\); it is also endangered by
+\(r_e\to0\), aligned loss/voltage gradients, or removal of a torque mechanism.
+Near such sets, the inverse noise gain grows like
+\(\|\matr J_\Phi^{-1}\|\).
+
+\subsection{Hyperbolic torque--allocation coordinates}
+
+For either torque sign define
+\begin{equation}
+ z_\psi=\frac{i_T}{\sqrt2}e^\alpha,\qquad
+ z_q=\operatorname{sgn}(M)\frac{i_T}{\sqrt2}e^{-\alpha},\qquad
+ M=\frac{\kappa}{2}\operatorname{sgn}(M)i_T^2.
+ \label{eq:signed-hyperbolic-chart}
+\end{equation}
+The inverse on a fixed sign branch is
+\[
+ i_T=\sqrt{2|z_\psi z_q|},\qquad
+ \alpha=\frac12\log\left|\frac{z_\psi}{z_q}\right|,\qquad z_0=z_0.
+\]
+Differentiation gives
+\begin{align}
+ \dot z_\psi&=\frac{e^\alpha}{\sqrt2}
+  (\dot i_T+i_T\dot\alpha),&
+ \dot z_q&=\frac{\operatorname{sgn}(M)e^{-\alpha}}{\sqrt2}
+  (\dot i_T-i_T\dot\alpha),\\
+ \dot M&=\kappa\operatorname{sgn}(M)i_T\dot i_T.
+ \label{eq:hyperbolic-rates-representation}
+\end{align}
+Thus \(\dot i_T\) changes torque, \(\dot\alpha\) reallocates its two factors at
+constant \(i_T\), and \(\dot z_0\) supplies a second torque-neutral direction.
+The chart fails at \(i_T=0\) and when either factor vanishes; sign and logarithm
+branches also make it unsuitable as a single global startup chart.
+
+\input{figures/43_hyperbolic_task_coordinates.tex}
+
+The earlier square map \(\zeta=(z_\psi+\mathrm jz_q)^2\) likewise puts torque
+in one Cartesian component, but it is two-to-one, singular at the origin, and
+requires branch memory. It is an illuminating plot and a poor universal
+feedback coordinate. In nonlinear flux maps the same local interpretation
+survives whenever the chosen chart Jacobian retains rank, but no fixed
+hyperbolic formula is then exact over the full current range.

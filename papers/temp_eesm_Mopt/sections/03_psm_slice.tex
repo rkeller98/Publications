@@ -1,0 +1,60 @@
+\section{The PSM as a fixed-excitation slice}
+\label{sec:psm-slice}
+
+Fix \(\gls{sym:iexc}=\bar i_{\mathrm{exc}}\) and define
+\begin{equation}
+ \gls{sym:psipm}=\gls{sym:lexc}\bar i_{\mathrm{exc}}.
+ \label{eq:pm-slice}
+\end{equation}
+Then \cref{eq:model-torque,eq:model-ud,eq:model-uq} become
+\begin{align}
+ \gls{sym:torque}&=\gls{sym:kt}\gls{sym:iq}
+ [\gls{sym:psipm}+\gls{sym:dl}\gls{sym:id}],
+ \label{eq:psm-torque}\\
+ \gls{sym:ud}&=\gls{sym:rs}\gls{sym:id}
+ -\gls{sym:omega}\gls{sym:lq}\gls{sym:iq},\\
+ \gls{sym:uq}&=\gls{sym:rs}\gls{sym:iq}
+ +\gls{sym:omega}(\gls{sym:ld}\gls{sym:id}+\gls{sym:psipm}).
+ \label{eq:psm-voltage}
+\end{align}
+These are the linear PSM torque and voltage equations. The identification is
+geometric, not ontological: a true PSM has no rotor excitation winding and
+therefore no term \(\gls{sym:rexc}\bar i_{\mathrm{exc}}^2\). In an EESM slice
+that term is a constant loss offset with respect to stator-current allocation.
+It must be removed, not silently retained, when interpreting the slice as an
+actual PSM.
+
+Set
+\begin{equation}
+ \gls{sym:ip}=\begin{bmatrix}\gls{sym:id}&\gls{sym:iq}\end{bmatrix}^{\mathsf T},
+ \quad
+ \gls{sym:mp}=\begin{bmatrix}
+ \gls{sym:rs}&-\gls{sym:omega}\gls{sym:lq}\\
+ \gls{sym:omega}\gls{sym:ld}&\gls{sym:rs}
+ \end{bmatrix},\quad
+ \vect r=\begin{bmatrix}0\\\gls{sym:omega}\gls{sym:psipm}\end{bmatrix}.
+ \label{eq:psm-affine-map}
+\end{equation}
+The PSM voltage map is \(\gls{sym:u}=\gls{sym:mp}\gls{sym:ip}+\vect r\).
+When \(R_s^2+\omega_e^2L_dL_q>0\), the matrix is invertible, so the inverse
+image of the inverter voltage disk is an ellipse. In the EESM picture, every
+constant-excitation plane cuts the voltage cylinder in one such ellipse. Its
+shape is independent of the chosen excitation; its center moves along the
+cylinder null line.
+
+\input{figures/02_psm_slice.tex}
+
+The fixed slice also explains the apparent loss of homogeneity. In three
+coordinates, scaling all currents scales the field flux and leaves every model
+equation homogeneous. In the PSM plane, the field coordinate is no longer
+allowed to scale. The term \(\gls{sym:psipm}\) is therefore a constant affine
+offset, torque contours are shifted hyperbolas, and voltage ellipses are
+translated away from the origin.
+
+\paragraph{What the slice teaches.}
+The PSM is the most legible two-dimensional cross-section of the EESM, but a
+cross-section must not be confused with a projection. If excitation is free,
+projecting the EESM voltage cylinder onto the \(dq\) plane produces an
+unbounded strip because field current can cancel \(u_q\). Fixing excitation
+produces a bounded ellipse. The distinction becomes decisive whenever a
+numerical plot implicitly fixes or bounds excitation.

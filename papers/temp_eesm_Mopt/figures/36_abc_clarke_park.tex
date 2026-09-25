@@ -1,0 +1,22 @@
+\begin{figure}[tb]
+\centering
+\begin{tikzpicture}[>=Latex,font=\small]
+\node[draw,circle,minimum size=10mm] (a) at (0,0) {\(a\)};
+\node[draw,circle,minimum size=10mm] (b) at (0,-1.2) {\(b\)};
+\node[draw,circle,minimum size=10mm] (c) at (0,-2.4) {\(c\)};
+\node[draw,rounded corners,fill=MidnightBlue!8,minimum width=2.4cm,minimum height=1cm] (cl) at (3,-1.2) {Clarke};
+\node[draw,rounded corners,fill=ForestGreen!9,minimum width=2.4cm,minimum height=1cm] (pa) at (6.3,-1.2) {Park \(R(-\theta_e)\)};
+\node[draw,rounded corners,fill=Orange!12,minimum width=2.8cm,minimum height=1cm] (dc) at (9.8,-1.2) {\(x_d=X,\ x_q=0\)};
+\foreach \n in {a,b,c}\draw[->] (\n.east)--(cl.west);
+\draw[->,thick] (cl)--node[above]{\(\alpha,\beta\) sinusoidal}(pa);
+\draw[->,thick] (pa)--node[above]{co-rotate}(dc);
+\draw[->,Purple,very thick] (3,-3.0)--++(1.2,0.55) node[right]{\(\vect x_{\alpha\beta}\)};
+\draw[->,gray,thick] (3,-3.0)--++(1.2,0) node[right]{\(\alpha\)};
+\draw[->,gray,thick] (3,-3.0)--++(0,1.0) node[above]{\(\beta\)};
+\draw[->,Purple,very thick] (7.5,-3.0)--++(1.2,0) node[right]{\(d,\vect x\)};
+\draw[->,gray,thick] (7.5,-3.0)--++(0,1.0) node[above]{\(q\)};
+\end{tikzpicture}
+\caption{Clarke removes the redundant three-phase direction; Park follows the
+rotating sinusoid so the steady vector becomes constant.}
+\label{fig:abc-clarke-park}
+\end{figure}

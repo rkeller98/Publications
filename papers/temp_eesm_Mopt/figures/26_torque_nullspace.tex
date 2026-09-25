@@ -1,0 +1,21 @@
+\begin{figure}[tb]
+\centering
+\begin{tikzpicture}[font=\small]
+ \begin{axis}[width=.78\linewidth,height=.48\linewidth,axis lines=middle,
+  xmin=-2.8,xmax=3.0,ymin=-1.7,ymax=2.3,ticks=none,xlabel={$z_\psi$},ylabel={$z_q$},clip=false]
+  \addplot[Purple,very thick,domain=.35:2.7,samples=100] ({x},{1.2/x});
+  \addplot[Purple,very thick,domain=-2.7:-.55,samples=100] ({x},{1.2/x});
+  \addplot[only marks,mark=*,BrickRed,mark size=3pt] coordinates {(1.05,1.1429)};
+  \draw[->,BrickRed,very thick] (axis cs:1.05,1.1429)--(axis cs:1.72,1.76) node[above] {$\dot{\vect i}_\perp$};
+  \draw[->,ForestGreen!70!black,very thick] (axis cs:1.05,1.1429)--(axis cs:1.72,.62) node[right] {$\dot{\vect i}_\parallel$};
+  \draw[blue,very thick,->] (axis cs:.55,2.18)..controls(axis cs:1.0,1.25)and(axis cs:1.65,.8)..(axis cs:2.35,.51);
+  \node[Purple,anchor=south west] at (axis cs:1.9,.72) {$M=M_{\rm ref}$};
+  \node[blue,anchor=west] at (axis cs:2.25,.25) {loss-improving reallocation};
+ \end{axis}
+\end{tikzpicture}
+\caption{Normal motion changes torque; tangent motion reallocates current on a
+constant-torque manifold.  The metric-weighted normal need not coincide with
+the Euclidean normal drawn by the raw current axes.}
+\label{fig:torque-nullspace}
+\end{figure}
+

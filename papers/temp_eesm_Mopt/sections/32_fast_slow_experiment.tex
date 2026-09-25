@@ -1,0 +1,112 @@
+\section{Fast--slow EESM reduction and a reproducible transition experiment}
+\label{sec:fast-slow-experiment}
+
+Define representative electrical time constants
+\[
+ \gls{sym:taus}=\sqrt{\frac{L_{\mathrm d}}{R_s}
+                         \frac{L_{\mathrm q}}{R_s}},
+ \qquad
+ \gls{sym:tauexc}=\frac{L_{\mathrm f}}{R_{\mathrm{exc}}},
+ \qquad
+ \gls{sym:epsilon}=\frac{\tau_s}{\tau_f}.
+ \tag{32.1}
+\]
+When \(\varepsilon\ll1\), stator currents are fast and field current is slow.
+After rescaling time by \(\tau_f\), singular-perturbation reasoning suggests a
+fast layer in \((i_d,i_q)\) followed by slow motion of \(i_f\).  This is a
+model property, not a universal EESM fact: coupling, converter ratios, and
+back-EMF may destroy the separation even when \(L_f/R_f\) is large.
+
+For a fixed slow field current and requested torque define the conditional
+steady optimum
+\[
+ \mathcal I^\star(i_f,M_{\mathrm{ref}})=
+ \arg\min_{i_d,i_q}P_{\mathrm{Cu}}
+ \quad\text{s.t.}\quad M=M_{\mathrm{ref}}
+ \text{ and instantaneous constraints}.
+ \tag{32.2}
+\]
+If the fast subsystem is stable and its constraint margin is uniform, the
+stator state can track this moving optimum manifold while \(i_f\) evolves.
+The three-state problem then reduces approximately to a scalar scheduling
+problem for \(i_f\), with the static inner solver from Part~I reused online.
+
+\input{figures/29_moving_manifold.tex}
+
+\subsection{Declared toy model and search family}
+
+The reproducible script \texttt{validation/verify\_dynamics.py} uses
+\[
+ \matr L=\begin{bmatrix}.42&0&.12\\0&.24&0\\.12&0&1.05\end{bmatrix},
+ \quad
+ \matr R_e=\operatorname{diag}(.16,.16,.12),
+ \quad \omega_e=.75,
+ \tag{32.3}
+\]
+with \(U_s=1.30\), \(U_f=.32\), and \(k_T=3\) in a normalized unit system.
+The inductance eigenvalues are \(0.2400,0.3979,1.0721\), so reciprocity and
+positive magnetic energy are satisfied.  The time-scale ratio is
+\(\varepsilon=0.2268\) with \(\tau_s=1.9843\) and \(\tau_f=8.7500\).
+The step is
+\[
+ \vect i_A=(.05,.45,.55)^{\mathsf T},\quad
+ \vect i_B=(.35,1.25,1.10)^{\mathsf T},\quad
+ M_A=.10125,\quad M_B=.73125.
+ \tag{32.4}
+\]
+
+Every candidate is a piecewise-linear current curve.  For each segment the
+minimum feasible duration is found from the exact affine voltage along that
+segment.  Convexity makes endpoint voltage checks sufficient.  The two
+numerically optimized paths use two internal waypoints, deterministic random
+coordinate refinement, monotonic torque, and exact stator-circle and field
+voltage checks.  They are optima within that declared waypoint family, not a
+proof of the global continuous-time optimum.
+
+\begin{table}[tb]
+\centering
+\caption{Quantitative A-to-B comparison for the normalized linear EESM toy
+case.  All paths reach unit voltage utilization within numerical tolerance.}
+\label{tab:dynamic-results}
+\small
+\begin{tabularx}{\linewidth}{@{}lrrX@{}}
+\toprule
+Path & transition time & copper energy & relative interpretation\\
+\midrule
+Straight interpolation & 3.2633 & 0.7063 & Euclidean baseline\\
+Stator first & 3.4842 & 1.6680 & rapid torque-surface hypothesis\\
+Excitation first & 3.3019 & 0.4247 & slow-axis-first baseline\\
+Metric-derived two-stage & 3.3876 & 1.4883 & natural-gradient target point\\
+Time-oriented waypoint path & \textbf{2.7489} & 1.0458 & shortest in tested family\\
+Energy-oriented waypoint path & 3.0164 & \textbf{0.3504} & \(t_f\leq1.55t_{\min}\)\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The result rejects a simplistic interpretation of the fast--slow hypothesis.
+Although the field time constant is 4.41 times the representative stator time
+constant, the naive stator-first path is slowest and most dissipative here.
+Its rapid torque acquisition demands high \(i_q\), which raises copper loss
+and consumes stator voltage.  Coordinated motion is 15.8\% faster than the
+straight path.  The energy-oriented path is 9.7\% slower than the tested
+time-oriented path but uses 66.5\% less copper energy.  Fast--slow structure
+suggests good coordinates; it does not determine the optimum by itself.
+
+\input{figures/30_dynamic_profiles.tex}
+\input{figures/31_dynamic_trajectory_pareto.tex}
+
+\subsection{A dynamic Pareto family}
+
+The pair \((t_f,E_{\mathrm{loss}})\) has an efficient frontier just as static
+torque and loss do.  Weighted sums \(t_f+\lambda E\) expose supported frontier
+points, but nonconvex portions require an explicit time or energy constraint.
+Engineering labels are then meaningful: a sport calibration lies near the
+time endpoint, an efficiency calibration near the energy endpoint, a thermal
+calibration limits peak winding power, and an \gls{nvh} calibration adds slew
+constraints.  These are interpretations of one computed trajectory frontier,
+not four unrelated ad hoc controllers.
+
+Turnpike behavior is plausible only for horizons long relative to the
+electrical transients: an optimum may approach a favourable steady manifold,
+remain near it, and leave near the terminal time \parencite{trelat2015}.  The
+short point-to-point experiment above is too short to claim such a regime.

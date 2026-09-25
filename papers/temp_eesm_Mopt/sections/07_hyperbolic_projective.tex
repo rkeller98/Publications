@@ -1,0 +1,110 @@
+\section{Hyperbolic and projective views of constant torque}
+\label{sec:hyperbolic}
+
+\subsection{A product suggests a reciprocal motion}
+
+For the elementary curve \(xy=c>0\), replacing
+\(x\) by \(e^\alpha x\) and \(y\) by \(e^{-\alpha}y\) leaves the product
+unchanged. This is how hyperbolic coordinates are discovered: one factor grows
+exactly as the other shrinks. In the torque plane, rotate by \(45^\circ\):
+\begin{equation}
+ \gls{sym:uvirt}=\frac{\gls{sym:zpsi}+\gls{sym:zq}}{\sqrt2},\qquad
+ \gls{sym:vvirt}=\frac{\gls{sym:zpsi}-\gls{sym:zq}}{\sqrt2}.
+ \label{eq:uv-rotation}
+\end{equation}
+Then
+\begin{equation}
+ \gls{sym:torque}=\frac{\gls{sym:kappa}}2(u^2-v^2),\qquad
+ \gls{sym:pcu}=u^2+v^2+z_0^2.
+ \label{eq:signature-form}
+\end{equation}
+No invertible linear transformation can turn \(u^2-v^2\) into a single
+positive square: the saddle has one positive, one negative, and one zero
+direction. Sylvester's law of inertia formalizes this geometric fact---a
+congruence change preserves the counts of positive, negative, and zero
+directions \cite{horn2013}.
+
+For positive torque define
+\begin{equation}
+ \gls{sym:it}=\sqrt{\frac{2\gls{sym:torque}}{\gls{sym:kappa}}},\qquad
+ u=i_T\cosh\gls{sym:alpha},\quad v=i_T\sinh\gls{sym:alpha}.
+ \label{eq:hyperbolic-coordinates}
+\end{equation}
+Because \(\cosh^2\alpha-\sinh^2\alpha=1\), torque depends only on the virtual
+amplitude \(i_T\), whereas
+\begin{equation}
+ \gls{sym:pcu}=i_T^2\cosh(2\alpha)+z_0^2.
+ \label{eq:hyperbolic-loss}
+\end{equation}
+The inequality \(\cosh(2\alpha)\geq1\) proves without differentiation that
+balanced factors, \(\alpha=0\), minimize loss when voltage is inactive. The
+constant-torque hyperbola is an orbit of the reciprocal scaling above, which
+is mathematically the same one-parameter group as a planar hyperbolic
+rotation. The Lorentz analogy adds no machine physics and is not needed beyond
+this invariant-product observation.
+
+\input{figures/09_hyperbolic.tex}
+
+\subsection{Remove radius with ratios}
+
+On a positive-torque chart where \(z_q\neq0\), define
+\begin{equation}
+ \gls{sym:eta}=\frac{\gls{sym:zpsi}}{\gls{sym:zq}}>0,
+ \qquad \gls{sym:chi}=\frac{\gls{sym:znull}}{\gls{sym:zq}}.
+ \label{eq:projective-coordinates}
+\end{equation}
+The torque equation fixes
+\(z_q^2=M/(\kappa\eta)\). Substitution into the loss sphere gives
+\begin{equation}
+ \gls{sym:pcu}=\frac{M}{\kappa}\gls{sym:jproj}(\eta,\chi),
+ \qquad
+ \boxed{\gls{sym:jproj}(\eta,\chi)=
+ \eta+\frac{1+\chi^2}{\eta}.}
+ \label{eq:J-projective}
+\end{equation}
+Setting \(J=c\) and multiplying by \(\eta\) yields
+\begin{equation}
+ \boxed{\left(\eta-\frac c2\right)^2+\chi^2
+ =\frac{c^2}{4}-1.}
+ \label{eq:J-circles}
+\end{equation}
+The circles are not a plotting coincidence. Dividing a spherical loss by the
+bilinear torque product produces the reciprocal term \(1/\eta\); completing
+the square returns Euclidean circles in the ratio chart. Since
+\(\eta+1/\eta\geq2\), the level \(c=2\) degenerates to the single point
+\((\eta,\chi)=(1,0)\): balanced active flux, balanced quadrature factor, and
+no torque-neutral current. Larger circles represent increasingly inefficient
+allocations. For prescribed torque the loss ceiling is the outer circle
+\begin{equation}
+ c_{\max}=\frac{\kappa\gls{sym:pcumax}}{|M|}.
+ \label{eq:outer-loss-circle}
+\end{equation}
+
+Let \(\bar{\matr Q}_U=[q_{jk}]\) be the voltage matrix in \(\vect z\)
+coordinates and \(\vect d=[\eta,1,\chi]^{\mathsf T}\). The voltage condition
+becomes
+\begin{equation}
+ \vect d^{\mathsf T}\bar{\matr Q}_U\vect d
+ \leq\frac{\kappa\eta\gls{sym:umax}^2}{|M|}.
+ \label{eq:projective-voltage}
+\end{equation}
+This is a conic in \((\eta,\chi)\). For \(R_s>0\), \(L_{\mathrm{exc}}>0\),
+and \(\omega_e\neq0\), its quadratic block in \((\eta,\chi)\) is positive
+definite and the admissible set is ellipse-like when nonempty. At
+\(R_s=0\), the two active-flux-plane voltage columns become collinear and the
+conic can degenerate. Minimum loss is now literally the smallest \(J\)-circle
+that meets the voltage-admissible conic. Maximum torque uses the same contact
+picture while the outer loss circle is fixed and the torque parameter changes.
+
+\input{figures/10_projective.tex}
+
+Finally, the hyperbolic and projective parameters are the same allocation
+written linearly and logarithmically. From \cref{eq:uv-rotation} and
+\cref{eq:hyperbolic-coordinates},
+\begin{equation}
+ \eta=\frac{u+v}{u-v}=e^{2\alpha},\qquad
+ \alpha=\frac12\log\eta.
+ \label{eq:eta-alpha}
+\end{equation}
+Ratios are convenient for algebra and conics; the hyperbolic angle turns
+multiplicative imbalance into an additive coordinate.

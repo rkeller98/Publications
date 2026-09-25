@@ -1,0 +1,89 @@
+\section{Three different meanings of coordinates}
+\label{sec:coordinate-layers}
+
+The fourth question of this paper is not where to operate, how to move, or
+which machine to build, but \emph{in which variables the other three questions
+should be asked}. A useful first safeguard is to separate three constructions
+that are often all called a frame.
+
+\begin{description}
+ \item[Spatial electromagnetic frame.] Clarke and Park transformations express
+ the same two-dimensional stator vector in stationary \(\alpha\beta\),
+ rotor-oriented \(dq\), or flux-oriented \(ft\) basis vectors. Voltage,
+ current, and stator flux all rotate together.
+ \item[State or task coordinates.] A map from
+ \((i_{\mathrm d},i_{\mathrm q},i_{\mathrm{exc}})\) to torque, flux, and
+ allocation variables reshapes the three-dimensional current space. It may
+ mix a rotor current with stator components and is not a physical rotation of
+ the air-gap field.
+ \item[Virtual control coordinates.] A state-dependent input map may replace
+ physical converter voltages by commands that request torque rate, flux rate,
+ and torque-neutral motion. This is a change of input channels, not a change
+ of spatial basis.
+\end{description}
+
+\input{figures/35_coordinate_layers.tex}
+
+Confusing these levels hides costs. A Park transform needs an angle but is
+linear once that angle is known. A task chart may require a nonlinear inverse.
+A virtual-input map may require a matrix inversion at every sample. The
+machine decides which representation is useful; no coordinate name removes
+the underlying sensing, inversion, or actuation burden.
+
+\subsection{Why the rotor frame remains unusually effective}
+
+For a balanced sinusoidal space vector
+\[
+ \vect x_{\alpha\beta}(t)=X
+ \begin{bmatrix}\cos\theta_{\mathrm e}(t)&\sin\theta_{\mathrm e}(t)\end{bmatrix}^{\mathsf T},
+\]
+the power-invariant Clarke map first removes the redundant zero-sequence
+direction and the Park map gives
+\[
+ \vect x_{dq}=R(-\gls{sym:thetae})\vect x_{\alpha\beta}
+ =\begin{bmatrix}X&0\end{bmatrix}^{\mathsf T}.
+\]
+Sinusoids become constants, rotor saliency axes become fixed, and the
+inductance matrix is stationary. Two constant references can therefore be
+tracked by ordinary PI current loops. This is why \gls{dq} solves a
+\emph{representation problem} extremely well. It does not follow that
+\((i_{\mathrm d},i_{\mathrm q})\) are also the best optimization outputs or
+that three EESM currents should be controlled as three equally important
+channels.
+
+\input{figures/36_abc_clarke_park.tex}
+
+\subsection{An arbitrary synchronous frame and its price}
+
+Let the absolute frame angle be
+\[
+ \gls{sym:gammaframe}(t)=\gls{sym:thetae}(t)+\gls{sym:frameangle}(t),\qquad
+ R(\delta)=\begin{bmatrix}\cos\delta&-\sin\delta\\
+ \sin\delta&\cos\delta\end{bmatrix},\quad
+ \gls{sym:jrot}=\begin{bmatrix}0&-1\\1&0\end{bmatrix}.
+\]
+The forward and inverse transformations are
+\begin{equation}
+ \vect x_\gamma=R(-\delta)\vect x_{dq},\qquad
+ \vect x_{dq}=R(\delta)\vect x_\gamma.
+ \label{eq:arbitrary-frame-map}
+\end{equation}
+Because \(\dot R(-\delta)=-\dot\delta\,\matr J R(-\delta)\),
+\begin{equation}
+ \boxed{\dot{\vect x}_\gamma
+ =R(-\delta)\dot{\vect x}_{dq}
+ -\dot\delta\,\matr J\vect x_\gamma.}
+ \label{eq:arbitrary-frame-rate}
+\end{equation}
+The final term is not a machine force. It is the apparent motion caused by
+the moving ruler. For \(\delta=\mathrm{const.}\) the frame is rotor-fixed and
+the term vanishes. If \(\delta=\delta(\vect i,\boldsymbol\psi)\), then
+\(\dot\delta=\nabla\delta^{\mathsf T}\dot{\vect x}\) and the frame is only
+synchronous with the selected flux during steady operation. We therefore use
+\emph{rotor-fixed}, \emph{rotor-synchronous}, and
+\emph{stator-flux-oriented} as distinct terms throughout.
+
+\begin{quote}\itshape
+Rotating a basis may simplify one algebraic relation, but a time-varying basis
+adds a connection term to the dynamics. There is no free coordinate system.
+\end{quote}

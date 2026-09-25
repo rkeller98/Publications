@@ -1,0 +1,83 @@
+\section{Node-Accurate Area Calculation}
+\label{sec:primfac}
+In node-accurate area calculation based on prime factor encoding, each sector of the stator and rotor is assigned a unique prime number, where \(\gls{Primenumber}_{k}\) denotes the \(k\)-th prime number. The results of this assignment are depicted in Fig. \ref{fig:Primfaktor_Stator} for the stator and with consecutive encoding in Fig. \ref{fig:Primfaktor_Rotor} for the rotor.
+%
+\begin{figure}[ht]%
+    \centering%
+    \begin{subfigure}{.49\linewidth}%
+        \centering%
+        \input{figures/MEC/Primfaktor_Stator.tex}%
+        \caption{Stator}%
+        \label{fig:Primfaktor_Stator}%
+    \end{subfigure}%
+    \hfill%
+    \begin{subfigure}{.49\linewidth}%   
+        \centering%
+        \input{figures/MEC/Primfaktor_Rotor.tex}%
+        \caption{Rotor}%
+        \label{fig:Primfaktor_Rotor}%
+    \end{subfigure}%
+    \caption{Exemplary prime factor encoding for a machine with \(\gls{Ntooth} = 3\) and \(\gls{polepair} = 1\)}%
+    \label{fig:Primfactor_Codierung}%
+\end{figure}%
+%
+Next, vectors are defined for both the stator and rotor, with the number of elements in each vector proportional to the geometric width of each sector; wider sectors correspond to a higher number of elements associated with the \(k\)-th prime number. To illustrate this for the rotor: 
+%
+$
+    \gls{vec_prim_sec}_{\gls{idx_rotor}} =
+    \begin{bsmallmatrix}
+        \gls{Primenumber}_{13} &
+        \gls{Primenumber}_{13} &
+        \gls{Primenumber}_{13} &
+        \gls{Primenumber}_{13} &
+        \gls{Primenumber}_{13} &
+        \gls{Primenumber}_{14} &
+        \gls{Primenumber}_{15} &
+        \gls{Primenumber}_{15} &
+        \gls{Primenumber}_{15} &
+        \gls{Primenumber}_{15} &
+        \gls{Primenumber}_{15} &
+        \gls{Primenumber}_{16}
+    \end{bsmallmatrix}^{\gls{trans}}.
+$
+%
+A vector \(\gls{vec_prim_sec}_{\gls{idx_stator}}\) of equal length is defined for the stator, constructed following the same principle. Element-wise multiplication \( \gls{vec_prim_sec}_{\gls{schurr}} = \gls{vec_prim_sec}_{\gls{idx_rotor}} \, \gls{schurr} \, \gls{vec_prim_sec}_{\gls{idx_stator}}\) of these vectors yields a result vector representing the intersection areas and can be interpreted using a result matrix \(\gls{matr_prim_res}\). To construct the result matrix, the prime factors for the stator
+$
+\gls{vec_prim}_{\gls{idx_stator}} 
+=
+\begin{bsmallmatrix}
+    \gls{Primenumber}_{1} & \cdots & \gls{Primenumber}_{12}
+\end{bsmallmatrix}^{\gls{trans}}
+$ 
+and rotor 
+$
+\gls{vec_prim}_{\gls{idx_rotor}} 
+=
+\begin{bsmallmatrix}
+    \gls{Primenumber}_{13} & \cdots & \gls{Primenumber}_{16}
+\end{bsmallmatrix}^{\gls{trans}}
+$
+are encoded in vectors and then multiplied dyadically:
+%
+\begin{equation}
+        \gls{matr_prim_res} =
+        \gls{vec_prim}_{\gls{idx_rotor}} \cdot \gls{vec_prim}_{\gls{idx_stator}}^{\gls{trans}} =
+        \begin{bsmallmatrix}
+            82 & 123 & 205 & 287 & 451 & 533 & 697 & 779 & 943 & 1189 & 1271 & 1517 \\
+            86 & 129 & 215 & 301 & 473 & 559 & 731 & 817 & 989 & 1247 & 1333 & 1591 \\
+            94 & 141 & 235 & 329 & 517 & 611 & 799 & 893 & 1081 & 1363 & 1457 & 1739 \\
+            106 & 159 & 265 & 371 & 583 & 689 & 901 & 1007 & 1219 & 1537 & 1643 & 1961
+        \end{bsmallmatrix}
+        \label{equ:PrimResMatrix}.
+\end{equation}
+%
+In $\gls{matr_prim_res}$ the row corresponds to the rotor sector and the column to the stator sector. The count of \(\gls{Primenumber}_{k}\) in $\gls{vec_prim_sec}_{\gls{schurr}}$ is related to the area of the sectors. To account for rotor position dependence, \(\gls{vec_prim_sec}_{\gls{idx_rotor}}\) is cyclically shifted. The calculation of \(\gls{vec_prim_sec}_{\gls{schurr}}\) is then repeated with the shifted vector and interpreted using \(\gls{matr_prim_res}\) to derive the rotor position-dependent areas. For an exemplary operating point, this is depicted in Fig. \ref{fig:Primfaktor_Result}.
+%
+\begin{figure}[ht]
+    \centering
+    \input{figures/MEC/Primfaktor_Result.tex}
+    \caption{Exemplary result of area calculation using prime factor encoding for a \(\gls{Ntooth} = 3\), \(\gls{polepair}=1\) machine}
+    \label{fig:Primfaktor_Result}
+\end{figure}
+%
+The marked area corresponds to the value \(\gls{vec_prim_sec}_{\gls{schurr}} = 901\). From (\ref{equ:PrimResMatrix}), it follows that this element is located at position \(\gls{matr_prim_res}(4,7)\), indicating a cross-sectional area between rotor sector 4 and stator sector 7. Furthermore, the sector width is \(\Delta \gls{idx_dim_azimutal}\), and its area can be determined as \(\gls{area} = \frac{\pi}{\SI{180}{\degree}} \cdot \Delta \gls{idx_dim_azimutal} \cdot \gls{meanRadius} \cdot (\gls{outerRadius} - \gls{innerRadius})\).

@@ -1,0 +1,47 @@
+\section{Technical comparison of solution routes}
+\label{sec:comparison}
+
+\begin{landscape}
+\scriptsize\sloppy
+\renewcommand{\arraystretch}{0.88}
+\setlength{\tabcolsep}{2.5pt}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{.13\linewidth}>{\raggedright\arraybackslash}p{.18\linewidth}>{\raggedright\arraybackslash}p{.15\linewidth}>{\raggedright\arraybackslash}p{.20\linewidth}>{\raggedright\arraybackslash}p{.22\linewidth}@{}}
+\caption{What each method simplifies and what it costs.}\label{tab:comparison}\\
+\toprule
+Method & Main simplification & Remaining solve & Embedded assessment & Nonlinear extension / didactic value\\
+\midrule
+\endfirsthead
+\toprule
+Method & Main simplification & Remaining solve & Embedded assessment & Nonlinear extension / didactic value\\
+\midrule
+\endhead
+Direct Lagrange & One smooth active equality; parallel normals & Coupled polynomial candidates & Exact candidates, but branch and global checks required & Useful local check; teaches tangency after the picture is known\\
+KKT active set & Multiple active boundaries and status logic & Enumerate active sets and roots & Robust verification language; not automatically a global solver & Natural for local affine models and added bounds\\
+Generalized eigenvalue & Torque per fixed loss when voltage is inactive & One extreme eigenpair & Excellent: small, symmetric, well conditioned after whitening & Recompute locally; strong resource-efficiency interpretation\\
+Whitening plus torque rotation & Loss sphere and \(M=\kappa z_\psi z_q\) & Generic voltage quadratic in 3D & Very cheap transforms; ideal preprocessing & Local metrics remain useful; strongest physical coordinate view\\
+Active flux & Isolates torque-producing flux & Needs independent loss-orthogonal complement & Excellent physical signal, but not alone a complete optimizer & Established machine concept; intuitive bridge\\
+Hyperbolic coordinates & Constant torque becomes fixed \(i_T\) & Allocate \(\alpha,z_0\) under voltage & Transcendentals unnecessary if replaced by ratios & Excellent explanation of imbalance; moderate solver value\\
+Projective ratios & Removes radius; loss levels become circles & Tangency of two conics, generic sextic stationary equation & Good 2D scalar/curve solver; explicit branch \(\eta>0\) & Local affine voltage still conic-like; excellent visual value\\
+Complex square map & Hyperbolas become lines; loss radius retained & Voltage introduces roots and branches, especially with \(z_0\) & Square-root inverse is cheap, but full constraint is not simpler & Elegant interpretation, weak primary-solver choice\\
+Resultants / discriminants & Removes variables; contact is repeated root & Quartic intersections; up to sextic stationary polynomial here & Exact offline/reference route; root conditioning and selection costly & PWA region by region; shows why tangency changes root multiplicity\\
+Performance space & Direction maps to convex \((\nu,\tau)\) set & One support slope and \(3\times3\) extreme eigenpairs & Preferred: bounded scalar search, no trig, explicit status & Rebuild locally; best unification of both operating problems\\
+SVD / GSVD & Voltage per loss principal gains and null direction & Torque remains coupled & Excellent diagnostics and scaling; no universal final basis & Local Jacobian SVD is valuable; clarifies conditioning\\
+PMSM quartics & Exact intersections of 2D quadrics & Fourth-order roots and physical filtering & Viable with careful libraries; often less robust than bracket search & Map-updated coefficients possible; mature reference literature\\
+Fixed-point outer loop & Preserves an analytic inner solve & A few map updates and residual tests & Promising if contraction/damping is monitored & Direct route to saturation and cross-saturation\\
+\bottomrule
+\end{longtable}
+\end{landscape}
+
+No method wins because it is exotic. The most useful combination is mundane
+and structured: whitening for scaling, active-flux rotation for understanding,
+performance-space support for online direction selection, and KKT/original
+equation residuals for verification. Projective circles are the clearest 2D
+picture. The square map and stereographic projection are mathematically
+beautiful but do not sufficiently simplify the full voltage constraint.
+
+For an \gls{fpga}, a small fixed-iteration eigensolver or tabled support curve
+offers regular data flow. For an \gls{mcu}, the same boundary can be found with
+bisection and a compact symmetric eigensolver. A radical quartic is exact in a
+symbolic sense, yet can be the less predictable numerical implementation once
+coefficient scaling, nearly repeated roots, and physical branch filtering are
+counted.

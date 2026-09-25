@@ -1,0 +1,21 @@
+\begin{figure}[tb]
+\centering
+\begin{tikzpicture}
+\begin{axis}[axis main,width=.78\linewidth,height=6.2cm,axis equal image,
+ xlabel={$i_{\mathrm c,d}/I_{\mathrm{ch}}$},ylabel={$i_{\mathrm c,q}/I_{\mathrm{ch}}$},
+ xmin=-1.1,xmax=.12,ymin=-.68,ymax=.68,legend pos=north east]
+ \addplot[mapped curve,domain=-8:8,samples=181]
+ ({-x^2/(1+x^2)},{-1.22*x/(1+x^2)});
+ \addplot[only marks,mark=*,MidnightBlue] coordinates {(0,0) (-1,0)};
+ \addplot[coordinate vector] coordinates {(-.20,-.49) (-.63,-.58)};
+ \addplot[coordinate vector] coordinates {(-.20,.49) (-.63,.58)};
+ \node[annotation,anchor=west] at (axis cs:.02,0){$\omega_e=0$};
+ \node[annotation,anchor=east] at (axis cs:-1.02,0){$|\omega_e|\to\infty$};
+ \legend{center locus}
+\end{axis}
+\end{tikzpicture}
+\caption{Normalized PSM center trajectory for $L_q/L_d=2/3$. Positive and
+negative speed traverse opposite halves of the same conic. Resistance changes
+the speed parameterization, not the curve.}
+\label{fig:center-path}
+\end{figure}

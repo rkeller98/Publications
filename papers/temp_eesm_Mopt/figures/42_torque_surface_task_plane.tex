@@ -1,0 +1,24 @@
+\begin{figure}[tb]
+\centering
+\begin{tikzpicture}[>=Latex,font=\small]
+\begin{scope}[xshift=0cm]
+ \draw[->] (-2,0)--(2.5,0) node[right]{\(i_d\)};
+ \draw[->] (0,-1.6)--(0,2.1) node[above]{\(i_q\)};
+ \foreach \k/\c in {-1.1/20,-.55/35,.55/55,1.1/70}
+   \draw[Purple!\c,very thick,domain=.35:2.15,samples=50]
+     plot ({\x},{\k/\x});
+ \node[align=center] at (0,-2.05){curved constant-\(M\) sheets\\in a current slice};
+\end{scope}
+\draw[->,very thick] (3.0,.2)--(5.0,.2) node[midway,above]{\(\boldsymbol\Phi\)};
+\begin{scope}[xshift=7.2cm]
+ \draw[->] (-2,0)--(2.4,0) node[right]{\(\xi_2\)};
+ \draw[->] (0,-1.6)--(0,2.1) node[above]{\(M\)};
+ \foreach \y/\c in {-1.0/20,-.5/35,.5/55,1.0/70}
+   \draw[Purple!\c,very thick] (-1.9,\y)--(1.9,\y);
+ \node[align=center] at (0,-2.05){parallel \(M=M_0\) planes\\in a task slice};
+\end{scope}
+\end{tikzpicture}
+\caption{A regular task chart straightens constant-torque surfaces. It does
+not guarantee a unique global inverse.}
+\label{fig:torque-surface-task-plane}
+\end{figure}

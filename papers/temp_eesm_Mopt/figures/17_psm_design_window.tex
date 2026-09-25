@@ -1,0 +1,29 @@
+\begin{figure}[tb]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+ width=.78\linewidth,height=.50\linewidth,
+ xmin=0,xmax=4.8,ymin=0,ymax=4.2,
+ xlabel={$L_d$},ylabel={$\psi_{\mathrm{pm}}$},
+ axis lines=left,ticks=none,clip=false]
+ \addplot[name path=lower,red,very thick,domain=0:4.8] {1.25};
+ \addplot[name path=upper,blue,very thick,domain=0:4.8] {.8*x};
+ \addplot[name path=top,draw=none,domain=0:4.8] {4.2};
+ \addplot[green!35] fill between[of=lower and upper,soft clip={domain=1.5625:4.8}];
+ \node[red,anchor=west,font=\scriptsize] at (axis cs:3.35,1.05)
+   {$\psi_{\min}$: torque};
+ \node[blue,anchor=west,font=\scriptsize,rotate=32] at (axis cs:3.05,2.65)
+   {$\psi=L_dI_P$: characteristic current};
+ \node[green!40!black,font=\small] at (axis cs:3.1,1.85) {feasible window};
+ \node[red!70!black,font=\scriptsize] at (axis cs:1,.65) {insufficient torque};
+ \node[blue!70!black,font=\scriptsize,align=center] at (axis cs:2.2,3.45)
+   {zero-flux point\\outside loss circle};
+ \addplot[only marks,mark=*,mark size=2.7pt,black] coordinates {(2.7,1.7)};
+\end{axis}
+\end{tikzpicture}
+\caption{Analytic nonsalient PSM design window.  The minimum PM flux follows
+from low-speed torque; the upper ray places characteristic current inside the
+copper-loss circle.  The latter is an ideal field-weakening criterion, not a
+complete finite-speed feasibility proof.}
+\label{fig:psm-design-window}
+\end{figure}

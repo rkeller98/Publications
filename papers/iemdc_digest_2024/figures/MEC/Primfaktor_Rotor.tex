@@ -1,0 +1,31 @@
+\begin{tikzpicture}[font=\footnotesize]
+    \pgfmathsetmacro{\poles}{2}
+    \pgfmathsetmacro{\innerRadius}{1.2}
+    \pgfmathsetmacro{\outerRadius}{2.2}
+    \pgfmathsetmacro{\meanRadius}{0.5*(\innerRadius + \outerRadius)}
+
+    \pgfmathsetmacro{\mcf}{0.8}
+    \pgfmathsetmacro{\poleWidth}{360/\poles}
+    \pgfmathsetmacro{\magnetWidth}{\poleWidth*\mcf}
+    \pgfmathsetmacro{\gapWidth}{\poleWidth*(1-\mcf)}  
+
+    \clip (0,0) circle(\outerRadius);
+    
+    \filldraw[fill=colMagnetNorth] 
+    ({\magnetWidth/2}:\innerRadius) arc[start angle={\magnetWidth/2}, end angle={-\magnetWidth/2}, radius=\innerRadius] --
+    ({-\magnetWidth/2}:\outerRadius) arc[start angle={-\magnetWidth/2}, end angle={\magnetWidth/2}, radius=\outerRadius] -- 
+    cycle;
+
+    \filldraw[fill=colMagnetSouth] 
+    ({\magnetWidth/2 + \poleWidth}:\innerRadius) arc[start angle={\magnetWidth/2 + \poleWidth}, end angle={-\magnetWidth/2 + \poleWidth}, radius=\innerRadius] --
+    ({-\magnetWidth/2 + \poleWidth}:\outerRadius) arc[start angle={-\magnetWidth/2 + \poleWidth}, end angle={\magnetWidth/2 + \poleWidth}, radius=\outerRadius] -- 
+    cycle;
+
+    \draw (0,0) circle[radius=\innerRadius];
+    \draw (0,0) circle[radius=\outerRadius];     
+    
+    \path (0,0) -- (0:\meanRadius) node[pos=1, sloped] {$\gls{Primenumber}_{13}$};
+    \path (0,0) -- (90:\meanRadius) node[pos=1, sloped] {$\gls{Primenumber}_{14}$};
+    \path (0,0) -- (180:\meanRadius) node[pos=1, sloped] {$\gls{Primenumber}_{15}$};        
+    \path (0,0) -- (270:\meanRadius) node[pos=1, sloped] {$\gls{Primenumber}_{16}$};    
+\end{tikzpicture}

@@ -1,0 +1,18 @@
+\begin{figure}[tb]
+\centering
+\begin{tikzpicture}[scale=1.05,>=Latex,font=\small]
+\coordinate (O) at (0,0);
+\coordinate (A) at (3.0,1.5);
+\coordinate (B) at (1.65,.35);
+\draw[->,MidnightBlue,very thick] (O)--(A) node[above]{\(\boldsymbol\psi_s\)};
+\draw[->,gray,very thick] (O)--(B) node[below]{\(L_q\vect i_s\)};
+\draw[->,ForestGreen!70!black,very thick] (B)--(A) node[midway,right]{\(\boldsymbol\psi_a\)};
+\node[draw,rounded corners,fill=ForestGreen!8,align=center] at (6.4,.8)
+ {\(\boldsymbol\psi_s=L_q\vect i_s+\boldsymbol\psi_a\)\\
+ remove the isotropic response\\
+ retain torque-producing flux};
+\end{tikzpicture}
+\caption{Active-flux vector subtraction. The remainder is the flux of the
+equivalent nonsalient torque model.}
+\label{fig:active-flux-subtraction}
+\end{figure}

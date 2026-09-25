@@ -1,0 +1,20 @@
+\begin{figure}[tb]
+\centering
+\begin{tikzpicture}[scale=1.05,>=Latex,font=\small]
+\coordinate (O) at (0,0);
+\draw[->,gray] (O)--(3.1,0) node[right]{\(d\)};
+\draw[->,gray] (O)--(0,2.5) node[above]{\(q\)};
+\draw[->,MidnightBlue,very thick] (O)--({2.7*cos(32)},{2.7*sin(32)}) node[right]{\(\gamma\)-axis};
+\draw[->,MidnightBlue,thick] (O)--({2.0*cos(122)},{2.0*sin(122)}) node[above]{quadrature};
+\draw[->,Purple,very thick] (O)--({2.25*cos(60)},{2.25*sin(60)}) node[above]{\(\vect x\)};
+\draw[->] (0.75,0) arc[start angle=0,end angle=32,radius=.75];
+\node at (0.82,.23) {\(\delta\)};
+\node[draw,rounded corners,align=left,fill=Orange!10] at (6.3,1.2)
+ {\(\delta=\mathrm{const.}\): rotor-fixed\\
+  \(\delta=\delta(\vect i,\boldsymbol\psi)\): moving\\
+  extra rate: \(-\dot\delta\matr J\vect x_\gamma\)};
+\end{tikzpicture}
+\caption{An arbitrary rotor-relative spatial frame. A state-dependent angle
+simplifies instantaneous geometry but contributes its own angular velocity.}
+\label{fig:arbitrary-frame}
+\end{figure}

@@ -1,0 +1,68 @@
+\section{A free excitation direction: limit, warning, and PSM slice}
+\label{sec:loss-degeneracy}
+
+Write \(a=3R_s/2>0\) and \(b=R_{\mathrm{exc}}>0\).  At loss level
+\(P_{\mathrm{Cu},\max}\), the three semiaxes are
+\begin{equation}
+ I_d=I_q=\sqrt{\frac{P_{\mathrm{Cu},\max}}{a}},\qquad
+ I_e=\sqrt{\frac{P_{\mathrm{Cu},\max}}{b}}.
+ \label{eq:loss-semiaxes}
+\end{equation}
+Consequently \(b\downarrow0\) sends \(I_e\) to infinity while leaving the
+stator radius fixed.  The positive-definite loss ellipsoid converges on every
+bounded window to the cylinder
+\begin{equation}
+ \boxed{a(i_d^2+i_q^2)=P_{\mathrm{Cu},\max},
+ \qquad i_{\mathrm{exc}}\text{ free}.}
+ \label{eq:loss-cylinder}
+\end{equation}
+The matrix \(\matr R=\operatorname{diag}(a,a,b)\) loses rank and
+\(\matr R^{-1/2}\) ceases to exist.  The divergence is therefore visible both
+before and after whitening: a torque-producing direction has lost its price.
+
+\input{figures/14_loss_degeneracy.tex}
+
+This is not automatically a PSM limit.  If excitation remains controllable,
+the loss-only model admits \(i_q=\varepsilon\),
+\(i_{\mathrm{exc}}=c/\varepsilon\), and \(i_d=0\).  Then
+\begin{equation}
+ M=k_TL_{\mathrm{exc}}c+O(\varepsilon),\qquad
+ P_{\mathrm{Cu}}=a\varepsilon^2,
+ \label{eq:free-field-scaling}
+\end{equation}
+so a finite excitation torque can approach zero modeled copper loss.  With a
+fixed nonzero \(i_q\), torque is unbounded as \(i_{\mathrm{exc}}\to\infty\).
+At nonzero speed, however,
+\(u_q=\omega_e(L_di_d+L_{\mathrm{exc}}i_{\mathrm{exc}})+R_si_q\)
+usually blocks this sequence: canceling the growing field term requires an
+equally growing \(i_d\), which is still priced by \(a>0\).  At exactly zero
+speed the stator voltage does not see excitation, so the degeneracy survives.
+An explicit field-current or field-voltage limit, magnetic saturation, rotor
+thermal constraints, or a finite excitation converter also regularizes it.
+
+The PSM-like limit instead fixes a slice,
+\begin{equation}
+ i_{\mathrm{exc}}=i_{e0},\qquad
+ \psi_{\mathrm{pm}}=L_{\mathrm{exc}}i_{e0}=\text{constant}.
+ \label{eq:fixed-excitation-limit}
+\end{equation}
+On that plane, the EESM torque becomes
+\(M=k_Ti_q(\Delta L i_d+\psi_{\mathrm{pm}})\), exactly the affine PSM
+law.  If \(b\to0\) as well, the constant offset \(b i_{e0}^2\) disappears
+from loss while its flux effect remains.  Fixing excitation removes a degree
+of freedom; setting its resistance to zero removes a cost.  These operations
+do not commute conceptually.
+
+\input{figures/15_eesm_psm_slice.tex}
+
+\paragraph{Limits as model diagnostics.}
+Whenever a capability diverges, the first question should be: which
+physically effective direction has just become free?  The same rule diagnoses
+other limits.  As \(R_s\to0\), stator current loses its thermal price and
+whitening fails in two directions.  As \(L_{\mathrm{exc}}\to0\), field
+current remains costly but stops producing torque.  As \(\Delta L\to0\), the
+reluctance mechanism vanishes.  Letting \(P_{\mathrm{Cu},\max}\to\infty\) or
+\(U_{\max}\to\infty\) removes a bounding surface rather than improving a
+physical machine.  A finite answer after such a removal must come from a
+remaining constraint, not from the optimizer's search box.
+

@@ -1,0 +1,26 @@
+\begin{figure}[tb]
+\centering
+\begin{tikzpicture}[scale=.9,>=Latex,font=\small]
+\begin{scope}
+ \coordinate (O) at (0,0);
+ \draw[->,gray] (O)--(3,0) node[right]{\(d\)};
+ \draw[->,gray] (O)--(0,2.6) node[above]{\(q\)};
+ \draw[->,ForestGreen!70!black,very thick] (O)--({2.6*cos(38)},{2.6*sin(38)}) node[right]{\(\boldsymbol\psi_s,f\)};
+ \draw[->,ForestGreen!70!black,thick] (O)--({1.8*cos(128)},{1.8*sin(128)}) node[above]{\(t\)};
+ \draw[->,Purple,very thick] (O)--({2.1*cos(76)},{2.1*sin(76)}) node[above]{\(\vect i_s\)};
+ \draw[->] (.65,0) arc[start angle=0,end angle=38,radius=.65];
+ \node at (.72,.24){\(\delta\)};
+ \draw[dashed,Purple] ({2.1*cos(76)},{2.1*sin(76)})--({1.28*cos(38)},{1.28*sin(38)});
+ \node at (2.0,2.35){\(dq\) and \(ft\)};
+\end{scope}
+\node[draw,rounded corners,align=center,fill=MidnightBlue!7] at (6.3,1.45)
+ {\(M_{dq}=k_Ti_q[\psi_{\rm exc}+\Delta L i_d]\)\\[1mm]
+  \(\Downarrow\ R(-\delta)\)\\[1mm]
+  \(M_{ft}=k_T\psi_s i_t\)};
+\node[align=center,text width=4.2cm] at (6.3,-.15)
+ {simpler torque and voltage-limit meaning\\at the cost of flux angle estimation};
+\end{tikzpicture}
+\caption{Rotor \(dq\) and stator-flux \(ft\) frames represent the same spatial
+vectors but expose different algebraic relations.}
+\label{fig:dq-vs-ft}
+\end{figure}

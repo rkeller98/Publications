@@ -1,0 +1,107 @@
+\section{Loss whitening and torque-aligned physical coordinates}
+\label{sec:whitening}
+
+\subsection{First equalize the price of distance}
+
+Before matrices, consider \(4x^2+y^2=1\). The ellipse is not evidence that
+the \(x\) direction is geometrically shorter; one unit of \(x\) simply costs
+four times as much. Coordinates \(X=2x\), \(Y=y\) turn it into
+\(X^2+Y^2=1\). The same operation in three dimensions is
+\begin{equation}
+ \gls{sym:y}=\gls{sym:rmat}^{1/2}\gls{sym:i},\qquad
+ \gls{sym:i}=\gls{sym:rmat}^{-1/2}\gls{sym:y},
+ \label{eq:whitening-map}
+\end{equation}
+so that
+\begin{equation}
+ \gls{sym:pcu}=\norm{\gls{sym:y}}^2.
+ \label{eq:whitened-loss}
+\end{equation}
+One unit of distance now costs one unit of copper loss in every direction.
+Whitening preserves dimension, rank, intersections, and the value of every
+physical quadratic form after congruence transformation. It hides amperes and
+must therefore be followed by the inverse map before commanding currents.
+
+\input{figures/07_whitening.tex}
+
+Put \(r_s=3R_s/2\), \(r_e=R_{\mathrm{exc}}\), and define the loss-weighted
+active-flux coefficient vector
+\begin{equation}
+ \vect a=\begin{bmatrix}\Delta L/\sqrt{r_s}\\L_{\mathrm{exc}}/\sqrt{r_e}\end{bmatrix},
+ \qquad \gls{sym:beta}=\norm{\vect a}.
+ \label{eq:active-vector}
+\end{equation}
+The combination already printed in the torque equation suggests
+\begin{equation}
+ \gls{sym:spsi}=\gls{sym:dl}\gls{sym:id}
+ +\gls{sym:lexc}\gls{sym:iexc}.
+ \label{eq:active-flux}
+\end{equation}
+This is an active-flux or torque-producing-flux coordinate in the sense that
+torque is \(k_Ti_qs_\psi\). Active flux is established synchronous-machine
+language \cite{boldea2008}. Our additional step is to complete it orthogonally
+in the loss metric so the unused coordinate has an exact resource meaning.
+
+\subsection{Rotate after whitening, not before}
+
+Let \(y_d,y_q,y_e\) denote the components of \(\gls{sym:y}\). Define
+\begin{equation}
+ \begin{bmatrix}\gls{sym:zpsi}\\\gls{sym:zq}\\\gls{sym:znull}\end{bmatrix}
+ =\begin{bmatrix}
+ a_d/\beta&0&a_e/\beta\\
+ 0&1&0\\
+ -a_e/\beta&0&a_d/\beta
+ \end{bmatrix}
+ \begin{bmatrix}y_d\\y_q\\y_e\end{bmatrix}.
+ \label{eq:torque-rotation}
+\end{equation}
+The matrix is orthogonal. The first row points along the active-flux
+coefficient; the third is its perpendicular complement; the middle leaves the
+quadrature coordinate untouched. Consequently
+\begin{equation}
+ \gls{sym:pcu}=\gls{sym:zpsi}^2+\gls{sym:zq}^2+\gls{sym:znull}^2,
+ \qquad
+ \gls{sym:torque}=\gls{sym:kappa}\gls{sym:zpsi}\gls{sym:zq},
+ \label{eq:canonical-product}
+\end{equation}
+where
+\begin{equation}
+ \gls{sym:kappa}=\frac{\gls{sym:kt}\gls{sym:beta}}{\sqrt{3R_s/2}}.
+ \label{eq:kappa}
+\end{equation}
+The inverse is explicit:
+\begin{equation}
+ y_d=\frac{a_dz_\psi-a_ez_0}{\beta},\quad y_q=z_q,\quad
+ y_e=\frac{a_ez_\psi+a_dz_0}{\beta},\qquad
+ \gls{sym:i}=\gls{sym:rmat}^{-1/2}\gls{sym:y}.
+ \label{eq:torque-inverse}
+\end{equation}
+
+Without a voltage constraint, \(z_0\) contributes loss and no torque, so the
+minimum has \(z_0=0\). For fixed positive torque, the arithmetic--geometric
+mean inequality gives
+\begin{equation}
+ z_\psi^2+z_q^2\geq2z_\psi z_q=\frac{2M}{\kappa},
+\end{equation}
+with equality at \(z_\psi=z_q=\sqrt{M/\kappa}\). Thus
+\begin{equation}
+ P_{\min}^{(U\,\mathrm{free})}(M)=\frac{2|M|}{\kappa}.
+ \label{eq:unconstrained-minloss}
+\end{equation}
+For negative torque, the factors have opposite signs and equal magnitude.
+Voltage can make a nonzero \(z_0\) useful: although torque-neutral, it can move
+the current vector toward the voltage-cylinder axis. Calling it useless
+without the phrase ``when voltage is inactive'' would therefore be wrong.
+
+\input{figures/08_torque_axes.tex}
+
+\paragraph{What became easy and what paid the price?}
+Loss became a sphere and torque became one product. All parameter complexity
+moved into the transformed voltage matrix
+\(\bar{\matr Q}_U=\matr S\matr R^{-1/2}\matr Q_U\matr R^{-1/2}\matr S^{\mathsf T}\),
+where \(\matr S\) is the rotation in \cref{eq:torque-rotation}. Three generic
+symmetric forms cannot all share principal axes. Simultaneous orthogonal
+diagonalization would require the whitened torque and voltage matrices to
+commute, a special parameter relation rather than a structural property
+\cite{horn2013}. SVD of the voltage map optimally simplifies voltage; the
+torque rotation optimally simplifies torque. Neither basis wins every task.

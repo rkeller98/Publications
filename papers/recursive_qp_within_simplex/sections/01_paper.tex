@@ -1,0 +1,110 @@
+\section{Introduction}
+
+In electric machine control, minimizing copper losses while maintaining a
+desired torque is a fundamental objective. The Maximum Torque Per Ampere
+(MTPA) strategy aims to find stator currents \(\mathbf{x}\) that produce the
+required torque with minimum copper losses, represented by the quadratic form
+\(\mathbf{x}^\top Q\mathbf{x}\), where \(Q\) is typically a diagonal matrix
+containing the stator resistances.
+
+Traditional quadratic programming approaches solve such problems globally
+but may not easily handle constraints defined by the convex hull of feasible
+current sets, especially when the constraint domain is a simplex defined by a
+finite set of vertices. In this paper, we propose a recursive quadratic
+programming approach that exploits the simplex structure of the feasible set
+and recursively reduces dimensionality to find the global optimum within the
+simplex.
+
+\section{Problem Formulation}
+
+Consider the quadratic minimization problem
+\begin{equation}
+  \min_{\mathbf{x}} \quad \mathbf{x}^\top Q\mathbf{x}
+  \quad \text{s.t.} \quad
+  \mathbf{x}\in\operatorname{conv}(\mathbf{v}_1,\mathbf{v}_2,\ldots,\mathbf{v}_m),
+\end{equation}
+where \(Q\in\mathbb{R}^{n\times n}\) is symmetric positive semidefinite and
+the feasible set is the convex hull of \(m\) vertices
+\(\mathbf{v}_i\in\mathbb{R}^n\). The vertices represent extremal current
+vectors satisfying operational constraints.
+
+Because the feasible region is a simplex, any point \(\mathbf{x}\) in the
+convex hull can be expressed as
+\[
+  \mathbf{x}=\mathbf{v}_1+B\boldsymbol{\lambda},
+\]
+where \(B=[\mathbf{v}_2-\mathbf{v}_1,\ldots,\mathbf{v}_m-\mathbf{v}_1]\),
+\(\boldsymbol{\lambda}\geq0\), and \(\sum\lambda_i\leq1\).
+
+\section{Recursive Solution Algorithm}
+
+The recursive approach proceeds by attempting to solve the unconstrained
+quadratic minimization in barycentric coordinates
+\(\boldsymbol{\lambda}\) on the simplex, checking feasibility, and, if the
+candidate lies outside, recursively solving on lower-dimensional faces. This
+ensures that the global optimum lies within or on the boundary of the
+simplex.
+
+\begin{lstlisting}[style=matlab,caption={Recursive quadratic minimization within a simplex},label={lst:recursive_qp}]
+function x_optimal = recursive_QP_within_simplex(vertices, Q)
+% Recursive solver for min x'Qx subject to x in conv(vertices)
+
+if size(vertices, 2) >= 2
+    B = vertices(:, 2:end) - vertices(:, 1);
+    QBB = B' * Q * B;
+    QBv = B' * Q * vertices(:, 1);
+
+    if rcond(QBB) < eps
+        is_inside = false;
+    else
+        lambda = -QBB \ QBv;
+        is_inside = all(lambda >= -eps & lambda <= 1+eps) ...
+            && (sum(lambda) <= 1+eps);
+    end
+
+    if is_inside
+        x_optimal = vertices(:, 1) + B * lambda;
+    else
+        subset_indices = nchoosek(1:size(vertices, 2), ...
+            size(vertices, 2) - 1);
+        x_candidates = NaN(size(vertices, 1), size(subset_indices, 1));
+        f_values = NaN(1, size(subset_indices, 1));
+
+        for idx = 1:size(subset_indices, 1)
+            subset = vertices(:, subset_indices(idx, :));
+            x_sub = recursive_QP_within_simplex(subset, Q);
+            x_candidates(:, idx) = x_sub;
+            f_values(idx) = x_sub' * Q * x_sub;
+        end
+        [~, best_idx] = min(f_values);
+        x_optimal = x_candidates(:, best_idx);
+    end
+else
+    x_optimal = vertices;
+end
+end
+\end{lstlisting}
+
+\section{Application to Maximum Torque per Current}
+
+In the MTPA problem, the vector \(\mathbf{x}\) contains the stator currents
+in each phase or the $dq$-axis components, and
+\(Q=\operatorname{diag}(R_1,R_2,\ldots,R_n)\) represents the resistances
+responsible for copper losses. Minimizing \(\mathbf{x}^\top Q\mathbf{x}\)
+corresponds to minimizing these losses for a given torque, where the feasible
+set is constrained by current limits and torque requirements that can be
+represented by the convex hull of vertices.
+
+The recursive quadratic programming method guarantees that the resulting
+solution respects the convex constraints while minimizing copper losses
+efficiently, even when the number of vertices is large or the problem is
+defined in higher dimensions.
+
+\section{Conclusion}
+
+We have presented a recursive quadratic programming solver tailored for
+optimization problems constrained to simplices, with application to MTPA
+current optimization in electric machines. The method recursively reduces
+dimensionality to handle boundary conditions and guarantees the global
+minimum within the convex hull. Future work may focus on extending this
+method to more complex nonlinear constraints and real-time implementations.

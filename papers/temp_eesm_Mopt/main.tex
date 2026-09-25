@@ -1,0 +1,76 @@
+\documentclass[11pt,a4paper]{article}
+\input{includes/preamble.tex}
+\input{metadata.tex}
+\input{local.tex}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+\PaperAbstract
+\end{abstract}
+\tableofcontents
+
+\part{Forward problem: from machine to optimal operation}
+\input{sections/01_introduction.tex}
+\input{sections/02_model_and_quadrics.tex}
+\input{sections/03_psm_slice.tex}
+\input{sections/04_psm_voltage_ellipse.tex}
+\input{sections/05_frontier.tex}
+\input{sections/06_whitening_active_flux.tex}
+\input{sections/07_hyperbolic_projective.tex}
+\input{sections/08_conformal_mapping.tex}
+\input{sections/09_performance_space.tex}
+\input{sections/10_algebraic_kkt.tex}
+\input{sections/11_nonlinear_extension.tex}
+\input{sections/12_validation.tex}
+\input{sections/13_embedded_solver.tex}
+\input{sections/14_limiting_cases.tex}
+\input{sections/15_method_comparison.tex}
+
+\part{Inverse problem: from required operation to admissible machines}
+\input{sections/17_inverse_design.tex}
+\input{sections/18_loss_degeneracy.tex}
+\input{sections/19_eesm_design_map.tex}
+\input{sections/20_psm_design_map.tex}
+\input{sections/21_voltage_multipoint.tex}
+\input{sections/22_spectral_sensitivity_robustness.tex}
+
+\part{Dynamic problem: optimal motion between operating points}
+\input{sections/25_dynamic_question_model.tex}
+\input{sections/26_velocity_geometry.tex}
+\input{sections/27_costs_zermelo_finsler.tex}
+\input{sections/28_geodesics_curvature_optics.tex}
+\input{sections/29_task_coordinates.tex}
+\input{sections/30_reachability_hjb_flatness.tex}
+\input{sections/31_constraints_targets.tex}
+\input{sections/32_fast_slow_experiment.tex}
+\input{sections/33_nonlinear_embedded.tex}
+\input{sections/34_dynamic_design_codesign.tex}
+
+\part{Representation problem: physically meaningful coordinates beyond \texorpdfstring{$dq$}{dq}}
+\input{sections/35_coordinate_layers.tex}
+\input{sections/36_flux_oriented_frames.tex}
+\input{sections/37_active_flux_unification.tex}
+\input{sections/38_task_performance_coordinates.tex}
+\input{sections/39_moving_frames.tex}
+\input{sections/40_joint_diagonalization.tex}
+\input{sections/41_task_control_architectures.tex}
+\input{sections/42_coordinate_validation.tex}
+\input{sections/43_robustness_codesign.tex}
+\input{sections/44_unified_coordinate_map.tex}
+
+\part{From electromagnetic parameters to physical designs}
+\input{sections/23_geometry_preimage.tex}
+\input{sections/24_codesign.tex}
+\input{sections/16_conclusion.tex}
+
+\ifshowglossary
+  \glsaddall[types={\acronymtype}]
+  \glsaddall[types={symbols}]
+  \printnoidxglossary[type=\acronymtype,title={Acronyms}]
+  \printnoidxglossary[type=symbols,title={Symbols}]
+\fi
+\ifshowbibliography
+  \printbibliography
+\fi
+\end{document}

@@ -1,0 +1,57 @@
+\begin{tikzpicture}[font=\footnotesize]
+    \pgfmathsetmacro{\slots}{3}
+    \pgfmathsetmacro{\innerRadius}{1.2}
+    \pgfmathsetmacro{\outerRadius}{2.2}
+    \pgfmathsetmacro{\meanRadius}{0.5*(\innerRadius + \outerRadius)}
+    \pgfmathsetmacro{\segmentangle}{360/\slots}
+    \pgfmathsetmacro{\slotWidth}{30}
+    \pgfmathsetmacro{\shoeWidth}{30}
+    
+    \pgfmathsetmacro{\innerSlotwidth}{\slotWidth/\innerRadius}
+    \pgfmathsetmacro{\outerSlotwidth}{\slotWidth/\outerRadius}
+    \pgfmathsetmacro{\innerShoewidth}{\shoeWidth/\innerRadius}
+    \pgfmathsetmacro{\outerShoewidth}{\shoeWidth/\outerRadius}
+    \pgfmathsetmacro{\meanShoewidth}{0.5*(\innerShoewidth + \outerShoewidth)}
+    
+    \clip (0,0) circle(\outerRadius);
+
+    \pgfmathsetmacro{\iters}{\slots-1}
+    \foreach \k in {0,...,\iters}
+    {
+        \pgfmathsetmacro{\innerCoreCW}{\k*\segmentangle - (\segmentangle - \innerSlotwidth)/2 + \innerShoewidth}
+        \pgfmathsetmacro{\innerCoreCCW}{\k*\segmentangle + (\segmentangle - \innerSlotwidth)/2 -\innerShoewidth}
+        \pgfmathsetmacro{\outerCoreCW}{\k*\segmentangle - (\segmentangle - \outerSlotwidth)/2 + \outerShoewidth}
+        \pgfmathsetmacro{\outerCoreCCW}{\k*\segmentangle + (\segmentangle - \outerSlotwidth)/2 - \outerShoewidth}
+    
+        \filldraw[fill=colIron] 
+        (\innerCoreCW:\innerRadius) arc[start angle=\innerCoreCW, end angle=\innerCoreCCW, radius=\innerRadius] --
+        (\outerCoreCCW:\outerRadius) arc[start angle=\outerCoreCCW, end angle=\outerCoreCW, radius=\outerRadius] -- 
+        cycle;
+
+        \filldraw[fill=colIronLight] 
+        (\innerCoreCW:\innerRadius) arc[start angle=\innerCoreCW, end angle={\innerCoreCW - \innerShoewidth}, radius=\innerRadius] --
+        ({\outerCoreCW - \outerShoewidth}:\outerRadius) arc[start angle={\outerCoreCW - \outerShoewidth}, end angle=\outerCoreCW, radius=\outerRadius] -- 
+        cycle;
+
+        \filldraw[fill=colIronLight] 
+        (\innerCoreCCW:\innerRadius) arc[start angle=\innerCoreCCW, end angle={\innerCoreCCW + \innerShoewidth}, radius=\innerRadius] --
+        ({\outerCoreCCW + \outerShoewidth}:\outerRadius) arc[start angle={\outerCoreCCW + \outerShoewidth}, end angle=\outerCoreCCW, radius=\outerRadius] -- 
+        cycle;
+
+        \draw (0,0) circle[radius=\innerRadius];
+        \draw (0,0) circle[radius=\outerRadius];
+
+        \pgfmathsetmacro{\idxGap}{int(1 + \k*4)}
+        \pgfmathsetmacro{\idxShoeCW}{int(2 + \k*4)}
+        \pgfmathsetmacro{\idxCore}{int(3 + \k*4)}
+        \pgfmathsetmacro{\idxShoeCCW}{int(4 + \k*4)}        
+        
+        \path ({(\k-0.5)*\segmentangle}:\innerRadius) -- ({(\k-0.5)*\segmentangle}:\outerRadius) node[pos=0.5, sloped] {$\gls{Primenumber}_{\idxGap}$};
+        \path ({\k*\segmentangle}:\innerRadius) -- ({\k*\segmentangle}:\outerRadius) node[pos=0.5, sloped] {$\gls{Primenumber}_{\idxCore}$}; 
+        
+        \path ({\innerCoreCW - 0.5*\innerShoewidth}:\innerRadius) -- ({\outerCoreCW - 0.5*\outerShoewidth}:\outerRadius) node[pos=0.5, sloped] {$\gls{Primenumber}_{\idxShoeCW}$};     
+        
+        \path ({\innerCoreCCW + 0.5*\innerShoewidth}:\innerRadius) -- ({\outerCoreCCW + 0.5*\outerShoewidth}:\outerRadius) node[pos=0.5, sloped] {$\gls{Primenumber}_{\idxShoeCCW}$};
+    }    
+    
+\end{tikzpicture}

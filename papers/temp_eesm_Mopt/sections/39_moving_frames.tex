@@ -1,0 +1,89 @@
+\section{Local metric frames and curvilinear machine coordinates}
+\label{sec:moving-task-frames}
+
+When saturation bends the flux map, the most meaningful directions may also
+bend through current space. Let
+\[
+ \vect g_M=\nabla M,\qquad \vect g_P=\nabla P_{\mathrm{Cu}},\qquad
+ \vect g_U=\nabla U^2.
+\]
+Each gradient is normal to its level surface. The Euclidean \(\vect g_M\)
+maximizes torque change per Euclidean ampere step. If the scarce resource is
+loss or voltage-to-current speed, a positive-definite metric \(\matr G\)
+changes the answer to the natural-gradient direction
+\begin{equation}
+ \vect e_M=
+ \frac{\matr G^{-1}\vect g_M}
+ {\sqrt{\vect g_M^{\mathsf T}\matr G^{-1}\vect g_M}}.
+ \label{eq:metric-torque-axis}
+\end{equation}
+With \(\matr G=\matr R\), it is the greatest torque change per incremental
+loss length; with the dynamic metric of Part~III, it is the greatest torque
+change per unit of local actuation difficulty.
+
+\input{figures/44_local_gradient_frame.tex}
+
+\subsection{Metric Gram--Schmidt and a moving triad}
+
+Metric orthogonality uses
+\(\langle\vect x,\vect y\rangle_G=\vect x^{\mathsf T}\matr G\vect y\).
+In two dimensions, remove from a trial vector \(\vect a\) its component along
+a normalized \(\vect e_1\) by
+\[
+ \vect a_\perp=\vect a-\vect e_1(\vect e_1^{\mathsf T}\matr G\vect a).
+\]
+The same construction in the EESM gives a local triad
+\[
+ \matr E(\vect i)=[\vect e_M,\vect e_U,\vect e_N],
+\]
+where \(\vect e_U\) is the metric projection of
+\(\matr G^{-1}\vect g_U\) into the constant-torque tangent plane and
+\(\vect e_N\) completes the metric-orthonormal basis. Its meanings are
+torque change, voltage management at constant torque, and remaining
+allocation. The construction fails when \(\vect g_M=0\), when the projected
+voltage gradient vanishes, or when gradients become nearly dependent.
+
+For a saturated map
+\(\boldsymbol\psi=\boldsymbol\phi(\vect i)\), the differential inductance
+\(\matr L_{\mathrm{diff}}=\partial\boldsymbol\psi/\partial\vect i\) enters
+the torque and voltage gradients. Consequently \(\matr E=\matr E(\vect i)\).
+If local components are \(\vect q=\matr E^{-1}\dot{\vect i}\), then
+\[
+ \ddot{\vect i}=\matr E\dot{\vect q}
+ +\underbrace{\dot{\matr E}\vect q}_{\text{motion of the basis}}.
+\]
+This is the three-dimensional analogue of the
+\(-\dot\delta\matr J\vect x\) term in~\eqref{eq:arbitrary-frame-rate}.
+
+\input{figures/45_curvilinear_grid.tex}
+
+\subsection{Local arrows are not automatically global coordinates}
+
+A smoothly varying triad is a useful differential frame, but its arrows need
+not integrate to a globally consistent rectangular chart. In plain language:
+walking first along the local torque arrow and then along the allocation arrow
+may not reach the same point as taking the steps in reverse order. Vanishing
+Lie brackets for the desired coordinate vector fields---or the corresponding
+Frobenius involutivity condition for distributions---is the formal
+integrability test. Torque itself is integrable by construction away from
+critical points; an arbitrarily Gram--Schmidt-completed pair generally is not.
+It should then be used as a local control basis, not advertised as a global
+coordinate transformation.
+
+Curvilinear charts are still useful. In the \(dq\) plane, torque curves can
+label one family and a loss- or flux-based variable can label the crossing
+family. The resulting grid follows the physics like polar coordinates follow
+circles. Conformality is neither required nor sufficient for decoupled
+dynamics. The square map from §cref{sec:conformal} preserves planar angles
+away from its branch point but does not remove observer, input, or saturation
+coupling; in three-dimensional EESM space, general metric-adapted
+diffeomorphisms are more natural than forcing a conformal analogy.
+
+Online identification could estimate
+\(\partial M/\partial\vect i\) and
+\(\partial\boldsymbol\psi/\partial\vect i\), then update the local frame
+without a fixed parameter map. This is an exploratory adaptive extension, not
+an established replacement for observers. Physical interpretability remains
+a hard constraint: every learned axis must still state what motion along it
+does, and continuity, excitation richness, sign alignment, and safety bounds
+must be enforced.

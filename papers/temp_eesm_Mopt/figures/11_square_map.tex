@@ -1,0 +1,21 @@
+\begin{figure}[tb]
+\centering
+\begin{tikzpicture}
+\begin{groupplot}[group style={group size=2 by 1,horizontal sep=12mm},
+ axis main,axis equal image,width=.46\linewidth,height=5.6cm]
+\nextgroupplot[xlabel={$z_\psi$},ylabel={$z_q$},xmin=-2.4,xmax=2.4,ymin=-2.2,ymax=2.2,title={$w$ plane}]
+ \foreach \c in {.45,.9}{
+  \addplot[torque curve,domain=.23:2.3,samples=80]{\c/x};
+  \addplot[torque curve,domain=-2.3:-.23,samples=80]{\c/x};}
+ \addplot[loss curve,domain=0:360,samples=100] ({1.55*cos(x)},{1.55*sin(x)});
+\nextgroupplot[xlabel={$\operatorname{Re}\zeta$},ylabel={$\operatorname{Im}\zeta$},xmin=-2.7,xmax=2.7,ymin=-2.7,ymax=2.7,title={$\zeta=w^2$ plane}]
+ \addplot[torque curve] coordinates {(-2.5,.9) (2.5,.9)};
+ \addplot[torque curve,Purple!55] coordinates {(-2.5,1.8) (2.5,1.8)};
+ \addplot[loss curve,domain=0:360,samples=100] ({2.40*cos(x)},{2.40*sin(x)});
+\end{groupplot}
+\end{tikzpicture}
+\caption{The square map sends constant-product hyperbolas to torque lines and
+loss circles to circles with squared radius. It does not remove the EESM's
+third, torque-neutral coordinate.}
+\label{fig:square-map}
+\end{figure}

@@ -1,0 +1,83 @@
+\section{Stator-flux orientation and direct flux-vector control}
+\label{sec:flux-oriented-frames}
+
+The stator-flux frame is an established counterexample to the idea that the
+rotor axes must also be the control axes. Let
+\(\boldsymbol\psi_s=\psi_s[\cos\delta,\sin\delta]^{\mathsf T}_{dq}\).
+Choosing the \(f\) axis along this vector gives
+\[
+ \boldsymbol\psi_{s,ft}=R(-\delta)\boldsymbol\psi_{s,dq}
+ =\begin{bmatrix}\gls{sym:psis}&0\end{bmatrix}^{\mathsf T},\qquad
+ \begin{bmatrix}\gls{sym:iflux}\\\gls{sym:itorqueft}\end{bmatrix}
+ =R(-\delta)\begin{bmatrix}i_d\\i_q\end{bmatrix}.
+\]
+The inverse is the transpose rotation. Figure~\ref{fig:arbitrary-frame} makes
+the distinction precise: a constant \(\delta\) is merely another rotor-fixed
+basis, whereas the \(ft\) angle is a state-dependent flux angle.
+
+\input{figures/37_arbitrary_frame.tex}
+
+The air-gap torque is the oriented area spanned by stator flux and current,
+\begin{equation}
+ M=\gls{sym:kt}(\psi_\alpha i_\beta-\psi_\beta i_\alpha)
+ =\boxed{\gls{sym:kt}\gls{sym:psis}\gls{sym:itorqueft}}.
+ \label{eq:ft-torque}
+\end{equation}
+Once one axis lies on the flux vector, the parallel current produces no
+oriented area and only the perpendicular component remains. Thus \(i_t\) is
+not a newly named \(i_q\): it is a geometrically exact torque-producing
+current in the instantaneous stator-flux frame.
+
+\input{figures/38_dq_vs_ft.tex}
+\input{figures/39_cross_product_torque.tex}
+
+\subsection{Voltage dynamics in the moving flux frame}
+
+In a frame rotating at
+\(\dot\gamma=\omega_e+\dot\delta\), the stator equation is
+\[
+ \vect u_{ft}=R_s\vect i_{ft}+\dot{\boldsymbol\psi}_{s,ft}
+ +(\omega_e+\dot\delta)\matr J\boldsymbol\psi_{s,ft}.
+\]
+Because the second flux component is zero,
+\begin{equation}
+ \boxed{u_f=R_si_f+\dot\psi_s},\qquad
+ \boxed{u_t=R_si_t+\psi_s(\omega_e+\dot\delta)}.
+ \label{eq:ft-voltage}
+\end{equation}
+The \(f\)-axis voltage changes flux magnitude; \(i_t\) sets torque; and the
+price is an observed flux angle and its rotational term. At high speed
+\(U\approx\omega_e\psi_s\), so a flux command exposes the voltage limit
+directly. A conventional current-vector stack uses
+\[
+ M^\star\to(i_d^\star,i_q^\star)\to 2\times\mathrm{PI},
+\]
+whereas flux--torque control uses
+\[
+ (M^\star,\psi_s^\star)\to(i_t^\star,\psi_s^\star)
+ \to\text{torque/current and flux loops}.
+\]
+The latter may remove a field-weakening current-reference map, but it adds a
+stator-flux observer and low-speed magnetic-model dependence.
+
+\subsection{What the literature already establishes}
+
+Unified \gls{dfvc} in stator-flux coordinates was demonstrated across
+sinusoidal AC-machine families by Pellegrino, Bojoi, and Guglielmi
+\cite{pellegrino2011dfvc}; model-based PMSM control and IPMSM self-learning or
+virtual-signal-injection variants further address nonlinear magnetic maps and
+MTPA tracking \cite{boazzo2015dfvc,sun2016dfvc,sun2017selflearning}. The EESM
+line is no longer a conjectural extension. Ionta et al.\ reported an ECCE
+implementation in 2024 \cite{ionta2024dfvc}; the 2026 journal works cover
+direct flux/torque control, deadbeat direct-flux control with interchangeable
+torque controllers, and a unified design of accurate torque controllers
+\cite{ionta2026dftc,rubino2026deadbeat,ionta2026unified}. Metadata checked on
+25 September 2026 place the first two journal papers in volume/issue/page
+ranges, while the unified torque-controller paper still carries early-access
+pages 1--21.
+
+Those works solve practical flux estimation, loop design, torque control, and
+experimental realization. The additional question here is different: among
+rotor, stator-flux, active-flux, and abstract task coordinates, which chart
+best exposes optimization, null-space allocation, conditioning, and embedded
+cost? No claim of a new DFVC principle is made.

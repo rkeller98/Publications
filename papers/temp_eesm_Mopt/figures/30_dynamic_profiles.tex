@@ -1,0 +1,44 @@
+\begin{figure}[p]
+\centering
+\begin{tikzpicture}
+\begin{groupplot}[
+ group style={group size=2 by 3,horizontal sep=1.15cm,vertical sep=1.15cm},
+ width=.46\linewidth,height=.25\linewidth,grid=both,
+ tick label style={font=\scriptsize},label style={font=\scriptsize},
+ legend style={font=\scriptsize,draw=none,fill=none}]
+\nextgroupplot[ylabel={$i_d$},xlabel={$t$}]
+ \addplot[gray,dashed] table[x index=0,y index=1]{figures/data/dynamic_straight.dat};
+ \addplot[BrickRed,thick] table[x index=0,y index=1]{figures/data/dynamic_time.dat};
+ \addplot[ForestGreen!70!black,thick] table[x index=0,y index=1]{figures/data/dynamic_energy.dat};
+\nextgroupplot[ylabel={$i_q$},xlabel={$t$},legend to name=dynlegend]
+ \addplot[gray,dashed] table[x index=0,y index=2]{figures/data/dynamic_straight.dat};
+ \addlegendentry{straight}
+ \addplot[BrickRed,thick] table[x index=0,y index=2]{figures/data/dynamic_time.dat};
+ \addlegendentry{time-oriented}
+ \addplot[ForestGreen!70!black,thick] table[x index=0,y index=2]{figures/data/dynamic_energy.dat};
+ \addlegendentry{energy-oriented}
+\nextgroupplot[ylabel={$i_f$},xlabel={$t$}]
+ \addplot[gray,dashed] table[x index=0,y index=3]{figures/data/dynamic_straight.dat};
+ \addplot[BrickRed,thick] table[x index=0,y index=3]{figures/data/dynamic_time.dat};
+ \addplot[ForestGreen!70!black,thick] table[x index=0,y index=3]{figures/data/dynamic_energy.dat};
+\nextgroupplot[ylabel={$M$},xlabel={$t$}]
+ \addplot[gray,dashed] table[x index=0,y index=4]{figures/data/dynamic_straight.dat};
+ \addplot[BrickRed,thick] table[x index=0,y index=4]{figures/data/dynamic_time.dat};
+ \addplot[ForestGreen!70!black,thick] table[x index=0,y index=4]{figures/data/dynamic_energy.dat};
+\nextgroupplot[ylabel={$P_{\rm Cu}$},xlabel={$t$}]
+ \addplot[gray,dashed] table[x index=0,y index=5]{figures/data/dynamic_straight.dat};
+ \addplot[BrickRed,thick] table[x index=0,y index=5]{figures/data/dynamic_time.dat};
+ \addplot[ForestGreen!70!black,thick] table[x index=0,y index=5]{figures/data/dynamic_energy.dat};
+\nextgroupplot[ylabel={voltage utilization},xlabel={$t$},ymax=1.08]
+ \addplot[gray,dashed] table[x index=0,y index=6]{figures/data/dynamic_straight.dat};
+ \addplot[BrickRed,thick] table[x index=0,y index=6]{figures/data/dynamic_time.dat};
+ \addplot[ForestGreen!70!black,thick] table[x index=0,y index=6]{figures/data/dynamic_energy.dat};
+ \addplot[black,dotted] coordinates {(0,1)(4,1)};
+\end{groupplot}
+\node at ($(current bounding box.south)+(0,-6mm)$) {\pgfplotslegendfromname{dynlegend}};
+\end{tikzpicture}
+\caption{Currents, torque, copper power, and exact converter utilization in
+the A-to-B toy experiment.  Different paths reach the same endpoint but use
+the voltage and loss budgets in visibly different ways.}
+\label{fig:dynamic-profiles}
+\end{figure}

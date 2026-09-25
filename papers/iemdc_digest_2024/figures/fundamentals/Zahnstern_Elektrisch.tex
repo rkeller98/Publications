@@ -1,0 +1,38 @@
+\begin{tikzpicture}[font=\footnotesize]
+    \pgfmathsetmacro{\slots}{12}
+    \pgfmathsetmacro{\polepairs}{5}
+    \pgfmathsetmacro{\coveragefactor}{0.85}
+    \pgfmathsetmacro{\outerRadius}{1.5}
+    \pgfmathsetmacro{\segmentangle}{360/\slots}
+    \pgfmathsetmacro{\slotangle}{\segmentangle*\coveragefactor}
+    
+    \def\Upos{\color{colPhaU}$\gls{mag_fluxlink}_{\gls{idx_cs_abc_a}+}$}
+    \def\Uneg{\color{colPhaU}$\gls{mag_fluxlink}_{\gls{idx_cs_abc_a}-}$}
+    \def\Vpos{\color{colPhaW}$\gls{mag_fluxlink}_{\gls{idx_cs_abc_c}+}$}
+    \def\Vneg{\color{colPhaW}$\gls{mag_fluxlink}_{\gls{idx_cs_abc_c}-}$}
+    \def\Wpos{\color{colPhaV}$\gls{mag_fluxlink}_{\gls{idx_cs_abc_b}+}$}
+    \def\Wneg{\color{colPhaV}$\gls{mag_fluxlink}_{\gls{idx_cs_abc_b}-}$}
+
+    \draw[->, line width=1] (0,0) -- ({\segmentangle*0*\polepairs}:{\outerRadius*1.1}) node[pos=1.1] {1} node[pos=1.35] {\Upos};
+    \draw[->, line width=1] (0,0) -- ({\segmentangle*1*\polepairs}:{\outerRadius*1.1}) node[pos=1.1] {2} node[pos=1.35] {\Wpos};
+    \draw[->, line width=1] (0,0) -- ({\segmentangle*2*\polepairs}:{\outerRadius*1.1}) node[pos=1.1] {3} node[pos=1.35] {\Wneg};
+    \draw[->, line width=1] (0,0) -- ({\segmentangle*3*\polepairs}:{\outerRadius*1.1}) node[pos=1.1] {4} node[pos=1.35] {\Vneg};
+    \draw[->, line width=1] (0,0) -- ({\segmentangle*4*\polepairs}:{\outerRadius*1.1}) node[pos=1.1] {5} node[pos=1.35] {\Vpos};
+    \draw[->, line width=1] (0,0) -- ({\segmentangle*5*\polepairs}:{\outerRadius*1.1}) node[pos=1.1] {6} node[pos=1.35] {\Upos};
+    \draw[->, line width=1] (0,0) -- ({\segmentangle*6*\polepairs}:{\outerRadius*1.1}) node[pos=1.1] {7} node[pos=1.35] {\Uneg};
+    \draw[->, line width=1] (0,0) -- ({\segmentangle*7*\polepairs}:{\outerRadius*1.1}) node[pos=1.1] {8} node[pos=1.35] {\Wneg};
+    \draw[->, line width=1] (0,0) -- ({\segmentangle*8*\polepairs}:{\outerRadius*1.1}) node[pos=1.1] {9} node[pos=1.35] {\Wpos};
+    \draw[->, line width=1] (0,0) -- ({\segmentangle*9*\polepairs}:{\outerRadius*1.1}) node[pos=1.1] {10} node[pos=1.35] {\Vpos};
+    \draw[->, line width=1] (0,0) -- ({\segmentangle*10*\polepairs}:{\outerRadius*1.1}) node[pos=1.1] {11} node[pos=1.35] {\Vneg};
+    \draw[->, line width=1] (0,0) -- ({\segmentangle*11*\polepairs}:{\outerRadius*1.1}) node[pos=1.1] {12} node[pos=1.35] {\Uneg};    
+
+    \pgfmathsetmacro{\arcpos}{0.7*\outerRadius}
+    \draw[<->] (0:\arcpos) arc(0:30:\arcpos);
+    \node at (15:{1.2*\arcpos}) {\scriptsize \gls{phasor_diff_angle_mech}};
+
+    \pgfmathsetmacro{\arcpos}{0.6*\outerRadius}
+    \draw[<->] (0:\arcpos) arc(0:150:\arcpos);
+    \node at (75:{1.2*\arcpos}) {\scriptsize \gls{phasor_diff_angle_elec}};
+
+    \path (0,0) circle (1.35*2); % Anpassen damit mechanische Mitte = ELektrischer Mitte 
+\end{tikzpicture}

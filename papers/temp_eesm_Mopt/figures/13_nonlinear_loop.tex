@@ -1,0 +1,20 @@
+\begin{figure}[tb]
+\centering
+\begin{tikzpicture}[
+ node distance=8mm and 9mm,
+ block/.style={draw,rounded corners,align=center,minimum height=10mm,text width=.19\linewidth,fill=gray!6},
+ flow/.style={-{Latex[length=2mm]},thick}]
+ \node[block] (linear) {linear geometric\\initial solution};
+ \node[block,right=of linear] (map) {read flux map\\$\matr L_k,\vect\psi_{0,k}$};
+ \node[block,right=of map] (inner) {analytic local\\inner solve};
+ \node[block,right=of inner] (check) {residual and\\region checks};
+ \draw[flow] (linear)--(map);
+ \draw[flow] (map)--(inner);
+ \draw[flow] (inner)--(check);
+ \draw[flow] (check.south) |- ++(0,-.8) -| node[pos=.25,below]{damp/update} (map.south);
+\end{tikzpicture}
+\caption{Saturation is handled by an outer flux-map update around the small
+analytic geometric solve. The affine offset is retained, and convergence is
+judged in the original nonlinear model.}
+\label{fig:nonlinear-loop}
+\end{figure}

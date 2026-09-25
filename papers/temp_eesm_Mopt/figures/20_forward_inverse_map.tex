@@ -1,0 +1,23 @@
+\begin{figure}[tb]
+\centering
+\begin{tikzpicture}[node distance=1.25cm and 1.05cm,>=Latex,font=\small,
+ box/.style={draw,rounded corners,align=center,text width=3.15cm,minimum height=.9cm,fill=blue!6},
+ inv/.style={draw,rounded corners,align=center,text width=3.15cm,minimum height=.9cm,fill=orange!10}]
+ \node[box] (g) {physical design $\vect g$\\geometry, winding, materials};
+ \node[box,right=of g] (t) {electromagnetic $\boldsymbol\theta$\\$R,L,\psi,p,\ldots$};
+ \node[box,right=of t] (c) {operating capability\\$M_{\max},P_{\min},\mathcal W$};
+ \draw[->,thick] (g)--node[above,font=\scriptsize] {$\mathcal M$} (t);
+ \draw[->,thick] (t)--node[above,font=\scriptsize] {$\mathcal C$} (c);
+ \node[inv,below=1.35cm of c] (req) {required capability\\torque-speed envelope};
+ \node[inv,left=of req] (tf) {$\Theta_{\mathrm{feas}}$\\admissible parameters};
+ \node[inv,left=of tf] (gf) {$\mathcal G_{\mathrm{feas}}$\\non-unique preimage};
+ \draw[->,thick,orange!80!black] (req)--node[above,font=\scriptsize] {level set} (tf);
+ \draw[->,thick,orange!80!black] (tf)--node[above,font=\scriptsize] {preimage} (gf);
+ \draw[dashed,->] (gf)--(g);
+ \draw[dashed,->] (tf)--(t);
+\end{tikzpicture}
+\caption{Forward and inverse readings.  The physical-to-electromagnetic map is
+many-to-one in general, so the inverse result is a feasible preimage rather
+than a unique machine.}
+\label{fig:forward-inverse-map}
+\end{figure}

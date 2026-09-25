@@ -1,0 +1,22 @@
+\begin{figure}[tb]
+\centering
+\begin{tikzpicture}[font=\small,node distance=8mm]
+ \node[draw,rounded corners,fill=ForestGreen!12,minimum width=9.3cm,minimum height=8mm] (l1)
+ {local law: metric solve $+$ task/null projection};
+ \node[draw,rounded corners,fill=blue!10,minimum width=8.0cm,minimum height=8mm,above=of l1] (l2)
+ {PWA / explicit trajectory family};
+ \node[draw,rounded corners,fill=orange!13,minimum width=6.7cm,minimum height=8mm,above=of l2] (l3)
+ {bounded MPC or flat spline};
+ \node[draw,rounded corners,fill=BrickRed!12,minimum width=5.3cm,minimum height=8mm,above=of l3] (l4)
+ {nonlinear shooting / online NLP};
+ \node[left=7mm of l1,rotate=90,anchor=south] {increasing online cost};
+ \draw[->,very thick] ($(l1.west)+(-.45,0)$)--($(l4.west)+(-.45,0)$);
+ \node[right=4mm of l1,align=left,font=\scriptsize] {fixed latency\\small memory};
+ \node[right=4mm of l4,align=left,font=\scriptsize] {highest fidelity\\timing certification needed};
+\end{tikzpicture}
+\caption{Implementation hierarchy.  More global optimality normally costs
+iterations, memory, or both; a certified controller combines an offline
+high-fidelity layer with a fixed-cost feasible online fallback.}
+\label{fig:embedded-hierarchy}
+\end{figure}
+

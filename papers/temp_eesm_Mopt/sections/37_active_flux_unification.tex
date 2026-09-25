@@ -1,0 +1,72 @@
+\section{Active flux: absorb machine-specific torque production}
+\label{sec:active-flux-unification}
+
+Active flux is a second established answer to the representation question
+\cite{boldea2008}. In stator-vector form,
+\begin{equation}
+ \boldsymbol\psi_{\mathrm a}=\boldsymbol\psi_{\mathrm s}
+ -L_q\vect i_{\mathrm s}.
+ \label{eq:active-flux-vector}
+\end{equation}
+Subtracting the isotropic \(L_q\) response leaves the part of flux that creates
+torque in an equivalent nonsalient model. For a linear IPMSM,
+\[
+ \boldsymbol\psi_{\mathrm a}
+ =[\psi_{\mathrm{pm}}+(L_d-L_q)i_d]\,\boldsymbol e_d,
+ \qquad M=k_T\psi_{\mathrm a}i_q.
+\]
+For a stator-referred DC-excited machine,
+\begin{align}
+ \psi_d&=L_di_d+L_{md}i_F,& \psi_q&=L_qi_q,\\
+ \boxed{\psi_{\mathrm a}}&=\boxed{L_{md}i_F+(L_d-L_q)i_d},&
+ \boxed{M}&=\boxed{k_T\psi_{\mathrm a}i_q}.
+ \label{eq:eesm-active-flux}
+\end{align}
+The derivation is merely
+\(M=k_T(\psi_di_q-\psi_qi_d)\); neither sensorless operation nor a
+particular observer is required for the definition. The 2009 DC-excited
+active-flux control work already uses this structure
+\cite{boldea2009dcactive}.
+
+\input{figures/40_active_flux_subtraction.tex}
+\input{figures/41_eesm_active_flux.tex}
+
+\subsection{Exact relation to the existing \texorpdfstring{\(s_\psi\)}{s-psi} coordinate}
+
+The earlier coordinate
+\[
+ s_\psi=\Delta L i_d+L_{\mathrm{exc}}i_{\mathrm{exc}}
+\]
+is numerically identical to \(\psi_{\mathrm a}\) only when
+\(i_{\mathrm{exc}}\) is referred to the same stator turns base and
+\(L_{\mathrm{exc}}=L_{md}\). With an unreferred rotor current
+\(i_F=n\,i_{\mathrm{exc}}\), the coefficient is \(nL_{md}\). Leakage belongs
+in the self inductances but not in the mutual excitation term; inconsistent
+use of \(L_f\), \(L_{md}\), and current referral creates an apparent scaling
+difference. Under saturation, the safest definition is always the vector
+identity~\eqref{eq:active-flux-vector}; a constant coefficient formula is then
+only a local affine approximation.
+
+Three related coordinate sets must not be conflated:
+\begin{align*}
+ (\psi_{\mathrm a},i_q,r)&\quad\text{uses physical webers and amperes},\\
+ (z_\psi,z_q,z_0)&\quad\text{uses loss-normalized coordinates}.
+\end{align*}
+The first is immediately interpretable and portable across SPM, IPM, SynRM,
+and EESM models; the residual \(r\) still needs a definition. The second makes
+copper loss spherical and supplies an exact loss-orthogonal null coordinate,
+but its axes depend on resistance and lose their direct units. Their link is
+linear in the unsaturated model:
+\(s_\psi=\beta z_\psi\) up to the stator-current whitening factor already
+specified in \cref{sec:whitening}. Thus
+\[
+ \boxed{\text{three physical currents}
+ \longrightarrow\text{two multiplicative torque factors}
+ +\text{one torque-null direction}.}
+\]
+
+For an SPM, \(L_d=L_q\) and active flux is the fixed PM flux, so conventional
+\(i_q\) is already an ideal torque coordinate. For an IPMSM it combines PM and
+reluctance torque. For an EESM it additionally combines field and direct-axis
+resources. This is why the incentive to leave raw \(dq\) currents grows with
+saliency, excitation freedom, saturation, and secondary objectives.

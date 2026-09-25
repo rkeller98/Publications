@@ -1,0 +1,83 @@
+\section{Nonlinear geometry and embedded realization}
+\label{sec:nonlinear-dynamic-embedded}
+
+For saturation, temperature, and DC-link variation, recompute the local
+objects from measured or scheduled parameters:
+\begin{align}
+ \matr B(\vect i)&=\matr L_{\mathrm{diff}}(\vect i)^{-1},
+ &\vect f&=-\matr B\vect r,
+ \tag{33.1}\\
+ \matr G(\vect i)&=\matr B^{-\mathsf T}\matr S^{-1}\matr B^{-1},
+ &\mathcal V(\vect i)&=\vect f+\matr B\mathcal U.
+ \tag{33.2}
+\end{align}
+Here \(R_s(T_s,\omega)\), \(R_f(T_r)\),
+\(\matr L_{\mathrm{diff}}(\vect i)\), and
+\(U_{\max}(U_{\mathrm{DC}})\) may all vary at runtime.  For three states,
+updating \(\vect f\), a Cholesky factor of \(\matr G\), and three principal
+directions is a fixed-size operation.  Recomputing a global HJB map or a full
+nonlinear geodesic is not.
+
+A safe local nonlinear loop is:
+\begin{enumerate}
+ \item evaluate flux, differential inductance, resistance, and converter set;
+ \item build the local velocity body and task/null-space directions;
+ \item take one short policy or optimization step;
+ \item verify voltage, current, torque, and original nonlinear flux residuals;
+ \item damp or shorten the step if a region boundary is crossed.
+\end{enumerate}
+This is analogous to the local affine static solver of
+Section~\ref{sec:nonlinear}, but now the tangent model predicts
+motion rather than a steady operating point.
+
+\subsection{Arithmetic and timing comparison}
+
+\begin{table}[tb]
+\centering
+\caption{Controller implementation cost.  ``Fixed'' means a declared maximum
+operation count can be guaranteed after offline preparation.}
+\label{tab:dynamic-implementation}
+\begin{tabularx}{\linewidth}{@{}lXXXX@{}}
+\toprule
+Approach & Online core & Variable iteration? & Memory & Main risk\\
+\midrule
+Natural-gradient task/null & $3\times3$ solve, dot products & no & parameters only & locally myopic\\
+Gramian law & matrix exponential/LUT, solve & no with fixed horizon & small & no hard amplitude guarantee\\
+PWA refraction & region lookup, line intersections & bounded & region table & model discontinuities\\
+Flat spline & polynomial evaluation, small coefficient solve & bounded if fixed & modest & missed path constraints\\
+Explicit MPC & affine-region lookup & no & potentially large & region explosion\\
+Online MPC & QP/NLP prediction & yes unless capped & modest & timing jitter\\
+Finsler shooting & ODE and root solve & yes unless capped & small & local branch selection\\
+Offline HJB & LUT interpolation and gradient & no & large in 3D/4D & grid and model error\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+For an \gls{mcu}, the natural-gradient and moving-manifold laws are the
+smallest credible dynamic extensions of the static solver.  For an
+\gls{fpga}, symmetric fixed-size factorizations, polynomial flux evaluation,
+\gls{cordic} square roots, facet comparisons, and a fixed number of Newton
+steps map well to pipelines.  Variable-iteration nonlinear shooting requires
+an iteration cap, residual monitor, and feasible fallback.  The time-optimal
+deadbeat and MPC literature illustrates the performance--constraint trade-off
+for PMSM drives \parencite{lee2014dynamic,brosch2023}.
+
+\input{figures/32_embedded_hierarchy.tex}
+
+\subsection{What can be updated cheaply?}
+
+Resistance and DC-link changes update \(\vect f\) and \(\matr S\) directly.
+A tabulated reciprocal \(\matr L_{\mathrm{diff}}\) updates the local metric
+with one fixed-size factorization.  Fast/slow axes follow from a symmetric
+\(3\times3\) eigensolver or from the Cholesky factor without explicit
+eigenvectors.  The local natural-gradient direction requires one metric solve.
+By contrast, curvature needs spatial derivatives of \(\matr G\), a global
+value map needs a grid recomputation, and a changing mechanical speed adds a
+state dimension.  The controller should therefore update local geometry
+online and reserve global trajectory families for scheduled offline models.
+
+Robustness requires margins on both the velocity body and the path.  If
+\(\widehat{\matr L}_{\mathrm{diff}}\) has bounded error, shrink
+\(\mathcal U\) or inflate \(\matr G\) so the commanded velocity remains inside
+the true body.  Every stored path should carry voltage, current, torque, and
+thermal margins, not only a nominal cost.

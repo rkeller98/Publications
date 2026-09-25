@@ -1,0 +1,24 @@
+\begin{figure}[tb]
+\centering
+\begin{tikzpicture}
+\begin{axis}[axis main,width=.78\linewidth,height=6.3cm,axis equal image,
+ xlabel={$\eta$},ylabel={$\chi$},xmin=0,xmax=5.1,ymin=-2.1,ymax=2.1]
+ \addplot[loss curve,domain=0:360,samples=121]
+ ({1+0*cos(x)},{0+0*sin(x)});
+ \addplot[loss curve,MidnightBlue!65,domain=0:360,samples=121]
+ ({1.25+.75*cos(x)},{.75*sin(x)});
+ \addplot[loss curve,MidnightBlue!40,domain=0:360,samples=121]
+ ({1.75+1.436*cos(x)},{1.436*sin(x)});
+ \addplot[voltage curve,domain=0:360,samples=121]
+ ({3.15+1.05*cos(x)*cos(18)-.62*sin(x)*sin(18)},
+  {.15+1.05*cos(x)*sin(18)+.62*sin(x)*cos(18)});
+ \addplot[only marks,mark=*,ForestGreen] coordinates {(1,0)};
+ \node[annotation,anchor=west] at (axis cs:1.05,.05){$J=2$};
+ \node[annotation] at (axis cs:3.55,-1.25){voltage conic};
+\end{axis}
+\end{tikzpicture}
+\caption{Projective loss levels are circles with moving centers. The
+unconstrained optimum is the degenerate point $(1,0)$; voltage forces the first
+contact with its transformed conic.}
+\label{fig:projective}
+\end{figure}

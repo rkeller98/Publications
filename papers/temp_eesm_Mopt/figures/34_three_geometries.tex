@@ -1,0 +1,21 @@
+\begin{figure}[tb]
+\centering
+\begin{tikzpicture}[font=\small,node distance=19mm and 18mm]
+ \node[draw,rounded corners,fill=blue!10,minimum width=35mm,minimum height=16mm,align=center] (static)
+ {static geometry\\where to operate?};
+ \node[draw,rounded corners,fill=BrickRed!10,minimum width=39mm,minimum height=16mm,align=center,right=of static] (dynamic)
+ {dynamic geometry\\how to move?};
+ \node[draw,rounded corners,fill=ForestGreen!12,minimum width=39mm,minimum height=16mm,align=center,below right=13mm and -9mm of static] (design)
+ {design geometry\\which machine?};
+ \draw[<->,very thick] (static)--node[above,font=\scriptsize] {endpoints}(dynamic);
+ \draw[<->,very thick] (static)--node[left,font=\scriptsize,align=right] {capability\\value functions}(design);
+ \draw[<->,very thick] (dynamic)--node[right,font=\scriptsize,align=left] {transition\\descriptors}(design);
+ \node[below=11mm of design,align=center,text width=10cm]
+ {geometry and materials $\rightarrow$ flux/loss/dynamics $\rightarrow$ feasible points and paths $\rightarrow$ controller};
+\end{tikzpicture}
+\caption{The unified machine-control co-design framework.  Static optima are
+the endpoints of dynamic paths; both impose inverse constraints on machine
+parameters and physical geometry.}
+\label{fig:three-geometries}
+\end{figure}
+

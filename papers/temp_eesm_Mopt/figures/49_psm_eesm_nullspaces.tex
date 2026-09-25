@@ -1,0 +1,16 @@
+\begin{figure}[tb]
+\centering
+\begin{tikzpicture}[font=\small,>=Latex]
+\node[draw,rounded corners,fill=MidnightBlue!8,minimum width=4.8cm,minimum height=2.4cm,align=center] (psm) at (0,0)
+ {PSM/IPMSM\\2 current coordinates\\\(M=M_0\): 1-D curve\\one torque-neutral tangent};
+\node[draw,rounded corners,fill=ForestGreen!9,minimum width=4.8cm,minimum height=2.4cm,align=center] (eesm) at (6.3,0)
+ {EESM\\3 current coordinates\\\(M=M_0\): 2-D surface\\two torque-neutral tangents};
+\draw[->,very thick] (psm)--node[above]{add field-current state and input}(eesm);
+\draw[Purple,very thick] (-1.65,-1.75) .. controls (-.7,-1.1) and (.6,-2.3) .. (1.65,-1.55);
+\draw[Purple!45,fill=Purple!8] (4.8,-2.15) .. controls (5.5,-1.25) and (6.7,-2.6) .. (7.8,-1.6)
+ .. controls (7.1,-1.05) and (5.6,-1.0) .. cycle;
+\end{tikzpicture}
+\caption{Dimensionality of constant-torque sets. EESM redundancy supplies one
+additional independent allocation direction.}
+\label{fig:psm-eesm-nullspaces}
+\end{figure}

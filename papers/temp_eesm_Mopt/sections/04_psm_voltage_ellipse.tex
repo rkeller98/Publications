@@ -1,0 +1,152 @@
+\section{Complete anatomy of the PSM voltage ellipse}
+\label{sec:psm-ellipse}
+
+\subsection{Shape matrix and exact center}
+
+Squaring \cref{eq:psm-affine-map} gives
+\begin{equation}
+ \gls{sym:ip}^{\mathsf T}\gls{sym:hp}\gls{sym:ip}
+ +2\vect b^{\mathsf T}\gls{sym:ip}+c\leq0,
+ \end{equation}
+where
+\begin{align}
+ \gls{sym:hp}&=\gls{sym:mp}^{\mathsf T}\gls{sym:mp}
+ =\begin{bmatrix}
+ R_s^2+\omega_e^2L_d^2&R_s\omega_e(L_d-L_q)\\
+ R_s\omega_e(L_d-L_q)&R_s^2+\omega_e^2L_q^2
+ \end{bmatrix},\label{eq:psm-Hp}\\
+ \vect b&=\begin{bmatrix}\omega_e^2L_d\psi_{\mathrm{pm}}\\
+ R_s\omega_e\psi_{\mathrm{pm}}\end{bmatrix},\qquad
+ c=\omega_e^2\psi_{\mathrm{pm}}^2-U_{\max}^2.
+\end{align}
+The determinant
+\begin{equation}
+ \det\gls{sym:hp}=(R_s^2+\omega_e^2L_dL_q)^2
+\end{equation}
+is positive outside the joint ideal limit \(R_s=\omega_e=0\). Completing the
+square therefore yields
+\begin{equation}
+ (\gls{sym:ip}-\gls{sym:ic})^{\mathsf T}\gls{sym:hp}
+ (\gls{sym:ip}-\gls{sym:ic})=\gls{sym:umax}^2,
+ \label{eq:psm-centered-ellipse}
+\end{equation}
+with
+\begin{equation}
+ \boxed{\gls{sym:ic}=\begin{bmatrix}
+ -\dfrac{\psi_{\mathrm{pm}}\omega_e^2L_q}
+ {R_s^2+\omega_e^2L_dL_q}\\[.7em]
+ -\dfrac{\psi_{\mathrm{pm}}R_s\omega_e}
+ {R_s^2+\omega_e^2L_dL_q}
+ \end{bmatrix}.}
+ \label{eq:psm-center}
+\end{equation}
+The alternative derivation is more physical: solve
+\(\gls{sym:mp}\gls{sym:ic}+\vect r=\vect0\). The center is exactly the
+stationary current that makes both stator-voltage components zero. It is not,
+at finite speed and resistance, the familiar point
+\((-\psi_{\mathrm{pm}}/L_d,0)\). That characteristic flux-cancellation point
+is the high-speed limit and the exact ideal-resistance center.
+
+\subsection{The center traces a fixed conic}
+
+Substitution of \cref{eq:psm-center} gives the identity
+\begin{equation}
+ L_di_{\mathrm c,d}^2+L_qi_{\mathrm c,q}^2
+ +\psi_{\mathrm{pm}}i_{\mathrm c,d}=0,
+ \label{eq:center-locus-raw}
+\end{equation}
+or, after completing one scalar square,
+\begin{equation}
+ \boxed{L_d\left(i_{\mathrm c,d}+\frac{\psi_{\mathrm{pm}}}{2L_d}\right)^2
+ +L_qi_{\mathrm c,q}^2=\frac{\psi_{\mathrm{pm}}^2}{4L_d}.}
+ \label{eq:center-locus}
+\end{equation}
+The center starts at the origin when \(\omega_e=0\), travels along the lower
+half for positive speed under the present sign convention, and approaches
+\((-\psi_{\mathrm{pm}}/L_d,0)\) as \(\omega_e\to+\infty\). Negative speed
+reflects the path across the \(d\)-axis.
+
+Introduce
+\begin{equation}
+ \gls{sym:xi}=\frac{\gls{sym:omega}\sqrt{\gls{sym:ld}\gls{sym:lq}}}
+ {\gls{sym:rs}}.
+\end{equation}
+For \(R_s>0\), the same center reads
+\begin{equation}
+ i_{\mathrm c,d}=-\frac{\psi_{\mathrm{pm}}}{L_d}
+ \frac{\xi^2}{1+\xi^2},\qquad
+ i_{\mathrm c,q}=-\frac{\psi_{\mathrm{pm}}}{\sqrt{L_dL_q}}
+ \frac{\xi}{1+\xi^2}.
+ \label{eq:center-dimensionless}
+\end{equation}
+Resistance changes how quickly physical speed traverses the locus; it does not
+change the locus itself. If \(L_d=L_q\), \cref{eq:center-locus} is a circle
+centered at \((-\psi_{\mathrm{pm}}/(2L_d),0)\).
+
+\input{figures/03_psm_center_path.tex}
+
+\subsection{Rotation and when an angle stops meaning anything}
+
+For a quadratic \(Ax^2+Bxy+Cy^2\), principal directions satisfy
+\(\tan(2\theta)=B/(A-C)\). In the present case the mixed coefficient is
+\(B=2R_s\omega_e(L_d-L_q)\). It exists only when resistance, rotation, and
+saliency are all present. If \(L_d\neq L_q\), cancellation of that common
+factor gives
+\begin{equation}
+ \boxed{\tan(2\theta)=\frac{2R_s}{\omega_e(L_d+L_q)}.}
+ \label{eq:psm-angle}
+\end{equation}
+The nonsalient case must be handled before this division: for \(L_d=L_q\),
+\(\gls{sym:hp}=(R_s^2+\omega_e^2L_d^2)\matr I\), the boundary is a circle,
+and every direction is a principal direction. Formula
+\cref{eq:psm-angle} would otherwise assign a spurious orientation to a
+degenerate \(0/0\) eigenvector problem.
+
+At \(R_s=0\), the axes are the \(dq\) axes. At high speed the angle approaches
+zero. At low but nonzero speed a formal angle may approach \(45^\circ\), yet
+the ellipse simultaneously approaches the resistance circle; its eigenvalues
+coalesce and the orientation becomes ill-conditioned and physically
+irrelevant. The correct message is not that the low-speed circle is strongly
+rotated, but that a nearly circular object has no robustly observable axis.
+
+\input{figures/04_psm_tilt.tex}
+
+\subsection{Characteristic current versus a copper-loss circle}
+
+For a true PSM with stator copper loss only,
+\begin{equation}
+ \gls{sym:pcu}=\frac32\gls{sym:rs}(i_d^2+i_q^2),\qquad
+ \gls{sym:ipmax}=\sqrt{\frac{2\gls{sym:pcumax}}{3\gls{sym:rs}}}.
+ \label{eq:psm-loss-circle}
+\end{equation}
+Define \(\gls{sym:ich}=\gls{sym:psipm}/\gls{sym:ld}\). The point
+\((-I_{\mathrm{ch}},0)\) may lie inside, on, or outside the admissible loss
+circle. If a separate peak-current limit \(\gls{sym:imax}\) is also present,
+the admissible radius is \(\min(I_P,I_{\max})\); the same three geometric
+cases use that smaller radius:
+\begin{itemize}
+ \item \(I_{\mathrm{ch}}<I_P\): high-speed voltage ellipses shrink around an
+       interior point. The ideal electromagnetic model permits arbitrarily
+       high speed; finite-power operation can persist while torque decays
+       approximately as \(1/|\omega_e|\).
+ \item \(I_{\mathrm{ch}}=I_P\): the limiting center is on the thermal circle.
+       This is the tangential characteristic-current case with vanishing
+       current margin.
+ \item \(I_{\mathrm{ch}}>I_P\): the limiting center lies outside. Continuity
+       implies a finite speed at which the voltage ellipse and loss circle
+       cease to intersect.
+\end{itemize}
+Mechanical speed, rotor stress, iron loss, inverter switching, demagnetization,
+and thermal transients make the first statement an ideal-model limit, not a
+promise of a realizable infinite-speed drive.
+
+\input{figures/05_characteristic_cases.tex}
+
+\paragraph{Connection to classical operation.}
+The current/loss circle, voltage ellipse, and shifted torque hyperbola are the
+standard geometric ingredients of \gls{mtpa}, \gls{fw}, and \gls{mtpv}
+\cite{morimoto1990,kim1997}. Their intersections are generically quartic,
+which explains the analytical PMSM literature. The additional EESM field
+coordinate does not merely add another quartic variable; it restores global
+homogeneity and introduces a torque-neutral direction that a 2D slice cannot
+show.

@@ -1,0 +1,19 @@
+\begin{figure}[tb]
+\centering
+\begin{tikzpicture}[scale=.82]
+\foreach \x/\c/\lab in {0/-1.15/inside,4.4/-1.55/on,8.8/-2.00/outside}{
+ \begin{scope}[xshift=\x cm]
+  \draw[->] (-2.35,0)--(.65,0) node[right]{$i_d$};
+  \draw[->] (0,-1.45)--(0,1.55) node[above]{$i_q$};
+  \draw[loss curve] (0,0) circle (1.55);
+  \draw[voltage curve] (\c,0) ellipse (.44 and .72);
+  \fill[BrickRed] (\c,0) circle (1.5pt);
+  \node[below] at (-.75,-1.75){\lab};
+ \end{scope}}
+\end{tikzpicture}
+\caption{Characteristic current relative to the PSM copper-loss circle.
+Inside permits an ideal infinite-speed limiting center, on is tangential, and
+outside implies a finite terminal speed when the shrinking voltage ellipse no
+longer intersects the admissible disk.}
+\label{fig:characteristic-cases}
+\end{figure}

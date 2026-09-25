@@ -1,0 +1,144 @@
+\section{EESM model and its three quadratic primitives}
+\label{sec:model}
+
+\subsection{Stationary model and conventions}
+
+Let
+\begin{equation}
+ \gls{sym:i}=\begin{bmatrix}\gls{sym:id}&\gls{sym:iq}&\gls{sym:iexc}\end{bmatrix}^{\mathsf T},
+ \qquad \gls{sym:dl}=\gls{sym:ld}-\gls{sym:lq},
+ \qquad \gls{sym:kt}=\frac32\gls{sym:p}.
+\end{equation}
+For positive winding resistances and positive inductances, the stationary
+linear model is
+\begin{align}
+ \gls{sym:pcu}&=\gls{sym:rexc}\gls{sym:iexc}^{2}
+ +\frac32\gls{sym:rs}(\gls{sym:id}^{2}+\gls{sym:iq}^{2}),
+ \label{eq:model-loss}\\
+ \gls{sym:torque}&=\gls{sym:kt}\gls{sym:iq}
+ (\gls{sym:lexc}\gls{sym:iexc}+\gls{sym:dl}\gls{sym:id}),
+ \label{eq:model-torque}\\
+ \gls{sym:ud}&=\gls{sym:rs}\gls{sym:id}
+ -\gls{sym:omega}\gls{sym:lq}\gls{sym:iq},
+ \label{eq:model-ud}\\
+ \gls{sym:uq}&=\gls{sym:rs}\gls{sym:iq}
+ +\gls{sym:omega}(\gls{sym:ld}\gls{sym:id}
+ +\gls{sym:lexc}\gls{sym:iexc}).
+ \label{eq:model-uq}
+\end{align}
+These equations follow the standard rotor-oriented synchronous-machine model
+\cite{binder2017,schroeder2021}. Positive \(\gls{sym:iq}\) and positive
+active flux give positive motoring torque; reversing either factor reverses
+the torque.
+
+\subsection{Matrix forms: entries before names}
+
+The copper-loss matrix is
+\begin{equation}
+ \gls{sym:pcu}=\gls{sym:i}^{\mathsf T}\gls{sym:rmat}\gls{sym:i},\qquad
+ \gls{sym:rmat}=\diag\!\left(\frac32\gls{sym:rs},
+ \frac32\gls{sym:rs},\gls{sym:rexc}\right).
+ \label{eq:R-matrix}
+\end{equation}
+Each diagonal coefficient is the watts paid for one squared ampere in that
+winding coordinate. For \(\gls{sym:rs},\gls{sym:rexc}>0\), the signature is
+\((+,+,+)\), the rank is three, and an equal-loss surface is an ellipsoid.
+Its eigenvectors are the physical winding-current axes because this simplified
+loss model contains no coupled loss term.
+
+Torque is also quadratic, although it is visibly a product:
+\begin{equation}
+ \gls{sym:torque}=\gls{sym:i}^{\mathsf T}\gls{sym:hmat}\gls{sym:i},\qquad
+ \gls{sym:hmat}=\frac{\gls{sym:kt}}2
+ \begin{bmatrix}
+ 0&\gls{sym:dl}&0\\
+ \gls{sym:dl}&0&\gls{sym:lexc}\\
+ 0&\gls{sym:lexc}&0
+ \end{bmatrix}.
+ \label{eq:H-matrix}
+\end{equation}
+The factor one half is required because each off-diagonal product appears
+twice in \(\gls{sym:i}^{\mathsf T}\gls{sym:hmat}\gls{sym:i}\). Its eigenvalues
+are
+\begin{equation}
+ 0,\qquad \pm\frac{\gls{sym:kt}}2
+ \sqrt{\gls{sym:dl}^{2}+\gls{sym:lexc}^{2}}.
+ \label{eq:H-eigenvalues}
+\end{equation}
+Thus the generic signature is \((+,-,0)\): one direction raises torque, one
+lowers it, and one is torque-neutral. A nonzero torque level is a hyperbolic
+cylinder. At zero torque it collapses to the two planes
+\(\gls{sym:iq}=0\) and
+\(\gls{sym:dl}\gls{sym:id}+\gls{sym:lexc}\gls{sym:iexc}=0\).
+
+The voltage map is linear:
+\begin{equation}
+ \gls{sym:u}=\gls{sym:amat}\gls{sym:i},\qquad
+ \gls{sym:amat}=\begin{bmatrix}
+ \gls{sym:rs}&-\gls{sym:omega}\gls{sym:lq}&0\\
+ \gls{sym:omega}\gls{sym:ld}&\gls{sym:rs}&
+ \gls{sym:omega}\gls{sym:lexc}
+ \end{bmatrix}.
+ \label{eq:A-matrix}
+\end{equation}
+Squaring its Euclidean output norm gives
+\begin{equation}
+ U^2=\gls{sym:i}^{\mathsf T}\gls{sym:qmat}\gls{sym:i},\qquad
+ \gls{sym:qmat}=\gls{sym:amat}^{\mathsf T}\gls{sym:amat}
+ =\begin{bmatrix}
+ R_s^2+\omega_e^2L_d^2&R_s\omega_e\Delta L&\omega_e^2L_dL_{\mathrm{exc}}\\
+ R_s\omega_e\Delta L&R_s^2+\omega_e^2L_q^2&R_s\omega_eL_{\mathrm{exc}}\\
+ \omega_e^2L_dL_{\mathrm{exc}}&R_s\omega_eL_{\mathrm{exc}}&\omega_e^2L_{\mathrm{exc}}^2
+ \end{bmatrix}.
+ \label{eq:QU-matrix}
+\end{equation}
+Unadorned symbols in this displayed matrix denote the corresponding glossary
+quantities and keep the coefficient audit legible. Because the matrix is a
+Gram matrix, it is positive semidefinite. Because
+\(\gls{sym:amat}\in\mathbb R^{2\times3}\), its rank is at most two. Under
+ordinary nondegenerate conditions the signature is \((+,+,0)\): the voltage
+boundary is an oblique elliptic cylinder, never a three-dimensional ellipsoid.
+The null direction can be chosen as
+\begin{equation}
+ \vect n=\begin{bmatrix}
+ -\omega_e^2L_qL_{\mathrm{exc}}\\
+ -R_s\omega_eL_{\mathrm{exc}}\\
+ R_s^2+\omega_e^2L_dL_q
+ \end{bmatrix},\qquad \gls{sym:amat}\vect n=\vect0.
+ \label{eq:voltage-null}
+\end{equation}
+Moving along this direction leaves both stator voltages unchanged. The zero
+eigenvalue is therefore not an abstract degeneracy; it is the precise stator
+current--field-current trade that is invisible to the inverter voltage in the
+stationary model.
+
+\input{figures/01_raw_geometry.tex}
+
+\subsection{Why homogeneity changes the problem}
+
+For every real scale \(a\),
+\begin{equation}
+ \gls{sym:pcu}(a\gls{sym:i})=a^2\gls{sym:pcu}(\gls{sym:i}),\quad
+ \gls{sym:torque}(a\gls{sym:i})=a^2\gls{sym:torque}(\gls{sym:i}),\quad
+ U^2(a\gls{sym:i})=a^2U^2(\gls{sym:i}).
+ \label{eq:homogeneity}
+\end{equation}
+A direction selects the ratios \(M/P_{\mathrm{Cu}}\) and
+\(U^2/P_{\mathrm{Cu}}\); radius selects the absolute level. Identifying
+opposite nonzero vectors as the same direction is precisely the elementary
+reason projective direction space is natural here. The sign of torque does
+not disappear: \(\vect i\) and \(-\vect i\) give the same torque, while
+changing only one torque-producing factor changes its sign.
+
+This structure is lost in the ordinary two-current PSM equations because a
+fixed magnet flux appears as an affine offset. It reappears when the PSM is
+viewed as the plane \(\gls{sym:iexc}=\text{constant}\) inside the homogeneous
+three-current parent problem.
+
+\paragraph{Synthesis.}
+Algebra gives three symmetric matrices. Geometry reads their signatures as an
+ellipsoid, a hyperbolic cylinder, and an elliptic cylinder. Physics identifies
+loss price, torque-producing products, and a voltage-invisible trade.
+Computation gains a direction--radius separation. These claims require the
+linear stationary model and positive winding resistances; later sections show
+exactly what changes outside those assumptions.

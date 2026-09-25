@@ -1,0 +1,36 @@
+\begin{tikzpicture}[font=\footnotesize]
+    \pgfmathsetmacro{\slots}{12}
+    \pgfmathsetmacro{\innerRadius}{1.3}
+    \pgfmathsetmacro{\outerRadius}{2}
+    \pgfmathsetmacro{\meanRadius}{0.5*(\innerRadius + \outerRadius)}
+    \pgfmathsetmacro{\segmentangle}{360/\slots}
+    \pgfmathsetmacro{\slotWidth}{12}
+    \pgfmathsetmacro{\innerSlotwidth}{\slotWidth/\innerRadius}
+    \pgfmathsetmacro{\outerSlotwidth}{\slotWidth/\outerRadius}
+
+
+    \pgfmathsetmacro{\iters}{\slots-1}
+    \foreach \k in {0,...,\iters}
+    {
+
+        \pgfmathsetmacro{\innerCW}{\k*\segmentangle - (\segmentangle - \innerSlotwidth)/2}
+        \pgfmathsetmacro{\innerCCW}{\k*\segmentangle + (\segmentangle - \innerSlotwidth)/2}
+        \pgfmathsetmacro{\outerCW}{\k*\segmentangle - (\segmentangle - \outerSlotwidth)/2}
+        \pgfmathsetmacro{\outerCCW}{\k*\segmentangle + (\segmentangle - \outerSlotwidth)/2}
+    
+        \filldraw[fill=colIron] 
+            (\innerCW:\innerRadius) arc[start angle=\innerCW, end angle=\innerCCW, radius=\innerRadius] --
+            (\outerCCW:\outerRadius) arc[start angle=\outerCCW, end angle=\outerCW, radius=\outerRadius] -- 
+            cycle;
+        
+        \pgfmathsetmacro{\number}{int(\k+1)}
+        \draw[->, line width=1] (0,0) 
+            -- ({\segmentangle*\k}:{\outerRadius*1.15}) 
+            node[pos=1.1] {\number};
+    }
+    \pgfmathsetmacro{\arcpos}{0.8*\innerRadius}
+    \draw[<->] (0:\arcpos) arc(0:30:\arcpos);
+    \node at (15:{0.8*\arcpos}) {\scriptsize \gls{phasor_diff_angle_mech}};
+
+    \path (0,0) circle (1.35*\outerRadius);
+\end{tikzpicture}

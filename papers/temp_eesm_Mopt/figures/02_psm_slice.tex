@@ -1,0 +1,19 @@
+\begin{figure}[tb]
+\centering
+\begin{tikzpicture}[x={(1cm,0cm)},y={(.32cm,.25cm)},z={(0cm,1cm)},scale=.95]
+ \draw[->] (-3,0,0)--(3.1,0,0) node[right]{$i_d$};
+ \draw[->] (0,-2,0)--(0,2.1,0) node[right]{$i_q$};
+ \draw[->] (0,0,-1.8)--(0,0,2) node[above]{$i_{\mathrm{exc}}$};
+ \foreach \z/\x/\col in {-1.2/.75/BrickRed,0/0/ForestGreen,1.2/-.75/MidnightBlue}{
+  \begin{scope}[canvas is xy plane at z=\z]
+   \draw[very thick,\col] (\x,0) ellipse (1.25 and .66);
+  \end{scope}}
+ \draw[neutral axis] (.75,0,-1.2)--(-.75,0,1.2);
+ \node[annotation] at (2.3,0,1.2){fixed field};
+ \node[annotation] at (2.3,0,0){PSM-like slice};
+\end{tikzpicture}
+\caption{Constant-excitation planes cut the homogeneous EESM voltage cylinder
+into translated PSM-like ellipses. Their centers lie on the cylinder's voltage
+null line.}
+\label{fig:psm-slices}
+\end{figure}

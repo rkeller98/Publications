@@ -1,0 +1,29 @@
+\begin{figure}[tb]
+\centering
+\resizebox{\linewidth}{!}{%
+\begin{tikzpicture}[>=Latex,font=\scriptsize,node distance=5mm and 5mm]
+\node[draw,rounded corners,fill=MidnightBlue!7] (t1) {\(M^\star,\omega\)};
+\node[draw,rounded corners,right=of t1] (map) {MTPA/FW maps};
+\node[draw,rounded corners,right=of map] (pi) {\(2\!+\!1\) current PIs};
+\node[draw,rounded corners,right=of pi] (dec) {\(dq\) decoupling};
+\node[draw,rounded corners,right=of dec] (pwm) {PWM/converters};
+\draw[->] (t1)--(map);\draw[->] (map)--(pi);\draw[->] (pi)--(dec);\draw[->] (dec)--(pwm);
+\node[left=3mm of t1,font=\bfseries] {CVC};
+
+\node[draw,rounded corners,fill=ForestGreen!9,below=12mm of t1] (t2)
+ {\(M^\star,\psi^\star,\) priorities};
+\node[draw,rounded corners,right=of t2] (model) {task model/observer};
+\node[draw,rounded corners,right=of model] (tc) {task-rate controller};
+\node[draw,rounded corners,right=of tc] (alloc) {constrained input allocation};
+\node[draw,rounded corners,right=of alloc] (pwm2) {PWM/converters};
+\draw[->] (t2)--(model);\draw[->] (model)--(tc);\draw[->] (tc)--(alloc);\draw[->] (alloc)--(pwm2);
+\node[left=3mm of t2,font=\bfseries] {task};
+
+\draw[dashed,Orange,->] (pwm2.south) to[bend right=15] node[below]{measured currents, estimated flux} (model.south);
+\end{tikzpicture}%
+}
+\caption{Conventional current-vector and task-space control stacks. Fewer
+reference maps can be exchanged for observers, Jacobians, and constrained
+input allocation.}
+\label{fig:control-stacks}
+\end{figure}

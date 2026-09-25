@@ -1,0 +1,80 @@
+\title{Geometry Before Multipliers:\\Operation, Motion, Design, and Physically Meaningful Control Coordinates for Synchronous Machines}
+\author{}
+\date{25 September 2026}
+\hypersetup{pdftitle={Geometry Before Multipliers: Operation, Motion, Design, and Physically Meaningful Control Coordinates for Synchronous Machines}}
+
+\newcommand{\PaperAbstract}{%
+This whitepaper develops a common geometric solution language for minimum-loss
+current allocation and maximum available torque in linear electrically excited
+and permanent-magnet synchronous machines. Copper loss, torque, and squared
+stator voltage are first classified as quadratic forms. Loss whitening turns
+the thermal ellipsoid into a sphere; a physically motivated rotation then
+separates torque-producing flux, quadrature current, and a torque-neutral
+degree of freedom. This exposes canonical hyperbolic, projective, conformal,
+and performance-space descriptions of the same structure. The normalized
+performance set is convex in the three-current EESM case, so both operating
+problems reduce to a one-dimensional boundary search supported by small
+symmetric eigenproblems. The PSM appears as a fixed-excitation slice; its
+resistive voltage ellipse, center trajectory, rotation, and characteristic
+current cases are derived without prematurely discarding stator resistance.
+Resultants, KKT equations, and known PMSM quartics are retained as validation
+and active-set tools rather than used as the opening argument. Symbolic and
+random numerical tests verify all transformations. The resulting controller
+architecture returns feasible minimum-loss currents when possible and the
+maximum admissible torque otherwise, while preserving the copper-loss ceiling
+as an explicit physical feasibility limit. The same value functions are then
+read in reverse: a required torque-speed envelope defines an admissible region
+in electromagnetic machine-parameter space. For the loss-limited linear EESM,
+two loss-normalized machine coordinates reduce constant torque-per-loss
+capability to circles, while their polar angle separates reluctance and field
+excitation mechanisms. The singular limit of vanishing excitation resistance
+is exposed as a loss cylinder and as a model diagnostic, not confused with the
+fixed-excitation PSM slice. Closed design inequalities are derived for the
+nonsalient PSM and its characteristic-current window; voltage-limited and
+multi-point requirements remain explicit value-function level sets. Spectral
+descriptors, sensitivities, robust parameter paths, and a non-unique preimage
+from electromagnetic parameters to physical geometry connect the analysis to
+machine-control co-design and inexpensive pre-filtering before finite-element
+optimization. A third reading asks how the machine should move between two
+operating points. Starting from a reciprocal flux-linkage matrix, the full
+stator and rotor-excitation dynamics are written as a drift plus a
+voltage-controlled velocity. The affine image of the converter set is the
+local speedometer of current space. Dynamic whitening separates voltage
+authority from electrical drift and identifies fast, medium, and slow current
+directions. Minimum time, transient loss energy, actuation effort, and thermal
+stress induce different trajectory geometries; their well-posedness conditions
+are stated explicitly. Ellipsoidal control authority with sufficiently weak
+drift yields an exact Zermelo navigation problem and a Randers metric, whereas
+hexagonal stator voltage and an independent excitation converter require a
+more general, often polyhedral, Finsler gauge. Curvature, optical refraction,
+piecewise-affine magnetic maps, controllability Gramians, reachability
+wavefronts, Hamilton--Jacobi equations, and flatness parametrizations are
+compared by the physical question each one simplifies. Torque-normal and
+torque-tangential motion expose a practical two-stage EESM strategy: acquire
+torque with fast stator currents and then redistribute current on the torque
+surface while the slower excitation state approaches its loss-optimal value.
+A reproducible linear toy experiment quantifies straight, stator-first,
+excitation-first, geometrically constructed, time-oriented, and energy-oriented
+paths. The resulting transition times, dynamic metric spectra, Gramian
+condition numbers, and representative point-to-point distances become new
+machine-control co-design descriptors. A fourth reading then asks in which
+coordinates the machine should be represented and controlled. Spatial
+electromagnetic frames, abstract task coordinates, and virtual input
+coordinates are separated rigorously. Rotor-oriented $dq$, stator-flux
+$ft$, and active-flux descriptions are derived in both directions, including
+the connection terms of moving frames. Torque is shown to be a valid local
+coordinate at regular points; hyperbolic torque-allocation coordinates,
+performance coordinates $(M,P_{\mathrm{Cu}},U^2)$, natural-gradient frames,
+and feedback-linearized task inputs are compared by invertibility,
+conditioning, observer burden, and real-time cost. Four numerical machine
+cases and symbolic round-trip checks expose singular sets and show why no
+single frame is universally best. The resulting conclusion is deliberately
+conditional: $dq$ remains an excellent spatial interface, while optimization,
+trajectory planning, and EESM allocation often become clearer in different,
+task-specific coordinates.}
+
+% Disable either component if the paper does not need it.
+\newif\ifshowglossary
+\showglossarytrue
+\newif\ifshowbibliography
+\showbibliographytrue

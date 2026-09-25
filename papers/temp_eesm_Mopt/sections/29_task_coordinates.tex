@@ -1,0 +1,97 @@
+\section{Torque task coordinates and null-space motion}
+\label{sec:task-coordinates}
+
+The physical currents are not sacred coordinates.  For the torque surface
+\(M(\vect i)=M_{\mathrm{ref}}\), the gradient
+\(\vect g_M=\nabla_{\vect i}M\) is Euclidean-normal.  Every tangent velocity
+satisfies \(\vect g_M^{\mathsf T}\dot{\vect i}=0\) and changes torque only at
+second order.  With dynamic metric \(\matr G\), the physically fastest normal
+direction is the natural gradient
+\[
+ \vect n_G=\frac{\matr G^{-1}\vect g_M}
+ {\vect g_M^{\mathsf T}\matr G^{-1}\vect g_M}.
+ \tag{29.1}
+\]
+It is normalized so that \(\vect g_M^{\mathsf T}\vect n_G=1\).  The associated
+metric-orthogonal tangent projector is
+\[
+ \boxed{\gls{sym:projg}=\matr I-
+ \frac{\matr G^{-1}\vect g_M\vect g_M^{\mathsf T}}
+ {\vect g_M^{\mathsf T}\matr G^{-1}\vect g_M}.}
+ \tag{29.2}
+\]
+Consequently,
+\[
+ \dot{\vect i}=\underbrace{\vect n_G\dot M}_{\text{torque-normal task motion}}
+ +\underbrace{\matr P_G\vect v_0}_{\text{torque-tangential reallocation}}.
+ \tag{29.3}
+\]
+The ordinary gradient asks which ampere change modifies torque most; the
+natural gradient asks which dynamically cheap ampere change does so.
+
+\input{figures/26_torque_nullspace.tex}
+
+A task-priority controller can therefore acquire torque through the normal
+component while projecting loss descent into the tangent space,
+\[
+ \vect v_0=-k\matr G^{-1}\nabla P_{\mathrm{Cu}}.
+ \tag{29.4}
+\]
+This compact law is not globally time-optimal in general: drift, finite steps,
+state constraints, and curvature couple the two tasks.  It is exact as the
+minimum-metric-norm solution of the instantaneous equality
+\(\dot M=\vect g_M^{\mathsf T}\dot{\vect i}\), and is therefore a useful local
+policy and warm start.
+
+\subsection{Hyperbolic torque and allocation rates}
+
+The static hyperbolic coordinates become especially informative dynamically:
+\[
+ z_\psi=\frac{i_T}{\sqrt2}e^\alpha,\qquad
+ z_q=\frac{i_T}{\sqrt2}e^{-\alpha},\qquad
+ M=\frac{\kappa}{2}i_T^2.
+ \tag{29.5}
+\]
+Differentiation gives
+\[
+ \dot z_\psi=z_\psi\left(\frac{\dot i_T}{i_T}+\dot\alpha\right),
+ \qquad
+ \dot z_q=z_q\left(\frac{\dot i_T}{i_T}-\dot\alpha\right),
+ \qquad
+ \dot M=\kappa i_T\dot i_T.
+ \tag{29.6}
+\]
+Thus \(\dot i_T\) is exactly torque-changing motion, while \(\dot\alpha\)
+reallocates the two torque factors at constant torque.  The third coordinate
+\(z_0\) remains a second torque-null freedom.  Away from \(i_T=0\), the EESM
+can be written locally as
+\[
+ \begin{bmatrix}\dot i_T&\dot\alpha&\dot z_0\end{bmatrix}^{\mathsf T}
+ =\vect F_T+\matr G_T\vect u.
+ \tag{29.7}
+\]
+This is the desired ``torque plus allocation'' machine.  The Jacobian becomes
+singular at zero torque and can be ill-conditioned when one torque factor is
+small, so a controller should switch back to regular whitened coordinates
+near those sets.
+
+\subsection{Start and target sets}
+
+Fast torque response targets the manifold
+\[
+ \gls{sym:torqueset}=\{\vect i:M(\vect i)=M_{\mathrm{ref}}\},
+ \tag{29.8}
+\]
+whereas fast convergence to efficient steady operation targets the single
+point \(\vect i^\star(M_{\mathrm{ref}})\).  A hierarchical strategy reaches
+\(\mathcal T\) first and then follows a torque-tangential curve toward
+\(\vect i^\star\).  These terminal conditions have different minimum times;
+reporting one without naming the target is ambiguous.
+
+On \(\mathcal T\), the induced metric is simply the restriction of
+\(\matr G\) to tangent vectors.  The optimal redistribution curve is a
+geodesic of that induced metric only when its objective is travel time along
+the manifold and drift is absent or incorporated into the correct Finsler
+density.  Direct current interpolation usually leaves the surface and causes
+torque error.
+

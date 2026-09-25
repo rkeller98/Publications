@@ -1,0 +1,28 @@
+\begin{figure}[tb]
+\centering
+\begin{tikzpicture}[font=\scriptsize,>=Latex,node distance=6mm and 7mm,
+ box/.style={draw,rounded corners,align=center,minimum height=7mm,fill=MidnightBlue!6}]
+\node[box] (foc) {FOC / CVC\\rotor \(dq\)};
+\node[box,right=of foc] (ufo) {UFO / DFVC\\flux frame};
+\node[box,right=of ufo] (dtc) {DTC / deadbeat\\direct voltage action};
+\node[box,below=of foc] (af) {active flux\\torque flux factor};
+\node[box,right=of af] (task) {task + null space\\priorities};
+\node[box,right=of task] (iofl) {feedback linearization\\virtual inputs};
+\node[box,below=of af] (hyp) {hyperbolic/projective\\allocation chart};
+\node[box,right=of hyp] (grad) {natural gradient\\local metric frame};
+\node[box,right=of grad] (ajd) {AJD\\fixed compromise};
+\draw[<->] (foc)--(ufo);
+\draw[<->] (ufo)--(dtc);
+\draw[->] (af)--(task);
+\draw[->] (task)--(iofl);
+\draw[->] (hyp)--(task);
+\draw[->] (grad)--(task);
+\draw[->] (ajd)--(task);
+\draw[->] (ufo)--(af);
+\draw[->] (dtc)--(iofl);
+\end{tikzpicture}
+\caption{Geometric map of control families. Spatial frames, torque variables,
+task priorities, and voltage laws are composable layers rather than mutually
+exclusive alternatives.}
+\label{fig:control-concept-map}
+\end{figure}

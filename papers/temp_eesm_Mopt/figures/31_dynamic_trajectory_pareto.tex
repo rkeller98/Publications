@@ -1,0 +1,32 @@
+\begin{figure}[tb]
+\centering
+\begin{tikzpicture}
+ \begin{axis}[name=traj,width=.54\linewidth,height=.48\linewidth,view={42}{24},
+  xlabel={$i_d$},ylabel={$i_q$},zlabel={$i_f$},grid=major,
+  tick label style={font=\scriptsize},label style={font=\scriptsize}]
+  \addplot3[gray,dashed,thick] table[x index=1,y index=2,z index=3]{figures/data/dynamic_straight.dat};
+  \addplot3[blue!65,thick] table[x index=1,y index=2,z index=3]{figures/data/dynamic_stator_first.dat};
+  \addplot3[Orange,thick] table[x index=1,y index=2,z index=3]{figures/data/dynamic_excitation_first.dat};
+  \addplot3[BrickRed,very thick] table[x index=1,y index=2,z index=3]{figures/data/dynamic_time.dat};
+  \addplot3[ForestGreen!70!black,very thick] table[x index=1,y index=2,z index=3]{figures/data/dynamic_energy.dat};
+ \end{axis}
+ \begin{axis}[at={(traj.east)},anchor=west,xshift=7mm,width=.40\linewidth,height=.42\linewidth,
+  xlabel={$t_f$},ylabel={$E_{\rm Cu}$},grid=both,
+  tick label style={font=\scriptsize},label style={font=\scriptsize},
+  nodes near coords,point meta=explicit symbolic,
+  every node near coord/.append style={font=\tiny,anchor=west}]
+  \addplot[only marks,mark=*,mark size=2.5pt,blue]
+   coordinates {(3.2633,.7063)[straight] (3.4842,1.6680)[stator]
+   (3.3019,.4247)[field] (3.3876,1.4883)[metric]};
+  \addplot[only marks,mark=square*,mark size=3pt,BrickRed]
+   coordinates {(2.7489,1.0458)[time]};
+  \addplot[only marks,mark=triangle*,mark size=3pt,ForestGreen!70!black]
+   coordinates {(3.0164,.3504)[energy]};
+  \draw[->,thick] (axis cs:2.75,.98)..controls(axis cs:2.8,.65)and(axis cs:2.9,.45)..(axis cs:3.01,.37);
+ \end{axis}
+\end{tikzpicture}
+\caption{Left: six current-space path families.  Right: the measured
+time--copper-energy trade-off.  No single trajectory dominates both dynamic
+objectives.}
+\label{fig:dynamic-trajectory-pareto}
+\end{figure}

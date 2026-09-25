@@ -1,0 +1,79 @@
+% The global framework remains authoritative. These settings are the
+% paper-specific IEMDC digest overrides retained from the source archive.
+\RequirePackage[upright=true]{derivative}
+\RequirePackage{float}
+\RequirePackage{tensor}
+
+\geometry{letterpaper,margin=1in}
+\linespread{1.6}
+\graphicspath{{./figures/}}
+
+\usetikzlibrary{fit,math,plotmarks,decorations.markings,
+  decorations.text,chains}
+\usepgfplotslibrary{colorbrewer}
+\pgfplotsset{
+  /pgfplots/table/col sep=comma,
+  colorbar style={width=2mm},
+  /pgf/number format/1000 sep={}
+}
+
+\RenewDocumentCommand{\vect}{O{} m O{}}{%
+  \ensuremath{\tensor*[#1]{\bm{#2}}{#3}}}
+\RenewDocumentCommand{\matr}{O{} m O{}}{%
+  \ensuremath{\tensor*[#1]{\underline{\bm{#2}}}{#3}}}
+\NewDocumentCommand{\pNorm}{m O{}}{%
+  \ensuremath{\left\lVert#1\right\rVert_{#2}}}
+\NewDocumentCommand{\scalar}{O{} m O{}}{%
+  \ensuremath{\tensor*[#1]{#2}{#3}}}
+\NewDocumentCommand{\phasor}{O{} m O{}}{%
+  \ensuremath{\tensor*[#1]{\underline{#2}}{#3}}}
+\NewDocumentCommand{\EvalAt}{m O{}}{%
+  \ensuremath{\left. #1 \right\vert#2}}
+\NewDocumentCommand{\discretestep}{m}{%
+  \ensuremath{\left[#1\right]}}
+
+\definecolor{colOne}{RGB}{27,158,119}
+\definecolor{colTwo}{RGB}{217,95,2}
+\definecolor{colThree}{RGB}{117,112,179}
+\definecolor{colFour}{RGB}{231,41,138}
+\definecolor{colFive}{RGB}{102,166,30}
+\definecolor{colSix}{RGB}{230,171,2}
+\definecolor{colSeven}{RGB}{166,118,29}
+\definecolor{colEight}{RGB}{102,102,102}
+\definecolor{colCopper}{RGB}{225,159,101}
+\definecolor{colIron}{RGB}{230,230,230}
+\colorlet{colIronLight}{colIron!50}
+\definecolor{colPhaU}{RGB}{228,26,28}
+\definecolor{colPhaV}{RGB}{55,126,184}
+\definecolor{colPhaW}{RGB}{77,175,74}
+\colorlet{colMagnetNorth}{red!50}
+\colorlet{colMagnetSouth}{green!50}
+
+% Only the notation used by this digest is imported from the much larger
+% legacy glossary. Keeping it local avoids coupling the global framework to a
+% paper-specific symbol catalogue.
+\newglossaryentry{area}{type=symbols,name={\ensuremath{A}},description={Area}}
+\newglossaryentry{gamma_elec}{type=symbols,name={\ensuremath{\gamma}},description={Electrical flux angle}}
+\newglossaryentry{gamma_mech}{type=symbols,name={\ensuremath{\Gamma}},description={Mechanical flux angle}}
+\newglossaryentry{innerRadius}{type=symbols,name={\ensuremath{r_{\mathrm i}}},description={Inner radius}}
+\newglossaryentry{mag_fluxlink}{type=symbols,name={\ensuremath{\psi}},description={Magnetic flux linkage}}
+\newglossaryentry{matr_prim_res}{type=symbols,name={\ensuremath{\matr{P}}},description={Prime-factor lookup matrix}}
+\newglossaryentry{meanRadius}{type=symbols,name={\ensuremath{r_{\mathrm m}}},description={Mean radius}}
+\newglossaryentry{Ntooth}{type=symbols,name={\ensuremath{N_{\mathrm t}}},description={Number of teeth}}
+\newglossaryentry{num_phases}{type=symbols,name={\ensuremath{m}},description={Number of phases}}
+\newglossaryentry{outerRadius}{type=symbols,name={\ensuremath{r_{\mathrm o}}},description={Outer radius}}
+\newglossaryentry{polepair}{type=symbols,name={\ensuremath{p}},description={Number of pole pairs}}
+\newglossaryentry{Primenumber}{type=symbols,name={\ensuremath{\mathbb P}},description={Prime number}}
+\newglossaryentry{schurr}{type=symbols,name={\ensuremath{\circ}},description={Hadamard product}}
+\newglossaryentry{trans}{type=symbols,name={\ensuremath{\mathsf T}},description={Transpose}}
+\newglossaryentry{vec_prim_sec}{type=symbols,name={\ensuremath{\vect{p}}},description={Sector-width encoded prime-factor vector}}
+\newglossaryentry{vec_prim}{type=symbols,name={\ensuremath{\vect{v}}},description={Prime-factor vector}}
+\newglossaryentry{phasor_diff_angle_mech}{type=symbols,name={\ensuremath{\Xi}},description={Mechanical phasor spacing}}
+\newglossaryentry{phasor_diff_angle_elec}{type=symbols,name={\ensuremath{\xi}},description={Electrical phasor spacing}}
+\newglossaryentry{idx_cs_ab_a}{type=symbols,name={\ensuremath{\alpha}},description={Alpha axis}}
+\newglossaryentry{idx_cs_abc_a}{type=symbols,name={\ensuremath{1}},description={First phase}}
+\newglossaryentry{idx_cs_abc_b}{type=symbols,name={\ensuremath{2}},description={Second phase}}
+\newglossaryentry{idx_cs_abc_c}{type=symbols,name={\ensuremath{3}},description={Third phase}}
+\newglossaryentry{idx_stator}{type=symbols,name={\ensuremath{\mathrm S}},description={Stator}}
+\newglossaryentry{idx_rotor}{type=symbols,name={\ensuremath{\mathrm R}},description={Rotor}}
+\newglossaryentry{idx_dim_azimutal}{type=symbols,name={\ensuremath{\nu}},description={Azimuthal coordinate}}

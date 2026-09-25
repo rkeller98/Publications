@@ -1,0 +1,159 @@
+\section{Conclusions}
+\label{sec:conclusion}
+
+The optimal current-allocation problem becomes small only after its geometry
+is respected. In the linear EESM, copper loss is a positive-definite
+ellipsoid, torque is a signature-\((+,-,0)\) hyperbolic cylinder, and squared
+stator voltage is a rank-two elliptic cylinder. Their common degree-two
+homogeneity separates current direction from radial operating level.
+
+Loss whitening gives every coordinate the same copper price. An orthogonal
+rotation discovered directly from the torque expression then produces one
+active-flux coordinate, one quadrature coordinate, and one torque-neutral
+coordinate. Torque reduces to \(M=\kappa z_\psi z_q\). From that single
+product follow the balanced unconstrained optimum, hyperbolic allocation
+angle, projective loss circles, and conformal square-map picture. The
+hyperbolic and projective coordinates are the same factor ratio in logarithmic
+and ordinary form; the square map records its product and difference-square
+geometry.
+
+The strongest computational view maps every loss-normalized direction to
+\((U^2/P_{\mathrm{Cu}},M/P_{\mathrm{Cu}})\). For three real current
+coordinates this joint numerical range is convex. Rotating a support line
+there yields a symmetric \(3\times3\) generalized eigenproblem and a bounded
+scalar search. Minimum loss and maximum available torque become two radial
+queries on the same boundary. The hard thermal limit remains explicit:
+\(P_{\mathrm{req}}\leq P_{\mathrm{Cu},\max}\) means the requested torque is
+physically admissible; otherwise the controller returns the maximum feasible
+torque and a limit status.
+
+The fixed-excitation PSM slice explains both what is inherited and what is
+lost. Its PM flux is an affine offset, so the voltage cylinder cuts to an
+ellipse whose exact resistive center follows a speed-independent conic path.
+Resistance, speed, and saliency jointly rotate the ellipse; the nonsalient
+circle case must be separated before evaluating an angle. The characteristic
+current's position relative to the copper-loss circle decides whether the
+ideal high-speed feasible set persists or terminates at finite speed.
+
+Reading the value functions in reverse creates a machine-capability geometry.
+For the voltage-free linear EESM, the time-valued coordinates
+\(x_M=\Delta L/a\) and
+\(y_M=L_{\mathrm{exc}}/\sqrt{aR_{\mathrm{exc}}}\) turn constant maximum
+torque per copper loss into circles. Their radius is the exact spectral
+descriptor \(2\lambda_{\max}(\widetilde H)/k_T\); their angle separates
+reluctance and wound-field mechanisms without judging the sign convention of
+saliency. Scaling by a declared base frequency makes the map dimensionless.
+The limit \(R_{\mathrm{exc}}\to0\) sends the loss ellipsoid to a cylinder and
+the capability coordinate to infinity. This exposes a missing physical cost;
+it is not the PSM limit, which instead fixes excitation and its effective flux.
+
+For a nonsalient PSM, low-speed torque supplies an exact minimum PM-flux
+condition. Combining it with the ideal characteristic-current criterion
+produces a transparent flux-inductance design window. Saliency adds the
+normalized loading \(\sigma=\Delta L I_P/\psi_{\mathrm{pm}}\), while
+\(\iota=I_{\mathrm{ch}}/I_P\) independently records access to the zero-flux
+point. Voltage-aware EESM and PSM boundaries remain implicit level sets of the
+same small support-eigenvalue solver. A torque-speed specification is their
+intersection, and a robust design requires its entire temperature- and
+saturation-dependent parameter path to remain inside that intersection.
+
+Electromagnetic inversion does not yield a unique physical machine. The
+forward map from geometry, winding, and materials to electromagnetic
+parameters is generally many-to-one; the proper result is the feasible
+preimage \(\mathcal G_{\mathrm{feas}}\). The analytic and spectral tests are
+therefore inexpensive filters and sensitivity tools before nonlinear magnetic,
+thermal, mechanical, demagnetization, and finite-element verification. They
+also make machine-control co-design explicit: geometry shapes the quadratic
+forms, and optimal current allocation evaluates their usable capability.
+
+KKT equations, resultants, and PMSM quartics remain important independent
+checks. They are not the preferred opening language because they hide
+directional efficiency and branch geometry. Likewise, the complex square map
+and stereographic projection teach useful invariants but make the full EESM
+voltage relation no smaller.
+
+For saturation, the next practical step is not to insert current-dependent
+inductances into global linear formulas. It is to combine the analytic inner
+direction solver with local affine flux models that include their tangent
+offsets, damping, region checks, and original-model residuals. Open questions
+include rigorous contraction regions for that outer loop, certified fixed-point
+implementations of the support eigensolver, certified surrogate margins for
+the physical-to-electromagnetic map, nonsmooth design sensitivities at
+active-set changes, and conditions under which special machine symmetries
+reduce the generic sextic projective contact polynomial. The same mathematical
+structure has thus been read in both directions: machine to feasible currents
+to optimal operation, and required operation to admissible electromagnetic
+parameters to candidate physical designs.
+
+Dynamic operation adds a third, genuinely different geometry. A reciprocal
+EESM flux matrix must contain the field self inductance and the same mutual
+inductance in stator and rotor flux equations. Its inverse differential
+inductance maps the converter-voltage body into a local set of current
+velocities; resistance, back-EMF, and cross coupling translate that body as an
+electrical drift. Dynamic whitening makes ellipsoidal voltage authority
+isotropic and exposes fast, medium, and slow current directions. These axes
+generally differ from both loss-whitened and torque-producing axes.
+
+No distance was introduced before its objective. Pure minimum time with an
+ellipsoidal controlled-speed body and sufficiently weak drift is exactly a
+Zermelo navigation problem and induces a nonreversible Randers metric. A real
+inverter hexagon crossed with a separate field-voltage interval instead gives
+a polyhedral Finsler gauge. Minimum control energy gives a controllability
+Gramian; minimum state-loss energy gives an LQR-type boundary-value problem;
+global first arrival gives an HJB value field. These are alternative physical
+questions, not rival notations for one universal trajectory.
+
+Curvature decides whether nonlinear path bending can be removed by changing
+coordinates. Conformal maps preserve angles, not travel time. The earlier
+complex square map makes torque motion visible through
+\(\dot\zeta=2w\dot w\) but is singular at zero and does not generically flatten
+the dynamic metric. Hyperbolic coordinates are more useful dynamically:
+\(\dot i_T\) changes torque while \(\dot\alpha\) reallocates current at
+constant torque. The metric natural gradient and tangent projector make this
+task/null-space split directly implementable.
+
+The fast--slow experiment also prevents a tempting overclaim. A field time
+constant 4.41 times the stator time constant did not make naive stator-first
+motion optimal. Within the tested monotonic-torque waypoint family, the
+coordinated time-oriented path was 15.8\% faster than straight interpolation,
+while the energy-oriented path used 66.5\% less copper energy than the time
+path at a 9.7\% time penalty. Time-scale separation supplies a moving optimum
+manifold and useful controller coordinates; voltage coupling still decides
+the optimum.
+
+The representation study adds a fourth, deliberately layered answer. The
+rotor \(dq\) frame remains an excellent spatial interface because it freezes
+sinusoidal variables and saliency. Stator-flux \(ft\) coordinates make torque
+and the high-speed voltage limit direct, while active flux absorbs saliency
+and excitation into one torque-producing flux factor. Neither eliminates its
+observer or magnetic-model burden. At regular points, torque can itself label
+a local coordinate; hyperbolic \((i_T,\alpha,z_0)\) variables then separate
+torque amplitude from two EESM allocation motions. Performance coordinates
+\((M,P_{\mathrm{Cu}},U^2)\) straighten three level-set families but are only
+local and can be badly conditioned.
+
+Loss-metric natural gradients and state-dependent frames expose useful local
+torque and voltage directions under saturation, but their moving bases add
+connection terms and need not integrate to global coordinates. After loss
+whitening, the sampled torque and voltage forms do not commute, so no constant
+orthogonal frame diagonalizes every objective. Approximate joint
+diagonalization provides a cheap fixed compromise; feedback linearization
+provides direct task-rate inputs only where its decoupling matrix is
+nonsingular and converter constraints remain satisfied. The numerical study
+verifies every forward/inverse identity, maps singular conditioning regions,
+and shows that the conventional \(dq\) stack is still the lowest-cost baseline
+in the explicit operation-count model.
+
+The inverse-design view now includes dynamic and representation capability. Local metric
+eigenvalues, finite-horizon Gramian spectra, excitation-to-stator time-scale
+ratio, and minimum time or energy for representative transitions complement
+steady torque--speed capability. Their intersection reveals machines that are
+efficient but dynamically slow, fast but statically inadequate, or efficient
+yet awkward to control. Thus the complete framework asks four linked
+questions: which variables expose the physics, where should the machine
+operate, how should it move between operating points, and which physical
+machine makes these points and paths possible. The common philosophy remains
+to seek the representation in which the physical constraint becomes the
+simplest geometric object---and to use conditioning, connection terms,
+curvature, residuals, and exact converter checks when no global simplification
+exists.

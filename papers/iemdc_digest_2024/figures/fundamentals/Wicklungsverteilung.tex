@@ -1,0 +1,115 @@
+\begin{tikzpicture}[
+    mag/.style={draw=black},
+    Nmag/.style={top color=colMagnetNorth, bottom color=colMagnetSouth, mag},
+    Smag/.style={top color=colMagnetSouth, bottom color=colMagnetNorth, mag},
+    flux/.style={-{Computer Modern Rightarrow[]}, line width = 2.5},
+    winding/.style={postaction={decorate}, decoration={markings, mark=between positions 0.175 and 0.825 step 0.325 with {\node {#1};}}},
+    wpos/.style={winding={\footnotesize$\otimes$}},
+    wneg/.style={winding={\footnotesize$\odot$}},
+]
+    \pgfmathsetmacro{\factor}{3.25e-2}
+    \pgfmathsetmacro{\N}{12}
+    \pgfmathsetmacro{\p}{5}
+    \pgfmathsetmacro{\poles}{2*\p}
+    \pgfmathsetmacro{\ri}{60.2*\factor}
+    \pgfmathsetmacro{\ro}{98.8*\factor}
+    \pgfmathsetmacro{\rm}{0.5*(\ri+\ro)}
+    \pgfmathsetmacro{\mcf}{0.84}
+    \pgfmathsetmacro{\hpm}{8.2*\factor}
+    \pgfmathsetmacro{\hyoke}{7.7*\factor}
+    \pgfmathsetmacro{\g}{2*\factor}
+
+    \pgfmathsetmacro{\hshoe}{5*\factor}
+    \pgfmathsetmacro{\hcore}{25*\factor}
+    \pgfmathsetmacro{\wcoil}{8*\factor}
+    \pgfmathsetmacro{\wslot}{2*\factor}
+    \pgfmathsetmacro{\wsec}{2*pi/\N*\rm }
+    \pgfmathsetmacro{\wcore}{2*pi/\N*\rm - (2*\wcoil + \wslot)}
+    \pgfmathsetmacro{\wshoe}{2*pi/\N*\rm - \wslot}
+
+    \pgfmathsetmacro{\magSecWidth}{pi/\p*\rm}
+    \pgfmathsetmacro{\wmag}{\magSecWidth*\mcf}
+    \pgfmathsetmacro{\wmagair}{\magSecWidth*(1-\mcf)}
+
+    \pgfmathsetmacro{\axlen}{\hcore/2 + \hshoe + \g + \hpm + \hyoke}
+
+    \pgfmathsetmacro{\curveangle}{12.5}
+
+    \pgfmathsetmacro{\fluxlen}{\axlen}
+
+    \newcommand{\phaseArray}{{1},{2},{-2},{-3},{3},{1},{-1},{-2},{2},{3},{-3},{-1}}
+    % Poles
+    \foreach \x in {1,...,\poles}
+    {
+        \pgfmathsetmacro{\xleft}{-\wmag/2 + \magSecWidth*(\x-5.5)}
+        \ifthenelse{\isodd{\x}}
+        {
+            \draw[Nmag] (\xleft, {(\hcore/2 + \hshoe + \g + \hpm)}) rectangle ++(\wmag, {-\hpm});
+            \draw[Nmag] (\xleft, {-(\hcore/2 + \hshoe + \g + \hpm)}) rectangle ++(\wmag, {+\hpm});
+        }
+        {
+            \draw[Smag] (\xleft, {(\hcore/2 + \hshoe + \g + \hpm)}) rectangle ++(\wmag, {-\hpm});
+            \draw[Smag] (\xleft, {-(\hcore/2 + \hshoe + \g + \hpm)}) rectangle ++(\wmag, {+\hpm});
+        }
+    }
+     
+    % Rotoryoke
+    \draw[fill=colIron] (-6*\wsec, {-(\hcore/2 + \hshoe + \g + \hpm)})
+    rectangle ++(12*\wsec, -\hyoke)
+    ;
+    \draw[fill=colIron] (-6*\wsec, {(\hcore/2 + \hshoe + \g + \hpm)})
+    rectangle ++(12*\wsec, \hyoke)
+    ;
+
+    % Statorteeth
+    \foreach \pha [count=\x] in \phaseArray
+    {
+        \draw[fill=colIron] ({-\wcore/2 + \wsec*(\x-6.5)}, -\hcore/2)
+            -- ++(0, \hcore) coordinate(P_NE_L)
+            -- ++(-\wcoil, 0)
+            -- ++(0, \hshoe)
+            -- ++(\wshoe, 0)
+            -- ++(0, -\hshoe) coordinate(P_NE_R)
+            -- ++(-\wcoil, 0)
+            -- ++(0, -\hcore) coordinate(P_SW_R)
+            -- ++(\wcoil, 0)
+            -- ++(0, -\hshoe)
+            -- ++(-\wshoe, 0)
+            -- ++(0, \hshoe) coordinate(P_SW_L)
+            -- cycle
+            ;
+
+        \coordinate(center) at ($(P_SW_L)!0.5!(P_NE_R)$);
+        \coordinate(lc) at ($(P_NE_L)!0.6!(P_SW_L)$);
+        \coordinate(rc) at ($(P_NE_R)!0.4!(P_SW_R)$);
+            
+        \ifnum \pha = -3
+            \path[wpos, colPhaW] (lc|-P_NE_L) -- (lc|-P_SW_L);
+            \path[wneg, colPhaW] (rc|-P_NE_R) -- (rc|-P_SW_R);
+            \draw[flux, colPhaW] ($(0,\fluxlen/2) + (center)$) -- ++(0,-\fluxlen);
+        \else\ifnum \pha = -2
+            \path[wpos, colPhaV] (lc|-P_NE_L) -- (lc|-P_SW_L);
+            \path[wneg, colPhaV] (rc|-P_NE_R) -- (rc|-P_SW_R);
+            \draw[flux, colPhaV] ($(0,\fluxlen/2) + (center)$) -- ++(0,-\fluxlen);
+        \else\ifnum \pha = -1
+            \path[wpos, colPhaU] (lc|-P_NE_L) -- (lc|-P_SW_L);
+            \path[wneg, colPhaU] (rc|-P_NE_R) -- (rc|-P_SW_R);
+            \draw[flux, colPhaU] ($(0,\fluxlen/2) + (center)$) -- ++(0,-\fluxlen);
+        \else\ifnum \pha = 1
+            \path[wneg, colPhaU] (lc|-P_NE_L) -- (lc|-P_SW_L);
+            \path[wpos, colPhaU] (rc|-P_NE_R) -- (rc|-P_SW_R);
+            \draw[flux, colPhaU] ($(0,-\fluxlen/2) + (center)$) -- ++(0,\fluxlen);
+        \else\ifnum \pha = 2
+            \path[wneg, colPhaV] (lc|-P_NE_L) -- (lc|-P_SW_L);
+            \path[wpos, colPhaV] (rc|-P_NE_R) -- (rc|-P_SW_R);
+            \draw[flux, colPhaV] ($(0,-\fluxlen/2) + (center)$) -- ++(0,\fluxlen);
+        \else\ifnum \pha = 3
+            \path[wneg, colPhaW] (lc|-P_NE_L) -- (lc|-P_SW_L);
+            \path[wpos, colPhaW] (rc|-P_NE_R) -- (rc|-P_SW_R);
+            \draw[flux, colPhaW] ($(0,-\fluxlen/2) + (center)$) -- ++(0,\fluxlen);
+        \fi\fi\fi\fi\fi\fi
+
+        \node[fill=white, inner sep=2pt] at (center) {\x};
+    }
+\end{tikzpicture}
+

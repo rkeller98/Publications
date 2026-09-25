@@ -1,0 +1,95 @@
+\section{Performance space and the preferred direction solver}
+\label{sec:performance}
+
+The preceding coordinates modify current space. A more radical approach maps
+each direction directly to what it accomplishes. In whitened coordinates let
+\(\vect x=\gls{sym:y}/\norm{\gls{sym:y}}\), so \(\norm{\vect x}=1\), and set
+\begin{equation}
+ \bar{\matr H}=\matr R^{-1/2}\matr H\matr R^{-1/2},\qquad
+ \bar{\matr Q}=\matr R^{-1/2}\matr Q_U\matr R^{-1/2}.
+\end{equation}
+Define
+\begin{equation}
+ \gls{sym:tau}(\vect x)=\vect x^{\mathsf T}\bar{\matr H}\vect x
+ =\frac{M}{P_{\mathrm{Cu}}},\qquad
+ \gls{sym:nu}(\vect x)=\vect x^{\mathsf T}\bar{\matr Q}\vect x
+ =\frac{U^2}{P_{\mathrm{Cu}}}.
+ \label{eq:performance-coordinates}
+\end{equation}
+Both are invariant under nonzero current scaling. The horizontal coordinate
+is squared voltage consumed per watt of copper loss; the vertical coordinate
+is torque produced per watt of copper loss.
+
+For two real symmetric forms and three or more real variables, the image of
+the unit sphere
+\begin{equation}
+ \mathcal W=\{(\nu(\vect x),\tau(\vect x)):\norm{\vect x}=1\}
+ \label{eq:joint-range}
+\end{equation}
+is compact and convex. Brickman's unit-sphere result is the exact statement
+needed here \cite{brickman1961}; Dines's related theorem says that the
+unnormalized joint range of two homogeneous quadratic forms is a convex cone
+\cite{dines1941}. The dimension qualification matters. In two real variables,
+the sphere is a circle and its joint range can be only the boundary of an
+ellipse rather than its filled interior. The extra EESM current coordinate is
+what makes the normalized real performance image convex.
+
+\input{figures/12_performance_space.tex}
+
+The boundary can be found without sampling the sphere. Rotate a support line
+with normal \((-\mu,1)\). Its highest contact maximizes
+\begin{equation}
+ \tau-\mu\nu
+ =\vect x^{\mathsf T}(\bar{\matr H}-\mu\bar{\matr Q})\vect x.
+\end{equation}
+On the unit sphere, the maximizing direction is the dominant eigenvector of
+the symmetric pencil
+\begin{equation}
+ (\matr H-\mu\matr Q_U)\vect v
+ =\lambda\matr R\vect v.
+ \label{eq:support-pencil}
+\end{equation}
+This is not a disguised request to memorize a multiplier. Geometrically, the
+controller turns a support line in a two-dimensional convex performance set;
+the eigenvector is the current direction at the contact point.
+
+With radial loss scale \(P\), every performance point obeys
+\begin{equation}
+ M=P\tau,\qquad U^2=P\nu.
+\end{equation}
+For requested positive torque, the admissible directions satisfy
+\begin{equation}
+ \nu\leq\frac{U_{\max}^2}{M_{\mathrm{ref}}}\tau,\qquad \tau>0,
+ \label{eq:performance-wedge}
+\end{equation}
+and the best point is the one with largest \(\tau\) in this half-plane.
+Therefore
+\begin{equation}
+ \boxed{P_{\mathrm{req}}=\frac{M_{\mathrm{ref}}}{\tau_\star}.}
+ \label{eq:performance-preq}
+\end{equation}
+If the unconstrained topmost point already satisfies the sloped voltage line,
+one dominant eigenvector of \(\bar{\matr H}\) suffices. Otherwise the optimum
+lies where the performance boundary meets that line. A scalar search in
+support slope \(\mu\) locates the contact.
+
+For maximum torque, one direction supplies
+\begin{equation}
+ M_{\mathrm{dir}}=\tau\min\!\left(P_{\mathrm{Cu},\max},
+ \frac{U_{\max}^2}{\nu}\right),
+ \label{eq:performance-mmax}
+\end{equation}
+with \(U_{\max}^2/\nu=+\infty\) when \(\nu=0\). The maximum along the upper
+boundary of \(\mathcal W\) is found by the same support-line parameterization.
+No 3D gridding is required.
+
+\subsection{SVD, GSVD, and what each axis optimizes}
+
+The SVD of \(\matr A\matr R^{-1/2}\) diagonalizes voltage gain per loss and
+reveals the voltage-null direction robustly. The eigenvectors of
+\(\bar{\matr H}\) diagonalize torque per loss. A generalized SVD can expose
+relative voltage/loss gains, but it does not generally diagonalize torque as
+well. Performance space avoids choosing one permanent axis system: it uses a
+small pencil whose axes change continuously with the support slope. This
+runtime flexibility is the reason it is preferred over a single simultaneous
+diagonalization.

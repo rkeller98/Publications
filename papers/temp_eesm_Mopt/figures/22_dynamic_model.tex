@@ -1,0 +1,22 @@
+\begin{figure}[tb]
+\centering
+\begin{tikzpicture}[node distance=10mm and 11mm,font=\small]
+ \node[draw,rounded corners,fill=blue!8,minimum width=28mm,minimum height=10mm] (u) {converter set $\mathcal U$};
+ \node[draw,rounded corners,fill=ForestGreen!10,right=of u,minimum width=31mm,minimum height=10mm] (ld) {$\matr L_{\rm diff}^{-1}$};
+ \node[draw,rounded corners,fill=orange!12,right=of ld,minimum width=30mm,minimum height=10mm] (v) {current velocity};
+ \node[draw,rounded corners,fill=purple!8,below=of ld,minimum width=34mm,minimum height=10mm] (drift) {$-\matr L_{\rm diff}^{-1}\vect r$};
+ \draw[->,thick] (u)--node[above] {$\vect u$}(ld);
+ \draw[->,thick] (ld)--node[above] {controlled}(v);
+ \draw[->,thick] (drift)-|node[pos=.25,left] {drift}(v);
+ \node[draw,align=left,below left=13mm and -2mm of drift,fill=gray!8] (phys)
+ {$\vect r=\matr R_e\vect i+\matr C(\omega_e)\boldsymbol\psi$\\resistance $+$ back-EMF $+$ cross coupling};
+ \node[draw,align=left,below right=13mm and -2mm of drift,fill=gray!8] (flux)
+ {$\boldsymbol\psi(\vect i)$, reciprocal Jacobian\\saturation changes local geometry};
+ \draw[->] (phys)--(drift); \draw[->] (flux)--(ld);
+\end{tikzpicture}
+\caption{The full electrical dynamics separate converter authority, the
+differential-inductance map, and natural drift.  Omitting the field-winding
+row would remove both a slow state and an independent voltage constraint.}
+\label{fig:dynamic-model}
+\end{figure}
+

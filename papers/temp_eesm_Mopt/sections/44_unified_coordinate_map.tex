@@ -1,0 +1,169 @@
+\section{A unified map of control representations}
+\label{sec:unified-coordinate-map}
+
+Field-oriented control names the alignment principle; current-vector control
+usually closes \(dq\) current loops inside it. Universal field orientation
+seeks a common flux-aligned interface across machine types
+\cite{profumo1992ufo,casadei2013unified}. DTC selects voltage actions from
+torque/flux errors, while DFVC regulates continuous flux-oriented quantities.
+Active flux changes the torque-producing flux variable; feedback
+linearization and deadbeat control change how voltages are computed.
+Task/null-space control organizes priorities in state space. Natural gradients
+choose locally efficient directions, and hyperbolic/projective coordinates
+parameterize torque-factor allocation. These are intersecting design choices,
+not mutually exclusive product names.
+
+\input{figures/51_control_concept_map.tex}
+
+\begin{landscape}
+\begin{center}
+\captionof{table}{Coordinate and controller comparison, structural panel.}
+\label{tab:coordinate-comparison-structural}
+\scriptsize
+\begin{tabularx}{\linewidth}{lXXXXXX}
+\toprule
+Method & physical interpretation & transformation type & spatial or abstract
+& linear/nonlinear & fixed/state dependent & global inverse / singularities\\
+\midrule
+\(dq\) CVC & rotor flux/saliency axes & rotation + current loops & spatial &
+linear for given angle & rotor-fixed & global rotation; angle unavailable at standstill without sensing\\
+\(ft\) DFVC & flux magnitude and perpendicular torque current & flux-angle rotation & spatial &
+linear rotation, nonlinear angle & state-dependent & undefined at \(\psi_s=0\); observer angle error\\
+Active flux & equivalent torque-producing flux & flux subtraction/model map & spatial variable + task meaning &
+linear only for constant inductances & fixed or map-dependent & weak at \(\psi_a=0\); parameter/map ambiguity\\
+Torque/flux IOFL & direct output rates & input transformation & abstract outputs/virtual inputs &
+nonlinear & state-dependent & local if \(\det(J_hB)\ne0\); voltage blow-up near rank loss\\
+\((i_T,\alpha,z_0)\) & torque amplitude and two allocations & state chart & abstract &
+nonlinear & fixed for linear EESM & branchwise; singular at zero torque/factors\\
+\((M,P,U^2)\) & performance levels themselves & state chart & abstract &
+nonlinear & state-dependent & local only; gradient dependence and multiple branches\\
+local gradient frame & torque, voltage, remaining direction & differential basis & abstract &
+nonlinear & moving & generally not integrable; critical points/eigen crossings\\
+AJD frame & least average quadratic coupling & orthogonal offline rotation & abstract &
+linear & fixed & global linear inverse; nonzero residual coupling\\
+\bottomrule
+\end{tabularx}
+\end{center}
+\end{landscape}
+
+\begin{landscape}
+\begin{center}
+\captionof{table}{Coordinate and controller comparison, implementation panel.
+Costs refer to the architecture, not only the coordinate transform.}
+\label{tab:coordinate-comparison-implementation}
+\scriptsize
+\begin{tabularx}{\linewidth}{lXXXXXXX}
+\toprule
+Method & observer & loops & reference maps & FPGA / MCU cost & saturation
+handling & field weakening & EESM suitability\\
+\midrule
+\(dq\) CVC & rotor angle, currents & \(2+1\) PI & MTPA/FW/limits & low / low &
+calibrated maps mature & indirect but mature & good baseline, hides redundancy\\
+\(ft\) DFVC & stator flux and angle & flux + torque/current + field & fewer FW maps &
+pipeline-friendly / medium & nonlinear flux observer & excellent direct flux limit & demonstrated; field allocation remains\\
+Active flux & active-flux estimate or rotor angle & usually current/torque loops & reduced torque model &
+low--medium / low--medium & map-dependent \(\psi_a\) & helpful, not by itself a limit law & excellent torque unification\\
+Torque/flux IOFL & task states and drift & task loops & few steady maps &
+matrix pipeline / high & accurate local model needed & direct if flux output & strong if decoupling rank persists\\
+\((i_T,\alpha,z_0)\) & currents, parameters & three hierarchical loops & small allocation policy &
+exp/log or LUT / medium--high & local map/Jacobian & needs voltage-aware \(\alpha,z_0\) & natural static/dynamic allocation\\
+\((M,P,U^2)\) & all performance models & three task loops & potentially none locally &
+solve-heavy / high & nonlinear Jacobian & direct voltage coordinate & diagnostic more than global controller\\
+local gradient frame & flux Jacobian/gradients & hierarchical & local model tables &
+parallel products / high & best local adaptation if map accurate & direct tangent direction & powerful but complex\\
+AJD frame & currents, rotor angle & transformed current loops & conventional limits &
+very low / low & only as calibration family captures it & residual coupling remains & attractive fixed compromise\\
+\bottomrule
+\end{tabularx}
+\end{center}
+\end{landscape}
+
+\begin{center}
+\captionof{table}{What the principal representations expose across synchronous-machine types.}
+\label{tab:machine-representation-map}
+\small
+\begin{tabularx}{\linewidth}{lXXXX}
+\toprule
+Representation & SPM & IPMSM & SynRM & EESM\\
+\midrule
+\(dq\) currents & nearly direct torque/flux split & saliency remains coupled & reluctance product hidden & field/stator allocation hidden\\
+\(ft\) frame & flux limit and torque current & flux limit and total torque current & flux/torque action & flux/torque action; field allocation remains\\
+Active flux & fixed PM flux & PM plus reluctance flux & reluctance-producing flux & field plus reluctance flux\\
+Task/null chart & one secondary direction & one secondary direction & one secondary direction & two torque-null tangent directions\\
+Performance chart & mainly diagnostic & local loss/voltage chart & local loss/voltage chart & richest three-task chart, but most singularity-prone\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection{Do we still need \texorpdfstring{\(dq\)}{dq}?}
+
+As a spatial interface, usually yes: it removes sinusoidal time variation and
+fixes rotor anisotropy. As the only internal plant representation, no. As
+optimization variables, often no. As controlled outputs, frequently no. For
+EESM, no single chart is best across startup, loss optimization, field
+weakening, saturation, and the capability boundary. The robust architecture
+is layered: regular \(dq\) or flux states at the plant boundary, a
+machine-specific model block, task variables for optimization and priorities,
+and guarded virtual inputs only where their decoupling matrix is healthy.
+
+\subsection{Explicit answers to the fifteen evaluation questions}
+
+\begin{enumerate}
+ \item \textbf{Is \(dq\) the best internal control coordinate?} For an SPM it
+ is nearly a torque/flux task chart already. For an IPMSM it remains an
+ excellent plant frame but not an ideal torque chart. For an EESM it hides two
+ allocation freedoms and is best retained as an inner spatial interface.
+ \item \textbf{When is \(ft\) superior?} When stator-flux magnitude directly
+ expresses the active voltage limit, especially in field weakening, and a
+ sufficiently accurate flux observer is available.
+ \item \textbf{When is active flux clearer?} With saliency or controllable
+ excitation, because it absorbs reluctance, PM, and field contributions into
+ the one flux factor that multiplies torque current.
+ \item \textbf{Can an EESM torque current be defined?} Yes: \(i_t\) is exact
+ in the stator-flux frame, while \(i_T\) is a nonspatial torque-amplitude
+ coordinate in the loss-whitened EESM task chart.
+ \item \textbf{Which two complements are most useful?} Below base speed,
+ allocation imbalance \(\alpha\) and the loss-orthogonal null coordinate
+ \(z_0\). In field weakening, replace or deform one complement toward stator
+ flux or voltage utilization.
+ \item \textbf{Fixed or moving frame?} Fixed \(dq\), active-flux, or AJD
+ frames are preferable while their residual coupling is acceptable. Saturated
+ and constraint-changing regions may justify a guarded moving local frame.
+ \item \textbf{Where are the singularities?} At zero flux for \(ft\), zero
+ active flux for torque division, zero torque/factors for hyperbolic charts,
+ dependent performance gradients, decoupling-matrix rank loss, and local
+ eigenvalue crossings.
+ \item \textbf{Most mathematically elegant?} \((M,P,U^2)\) straightens three
+ level-set families, but only locally. Hyperbolic coordinates are the cleanest
+ global-on-a-branch expression of the linear EESM torque product.
+ \item \textbf{Most physically transparent?} \(ft\) for flux/torque action and
+ \((M,\psi_a,\sigma)\) for EESM torque production plus internal sharing.
+ \item \textbf{Cheapest on MCU/FPGA?} The measured-angle \(dq\) CVC baseline
+ remains cheapest in the stated count model. A fixed AJD frame adds little;
+ state-dependent task/IOFL frames cost more unless they remove substantial
+ maps or calibration.
+ \item \textbf{Most robust under saturation?} In principle a local
+ gradient/differential-flux frame; in present practice, calibrated \(dq\) or
+ DFVC with a validated nonlinear flux map is safer than an unguarded inverse.
+ \item \textbf{Largest calibration reduction?} DFVC removes much of the
+ field-weakening reference map; active flux unifies torque calculation.
+ Neither removes the saturated magnetic map.
+ \item \textbf{Natural architecture for the static optimum?} The
+ \((i_T,\alpha,z_0)\) hierarchy: set torque amplitude, drive allocation toward
+ the loss/voltage optimum, then use the remaining null freedom.
+ \item \textbf{Natural architecture for A-to-B motion?} The same task chart is
+ the best warm start because it separates rapid torque acquisition from slow
+ allocation, while the final constrained optimization remains in nonsingular
+ physical coordinates.
+ \item \textbf{A unified machine task coordinate system?} Evidence supports a
+ unified \emph{interface}---torque, a flux resource, and priority/limit
+ information---but not one globally invertible coordinate formula for SPM,
+ IPMSM, SynRM, and EESM. Machine-specific inner charts are physically
+ unavoidable.
+\end{enumerate}
+
+\begin{quote}\itshape
+Coordinates are tools, not physical laws. A useful transformation must expose
+meaning, optimality, feasibility, dynamics, observability, controllability, or
+implementation---and must state where the displaced complexity reappears.
+\end{quote}

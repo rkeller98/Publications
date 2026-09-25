@@ -1,0 +1,31 @@
+\begin{figure}[tb]
+\centering
+\begin{tikzpicture}[scale=.92,>=Latex]
+ \foreach \x/\h/\lab in {0/1.15/{b>0},4.1/1.85/{b\downarrow0},8.2/2.35/{b=0}}{
+   \draw[thin,->] (\x-1.25,0)--(\x+1.35,0) node[right] {$i_d$};
+   \draw[thin,->] (\x,-1.25)--(\x,2.45) node[above] {$i_{\mathrm{exc}}$};
+   \ifdim \x pt<8pt
+     \draw[blue,thick,fill=blue!8] (\x,0.55) ellipse (1.05 and \h);
+     \draw[blue!55,dashed] (\x-1.05,.55)--(\x+1.05,.55);
+   \else
+     \draw[blue,thick] (\x-1.05,-1.05)--(\x-1.05,2.15);
+     \draw[blue,thick] (\x+1.05,-1.05)--(\x+1.05,2.15);
+     \draw[blue!55,dashed] (\x-1.05,.55)--(\x+1.05,.55);
+     \draw[blue,->] (\x-1.05,2.0)--(\x-1.05,2.4);
+     \draw[blue,->] (\x+1.05,2.0)--(\x+1.05,2.4);
+     \draw[blue,->] (\x-1.05,-.9)--(\x-1.05,-1.3);
+     \draw[blue,->] (\x+1.05,-.9)--(\x+1.05,-1.3);
+   \fi
+   \node[font=\small] at (\x,-1.65) {$\lab$};
+ }
+ \draw[->,very thick,orange] (1.5,.55)--(2.6,.55)
+   node[midway,above,font=\scriptsize] {$I_e\propto b^{-1/2}$};
+ \draw[->,very thick,orange] (5.6,.55)--(6.7,.55);
+\end{tikzpicture}
+\caption{Loss-geometry degeneracy in an \(i_d\)-\(i_{\mathrm{exc}}\)
+section.  The full three-dimensional bodies are ellipsoids of revolution about
+the excitation axis; as \(R_{\mathrm{exc}}=b\) decreases, the excitation
+semiaxis diverges and the limit is the circular cylinder
+\cref{eq:loss-cylinder}.}
+\label{fig:loss-degeneracy}
+\end{figure}

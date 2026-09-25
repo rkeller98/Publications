@@ -1,0 +1,76 @@
+\section{Limiting cases and counterexamples}
+\label{sec:limits}
+
+Every compact formula in this paper has a nearby case in which its geometry
+collapses. The cases below are tests, not footnotes.
+
+\begin{description}
+ \item[\(R_s\to0\).] The PSM voltage cross term vanishes and its axes align
+ with \(dq\). The exact center becomes the characteristic point at every
+ nonzero speed. In the EESM, the voltage null direction becomes
+ \([-L_{\mathrm{exc}}/L_d,0,1]^{\mathsf T}\). Loss whitening becomes singular
+ only if the same idealization is also applied to stator copper loss; therefore
+ a zero-resistance voltage approximation must not automatically replace the
+ positive thermal resistance.
+
+ \item[\(\omega_e\to0\).] With \(R_s>0\), the PSM voltage ellipse tends to a
+ resistance circle centered at the origin. For the EESM, excitation current is
+ invisible to stator voltage at exactly zero speed, while copper loss still
+ bounds it. If also \(R_s=0\), the voltage map is zero and the voltage
+ constraint imposes no current restriction.
+
+ \item[\(|\omega_e|\to\infty\).] The PSM center tends to
+ \((-\psi_{\mathrm{pm}}/L_d,0)\), its axes scale approximately as
+ \(1/|\omega_e|\), and the sign of its small \(q\)-center component reverses
+ with speed. The EESM voltage cylinder narrows in its two visible directions
+ but remains open along its null line.
+
+ \item[\(L_d=L_q\).] The PSM voltage boundary is a translated circle and the
+ rotation angle is undefined, not zero by decree. Reluctance torque vanishes,
+ but EESM excitation torque remains. In active-flux coordinates the effective
+ coefficient vector simply loses its \(d\)-current component.
+
+ \item[\(\psi_{\mathrm{pm}}=0\).] The PSM voltage ellipse returns to the origin.
+ Torque is purely reluctance torque and vanishes altogether in the additional
+ nonsalient limit. The EESM parent remains meaningful because controllable
+ excitation can replace the missing PM flux.
+
+ \item[Fixed \(i_{\mathrm{exc}}\).] A homogeneous 3D EESM problem becomes an
+ affine 2D PSM-like slice. Rotor copper loss is a constant slice offset; an
+ actual PSM omits it.
+
+ \item[\(P_{\mathrm{Cu},\max}\to\infty\).] The linear EESM maximum-torque
+ problem under voltage alone is generically unbounded. Following the voltage
+ null line leaves voltage unchanged while torque can grow. A finite numerical
+ box would manufacture a false optimum.
+
+ \item[\(U_{\max}\to\infty\).] Voltage disappears from allocation. The exact
+ solution is \(z_0=0\), \(|z_\psi|=|z_q|\), and
+ \(P_{\min}=2|M|/\kappa\). Maximum torque under a loss budget follows the
+ corresponding dominant torque-per-loss eigenvector.
+
+ \item[Vanishing saliency.] With \(\Delta L=0\), direct-axis stator current is
+ torque-neutral in the linear EESM torque law; field excitation alone creates
+ active flux. With vanishing excitation coupling instead, field current is
+ torque-neutral and the machine reduces to reluctance torque allocation.
+
+ \item[Degenerate eigenvalues.] Principal directions become nonunique.
+ Algorithms must compare invariant subspaces or residuals rather than raw
+ eigenvector angles.
+
+ \item[Positive and negative torque.] The loss and voltage sets are even in
+ the full current vector, so \(\vect i\mapsto-\vect i\) does not reverse torque.
+ Torque reversal requires changing the sign of one product factor, producing
+ the opposite saddle branch. Extra one-sided field constraints can make motor
+ and generator capability asymmetric.
+
+ \item[Unreachable request.] The voltage-limited direction set may contain no
+ point capable of \(M_{\mathrm{ref}}\), or its minimum loss may exceed the
+ thermal ceiling. The controller must saturate on \(M_{\max}\) and return a
+ limit status; scaling currents beyond the boundary is not a solution.
+\end{description}
+
+These limits are also debugging oracles. Any implementation that reports a
+unique ellipse angle in the circle case, a bounded voltage-only EESM torque,
+or a homogeneous 2D PSM model with nonzero fixed PM flux has contradicted the
+geometry before numerical tolerances are considered.
